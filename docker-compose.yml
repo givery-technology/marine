@@ -1,0 +1,6 @@
+writer:
+  image: codeprep/marine:1.0.0
+  ports:
+    - "39000:9000"
+  volumes:
+    - $PWD/contents:/opt/docker/contents
