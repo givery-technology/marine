@@ -57,6 +57,10 @@ book.ymlはBook全体の定義が記述されたファイルです。
 - cover: String, 任意
 - files: List[String], 任意
 - images: List[String], 任意
+- preview: String, 任意
+- download: Boolean, 任意
+- playground: Boolean, 任意
+- webStorage: Boolean, 任意
 
 ### title
 titleにはBookのタイトルを指定します。
@@ -109,6 +113,58 @@ filesに指定したファイルはBookReaderのワークスペース上でタ�
 別の言い方をすれば、filesで指定したファイルは各セクションで使用するソースコードの一部となります。例えばHTMLファイルの`img`タグから画像を参照する場合はfiles(または各セクション定義内のfiles)を使用します。
 
 imagesはあくまで説明文中で使用するための画像です。
+
+### preview
+previewにはブックの詳細ページで表示されるプレビューページを指定します。
+指定の方法は以下のいずれかです。
+
+#### ファイルを指定する
+
+```
+preview: preview.html
+```
+
+この場合は、指定したファイルは必ずそのパスになければなりません。
+css, scriptを使用する場合は外部ファイルとはせず、HTML内にインラインで定義してください。
+
+#### sectionを指定する(HTMLブックの場合)
+各チャプター定義ファイルのセクション定義に`alias`が定義されている場合は、その値を指定することができます。
+
+```
+preview: 
+  - section: mysection1
+```
+
+この場合、指定されたセクションのプレビューがブックのプレビューとして使用されます。
+
+#### chapterを指定する(HTMLブックの場合)
+チャプターとセクションのインデックスを指定して、セクションを指定することもできます。
+
+```
+preview: 
+  - chapter: 2-1
+```
+
+previewを指定しなかった場合は、最後のセクションの内容がプレビューとなります。
+ただし、remoteブック(Java, Rubyなど)の場合はNo Previewとなるので、プレビュー用のファイルを別途用意してください。
+
+### download
+ブックの各セクションがダウンロード可能かどうかを指定します。
+
+省略時のデフォルト値は現在`false`ですが、将来`true`に変更される予定です。
+特に理由がない場合は`true`を指定してください。
+
+### playground
+ブックの各セクションがプレイグラウンド化可能かどうかを指定します。
+
+省略時のデフォルト値は現在`false`ですが、将来`true`に変更される予定です。
+特に理由がない場合は`true`を指定してください。
+
+### webStorage
+HTMLブックでWebStorage(sessionStorage or localStorage)を使用する場合は、`true`を指定します。
+`false`の場合はWebStorageは使用できません。
+
+省略時のデフォルト値は`false`です。
 
 
 ## チャプター定義ファイル
@@ -251,7 +307,7 @@ maxLengthを適切に設定したい場合は次節のJSON定義を使用して�
 - ${/a.*b/i,aab}
 - ${/red|green/,red}
 
-現時点では解答例が算出できない場合でも、解答例の付加は必須ではありませんが将来的には解答例が算出できない(与えられていない)定義はコンパイルエラーとなる予定です。
+解答例が算出できない(与えられていない)正規表現定義はコンパイルエラーとなります。
 
 #### 先頭が「{」の場合
 {}内はJSONであると解釈されます。
@@ -328,64 +384,35 @@ filesには参照する外部ファイルをリスト形式で複数設定でき
 
 - main.css
 - [main.js](chapter1/section1_main.js)
+- [images/image1.png](chapter1/image1.png)
 ```
 
 Markdownのリンク書式を使用して実際のファイル名と表示上のファイル名を変更することも可能です。
 
+HTML内から参照する場合は表示上のファイル名(`[]`内で指定されたファイル名)を使用します。
+
+
 ### previewの定義
 プレビュー(BookReaderの画面右側下半分に表示される)は通常、後述のロジックに従って自動生成されますが独自のプレビューを
-ベット定義することができます。
+別途定義することができます。
 
-previewではコードブロックでインラインにpreviewを定義するか、リスト形式で
+previewではリスト形式で
 
 ```
 - file:chapter1/section1_preview.html
 ```
 
-のように外部ファイルを参照することができます。
+のように外部ファイルを参照します。
 
 preview機能は必ずしもmainの内容をそのまま再現する必要はなく、自由にカスタマイズすることができます。
+previewの仕様例は
 
-例
-```
-### main(chapter1.md)
+- [JavaScriptの配列操作を理解する](https://codeprep.jp/books/54)
+- [JavaScriptで正規表現を理解する](https://codeprep.jp/books/56)
 
-\```
-### ${preview}
-\```
+などで見ることができるので参考にしてください。
 
-
-### preview
-
-\```
-<html>
-<head>
-  <title>Preview</title>
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script>
-$(document).ready(function() {
-  var answer = "${a1}";
-  if (answer === "preview") {
-    $("#preview").show();
-  }
-});
-</script>
-</head>
-<body>
-<p id="preview" style="display:none;">この文章はブランクを正しく埋めると表示されます。</p>
-</body>
-</html>
-\```
-```
-
-上の例ではユーザーの解答が正しい場合に説明文を表示しています。
-
-preview定義内では以下のキーワードが置換文字列として使用できます。
-
-- ${a1}, ${a2}... ユーザーの入力したブランクの解答。1ベースの序数で${a1}が最初のブランクに対応
-- ${content} mainの内容全体(ユーザーのブランク入力もそのまま反映されます。)
-
-また、コードブロック(file)とは別にオプションとして以下が設定できます。
+外部ファイルとは別にオプションとして以下が設定できます。
 
 - contentType: プレビューのContent-Type。省略時は text/html
 - prefix: キーワード参照に使用するprefix。省略時は$。
@@ -396,10 +423,7 @@ preview定義内では以下のキーワードが置換文字列として使用�
 
 - contentType: text/plain
 - prefix: %
-
-\```
-あなたの解答は%{a1}です。
-\```
+- file: chapter1/preview.html
 ```
 
 ### remoteの定義
@@ -481,7 +505,7 @@ PHPのBookなどではコマンドの実行結果がそのままHTMLとなって
 - [image1.png](assets/image1.png)
 ```
 
-が設定されている場合、 HTML内で定義されているimgタグは `<img src="image1.png"/>` となります。
+が設定されている場合、 HTML内で定義するimgタグは `<img src="image1.png"/>` とします。
 
 ## 高度な機能
 ここではBookを作成する上で、さらに便利な機能を紹介します。
@@ -539,16 +563,7 @@ ${codeprep:section(prev)}
 <${p}>This is p<${/p}>
 ```
 
-注(旧).
-Answerを正規表現で定義している場合、正解を決定できないことがあります。  
-例えば `${abc|def}` という正規表現では"abc"と"def"のどちらを正解とするべきか判断できません。  
-この場合はコンパイルエラーとなるのでJSON形式でのAnswer定義を使用してください。
-
-注(追加).
-この状況を解決するために正規表現に解答例を付与できるようになりました。
-将来的に(パターンから解答が算出できない場合は)解答例が必須となります。
-
-このcodeprep:section関数では引数として"prev"以外に以下を取ることができます。
+このcodeprep:section関数では引数として`prev`以外に以下を取ることができます。
 
 - 数字: 同一チャプター内のセクション番号。
   - 例: `${codeprep:section(2)}` はセクション2の内容を参照します。
@@ -557,7 +572,7 @@ Answerを正規表現で定義している場合、正解を決定できない�
 
 いずれの場合もそのセクションが見つからない場合はコンパイルエラーとなります。
 
-"prev"はファイル名を考慮します。
+`prev`はファイル名を考慮します。
 例えば、`index.html`と`main.js`を交互に編集するようなブックの場合、`### main(index.html)`からの"prev"の参照はファイル名がindex.htmlのセクションのみが対象となります。
 
 ### その他のsectionを参照する関数
@@ -586,7 +601,16 @@ Answerを正規表現で定義している場合、正解を決定できない�
 - section-from(SYMBOL, "検索文字列")
   - main定義から指定の文字列のある行を検索し、その行以降を返します。(検索行を含む)
 
-こちらの関数では指定の文字列を含む行が2行以上ある場合はコンパイルエラーとなります。
+- section-from-to(SYMBOL, "検索文字列1", "検索文字列2")
+  - 検索文字列1を含む行から検索文字列2を含む行までを返します。(検索文字列1、検索文字列2のある行を含みます。)
+- section-from-before(SYMBOL, "検索文字列1", "検索文字列2")
+  - 検索文字列1を含む行から検索文字列2を含む行までを返します。(検索文字列1のある行を含み、検索文字列2のある行は含みません。)
+- section-after-to(SYMBOL, "検索文字列1", "検索文字列2")
+  - 検索文字列1を含む行から検索文字列2を含む行までを返します。(検索文字列1のある行は含まず、検索文字列2のある行を含みます。)
+- section-after-before(SYMBOL, "検索文字列1", "検索文字列2")
+  - 検索文字列1を含む行から検索文字列2を含む行までを返します。(検索文字列1、検索文字列2のある行を含みません。)
+
+これらの関数では指定の文字列を含む行が2行以上ある場合はコンパイルエラーとなります。
 
 例
 ```
@@ -606,6 +630,40 @@ ${codeprep:section-before-blank(prev)}
 ${codeprep:section-after-blank(prev)}
 ```
 
+### codeprep:mark関数
+section-beforeやsection-afterを使用するためには何らかの検索文字列がソースコード内に必要ですが、適当な検索文字列が存在しないケースも多々あります。
+このようなケースのために`${codeprep:mark("hoge")}`という書式で検索用の文字列を埋め込むことができます。
+
+```
+$(${function}() {
+  // ${codeprep:mark("next-position")}
+})
+```
+
+先行するセクションで上記のようにmainを定義しておけば、次のセクションでは、
+
+```
+${codeprep:section-before(prev, "next-position")}
+  var ws = ${new} ${WebSocket}("wss://codeprep-ws-chat.herokuapp.com/api/websocket/chat");
+  // ${codeprep:mark("next-position")}
+${codeprep:section-after(prev, "next-position")}
+```
+
+のようにして、`next-position`のある行に次のコードを埋め込むことができます。
+
+ちなみに上の例では`section-after`関数(検索行を含まない)の直前に検索行があるので、`section-from`(検索行を含む)を使用して以下のように書き換えても同じです。
+
+```
+${codeprep:section-before(prev, "next-position")}
+  var ws = ${new} ${WebSocket}("wss://codeprep-ws-chat.herokuapp.com/api/websocket/chat");
+${codeprep:section-from(prev, "next-position")}
+```
+
+ただ、状況に応じて`section-after`と`section-from`を使い分けるよりも、常に`section-after`を使用して次の行が入る位置を明示した方が可読性は良くなります。
+
+`codeprep:mark`を含む行はブックの公開時には削除されますが、Marine上では表示するか削除するかを選択することができます。
+表示する場合は、その行もソースコードの一部となるので、コンパイルエラー/ランタイムエラーを避けるために対象言語のコメント書式を利用して定義してください。
+
 ### fileを参照する関数
 セクションではなく外部ファイルを参照する関数もあります。  
 こちらの関数では第一引数は外部ファイルへのパスとなります。
@@ -619,6 +677,10 @@ ${codeprep:section-after-blank(prev)}
 - ${codeprep:file-after(filepath, "検索文字列")}
 - ${codeprep:file-to(filepath, "検索文字列")}
 - ${codeprep:file-from(filepath, "検索文字列")}
+- ${codeprep:file-from-to(filepath, "検索文字列1", "検索文字列2")}
+- ${codeprep:file-from-before(filepath, "検索文字列1", "検索文字列2")}
+- ${codeprep:file-after-to(filepath, "検索文字列1", "検索文字列2")}
+- ${codeprep:file-after-before(filepath, "検索文字列1", "検索文字列2")}
 
 ### filesサブセクションでの先行セクションの参照
 filesサブセクションでも外部ファイルではなく先行するセクションを参照することができます。
@@ -646,30 +708,6 @@ filesサブセクションでも外部ファイルではなく先行するセク
 ```
 
 この機能をうまく利用すると、例えばHTMLとCSSを交互に編集しながら組み立てるようなBookを一切外部ファイルの参照なしで組み立てることも可能です。
-
-
-### 作ってみたけどいきなりDeprecatedな関数
-上記以外にもチャプター番号とセクション番号で参照する関数もあります。
-
-- ${codeprep:chapter(chapterIndex, sectionIndex)}
-- ${codeprep:chapter-before-blank(chapterIndex, sectionIndex)}
-- ${codeprep:chapter-after-blank(chapterIndex, sectionIndex)}
-- ${codeprep:chapter-to-blank(chapterIndex, sectionIndex)}
-- ${codeprep:chapter-from-blank(chapterIndex, sectionIndex)}
-- ${codeprep:chapter-before(chapterIndex, sectionIndex, "検索文字列")}
-- ${codeprep:chapter-after(chapterIndex, sectionIndex, "検索文字列")}
-- ${codeprep:chapter-to(chapterIndex, sectionIndex, "検索文字列")}
-- ${codeprep:chapter-from(chapterIndex, sectionIndex, "検索文字列")}
-
-ただし、aliasを使用すればsection関数を使えば別チャプターも参照できることと、chapter/section番号はBook編集中に容易に変わりえることからあまりオススメはしません。
-
-同様にfilesサブセクションでも
-
-```
-- chapter: 1-2
-```
-
-というチャプター番号とセクション番号での参照が可能ですが、同じ理由でsectionでのalias参照を推奨します。
 
 ### Playground
 リスト形式でファイル(`file:xxxx`)またはセクション参照(`section:xxx`)を使用して、編集可能なファイルを指定します。
