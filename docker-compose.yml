@@ -4,3 +4,5 @@ writer:
     - "39000:9000"
   volumes:
     - $PWD/contents:/opt/docker/contents
+  environment:
+    - ORCA_HOST=orca-staging.codeprep.jp
