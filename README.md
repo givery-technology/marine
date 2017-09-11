@@ -19,6 +19,13 @@ After the application started, you can access the app via `http://localhost:3900
 docker-compose down
 ```
 
+## How to update docker image
+If any change comes with the docker image itself, you need to remove it once for upgrading it.
+
+```
+docker rmi codeprep/marine:newest
+```
+
 ## How to use
 Following directory names are listed in dropdown on header.
 
