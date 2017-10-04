@@ -19,6 +19,20 @@ After the application started, you can access the app via `http://localhost:3900
 docker-compose down
 ```
 
+## Using with a local Orca Server
+
+Start your orca server with a particular port:
+
+```
+PORT=5000 ./orca
+```
+
+After Orca has started, run this command in your book's directory to start Marine:
+
+```
+docker run -e "ORCA_HOST=localhost:5000" -p 9000:9000 --rm -it -v $(pwd):/opt/docker/contents codeprep/marine
+```
+
 ## How to update docker image
 If any change comes with the docker image itself, you need to remove it once for upgrading it.
 
