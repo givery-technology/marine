@@ -61,6 +61,8 @@ book.ymlはBook全体の定義が記述されたファイルです。
 - download: Boolean, 任意
 - playground: Boolean, 任意
 - webStorage: Boolean, 任意
+- timeInMinutes: Int, 任意
+- env: Object, 任意
 
 ### title
 titleにはBookのタイトルを指定します。
@@ -137,7 +139,7 @@ preview:
 
 この場合、指定されたセクションのプレビューがブックのプレビューとして使用されます。
 
-#### chapterを指定する(HTMLブックの場合)
+#### chapterを指定する
 チャプターとセクションのインデックスを指定して、セクションを指定することもできます。
 
 ```
@@ -146,25 +148,43 @@ preview:
 ```
 
 previewを指定しなかった場合は、最後のセクションの内容がプレビューとなります。
-ただし、remoteブック(Java, Rubyなど)の場合はNo Previewとなるので、プレビュー用のファイルを別途用意してください。
+remoteブック(Java, Rubyなど)の場合はセクションのソースコードがプレビューとなります。
 
 ### download
 ブックの各セクションがダウンロード可能かどうかを指定します。
-
-省略時のデフォルト値は現在`false`ですが、将来`true`に変更される予定です。
-特に理由がない場合は`true`を指定してください。
+省略した場合のデフォルト値は`true`です。
+特に理由がない限り`false`にする必要はありません。
 
 ### playground
 ブックの各セクションがプレイグラウンド化可能かどうかを指定します。
-
-省略時のデフォルト値は現在`false`ですが、将来`true`に変更される予定です。
-特に理由がない場合は`true`を指定してください。
+省略した場合のデフォルト値は`true`です。
+特に理由がない限り`false`にする必要はありません。
 
 ### webStorage
 HTMLブックでWebStorage(sessionStorage or localStorage)を使用する場合は、`true`を指定します。
 `false`の場合はWebStorageは使用できません。
 
 省略時のデフォルト値は`false`です。
+
+### timeInMinutes
+Bookを解き終わるまでの目安時間を分単位で指定します。
+省略時にはセクション数から自動計算されます。
+
+自動計算は穴埋め問題を基準に計算しています。
+エクササイズのあるBookでは自動計算される値と実際の目安時間が大きく乖離するのでできるだけ指定するようにしてください。
+
+
+### env
+独自のDockerImageを使用する場合に指定します。
+現状`env`以下に指定できるキーは`imageName`のみです。
+
+```
+env:
+  imageName: codeprep/python3_numpy
+```
+
+imageNameに指定できるDockerイメージ名は実行環境でサポートされているもののみです。
+新しいDockerImageを使用したい場合はご相談ください。
 
 
 ## チャプター定義ファイル
@@ -227,6 +247,7 @@ CODEPREPではひとつのチャプターがひとつのファイルに対応し
 - preview
 - hint
 - tips
+- answer
 - files
 - remote
 
@@ -241,7 +262,7 @@ CODEPREPのセクションには大きく次の4種類があります。
   - 殆どのセクションが穴埋め問題です。
 - エクササイズ(exercise)
   - セクションで`exercise`が定義されている
-  - 正規表現Bookと配列Bookの最後に定義されています。
+  - エクササイズにはさらにRemote(Ruby, Java等)のエクササイズとClient(HTML/JavaScript)のエクササイズがあり、作成方法が異なります。
 - プレイグラウンド(playground)
   - セクションで`playground`が定義されている
   - 自由編集ページ。いくつかのブックの最終セクションはプレイグラウンドになっています。
@@ -275,21 +296,10 @@ Answerは通常、`${...}`という形式で定義し、最もシンプルなケ
 
 例
 - ${/red/i}  - 大文字小文字の区別なしで「red」にマッチ
-- ${/abc|def/} - 大文字小文字の区別ありで「abc」または「def」にマッチ
+- ${/abc|def/,abc} - 大文字小文字の区別ありで「abc」または「def」にマッチ。解答例はabc
 
 JavaScriptのRegExがサポートする範囲で自由に正規表現を定義することが可能です。
 文字列が正規表現として不正な場合はコンパイルエラーとなります。
-
-注.   
-正規表現内でOR(|)や繰り返し(\*)等を使用した場合、解答の最大長が計算できなくなります。  
-通常、BookReaderで表示されるブランクではwidthと入力のmaxlengthが解答の最大長に基づいて設定されますが、この場合は
-
-- width: 8文字分
-- maxlength: 設定なし
-
-となります。
-
-maxLengthを適切に設定したい場合は次節のJSON定義を使用してください。
 
 ##### 正規表現の解答例の定義
 正規表現は書き方によっては、パターンから解答例を算出することができなくなります。
@@ -373,6 +383,15 @@ hintあるいはtipsはデフォルトでは表示されず、ユーザーアク
 
 hintとtipsには機能的な差異は存在しないので用途によって使い分けてください。(両方定義することも可能です。)
 
+### answerの定義
+answerには問題に対する解答/解説を定義します。
+
+穴埋め問題では不要ですが、エクササイズ問題では定義するようにしてください。
+
+answerは各セクションで個別に参照することができます。
+また、Bookの最後にすべてのanswerをまとめたセクションが追加されます。
+
+
 ### filesの定義
 filesには参照する外部ファイルをリスト形式で複数設定できます。
 ここで指定したファイルはエディタ部でタブとして表示されます。
@@ -405,7 +424,7 @@ previewではリスト形式で
 のように外部ファイルを参照します。
 
 preview機能は必ずしもmainの内容をそのまま再現する必要はなく、自由にカスタマイズすることができます。
-previewの仕様例は
+previewの使用例は
 
 - [JavaScriptの配列操作を理解する](https://codeprep.jp/books/54)
 - [JavaScriptで正規表現を理解する](https://codeprep.jp/books/56)
@@ -425,6 +444,21 @@ previewの仕様例は
 - prefix: %
 - file: chapter1/preview.html
 ```
+
+またURLを指定して外部のHTMLを参照することも可能です。
+
+```
+### preview
+
+- url: https://s3-ap-northeast-1.amazonaws.com/codeprep-assets/html/about-exercise.html
+```
+
+現状、エクササイズBookの先頭セクションには必ず、エクササイズの解き方のセクションを差し込んでいます。
+上記の例のURLはその説明のHTMLを指しているので、このURLを参照することで説明セクションを差し込むことができます。
+
+指定のURLのファイルはコピーされず直接参照されます。  
+このため、参照先のHTMLが修正された場合はその内容はすぐにBookに反映されます。
+
 
 ### remoteの定義
 remoteはRubyなどのサーバーサイドの言語を実行する機能です。  
@@ -719,6 +753,7 @@ HTMLプレイグラウンド
 ```
 ### playground
 
+- mode: client
 - file: exercise5/main.js
 - file: exercise5/index.html
 ```
@@ -727,10 +762,140 @@ HTMLプレイグラウンド
 ```
 ### playground
 
+- mode: remote
 - file: [main.rb](playground1/main.rb)
 - command: ruby main.rb
 ```
 
-### Exercise
-エクササイズの定義方法は現在ドキュメント化されていません。
+`mode`に指定できる値は`client`または`remote`です。
+省略時は`client`となります。
 
+### exercise
+エクササイズの定義はリスト形式で必要な情報を定義することで行われます。
+エクササイズの定義方法はリモートエクササイズ(Ruby, Java等)と、クライアントエクササイズ(HTML/JavaScript)の場合で異なります。
+
+#### リモートエクササイズ
+リモートエクササイズを定義するには`- mode: remote`を定義に加えます。
+それ以外に定義可能なキーは以下のとおりです。
+
+- file: 1つ以上必須。ユーザが編集可能なファイルを指定します。ファイル自体は外部ファイルとして作成します。
+- hidden: 任意。ユーザから不可視のファイルを指定します。通常テスト本体はhiddenで指定します。
+- command: 必須。テストの実行コマンドを指定します。
+- build: 任意。`command`の実行前に実行するコマンドがある場合に指定します。複数指定可能です。
+
+ユーザーには見えているけれど、編集はさせたくないファイルが存在する場合は`files`サブセクションで定義してください。
+
+例: Javaのテスト
+```
+### exercise
+
+- build: javac -J-Duser.language=ja *.java
+- file: [Main.java](assets/Section1_1.java)
+- hidden: [Section1_1_Test.java](assets/Section1_1_Test.java)
+- mode: remote
+- command: java Section1_1_Test
+```
+
+#### リモートテストの書き方
+実行結果がTAP形式で出力されるならどのように作成しても構いません。
+テストツールの多くはTAP形式をサポートしているので、それらを使っても構いませんしすべて自力で記述しても構いません。
+
+TAP形式とは簡単に言うとコンソールの出力が
+
+- `ok `で始まる場合はテストの成功を表す。
+- `not ok `で始まる場合はテストの失敗を表す。
+
+というものです。(厳密に言うともう少し細かいルールがありますが、CODEPREPで必要としているのはこの部分だけです。)
+
+リモートエクササイズの結果の判定では
+
+- コンパイルエラー、または実行時エラーになっていない
+- `ok `で始まる行が1つ以上ある
+- `not ok `で始まる行がない
+
+という条件で正解としています。
+
+簡単なテストの例は以下のようになります。
+
+
+``` java
+// ユーザにMainクラスのhelloというメソッドを定義させる問題
+public class Section1_1_Test {
+
+  private static void doTest(int index, String name) {
+    try {
+      String answer = "Hello " + name;
+      String users = Main.hello(name);
+      String ret = answer.equals(users) ? "ok " : "not ok ";
+      System.out.println(ret + index + " 引数が「" + name + "」の場合の返り値が「" + answer + "」であること");
+    } catch (Exception e) {
+      System.out.println("not ok " + index + " メソッドの実行に失敗しました: " + e.toString());
+      e.printStackTrace();
+    }
+  }
+  public static void main(String[] args) {
+    doTest(1, "World");
+    doTest(2, "Taro");
+  }
+}
+```
+
+RSpecやJUnitなどのテストフレームワークを使うことも可能ですが、テストフレームワーク自体が実行環境にあらかじめインストールされていない場合は初期化に時間がかかるため、あまり現実的ではありません。
+
+使いたいテストフレームワークがある場合はご相談ください。
+
+#### クライアントエクササイズ
+クライアントエクササイズを定義するには`- mode: client`を定義に加えます。
+それ以外に定義可能なキーは以下のとおりです。
+
+- file: 1つ以上必須。ユーザが編集可能なファイルを指定します。ファイル自体は外部ファイルとして作成します。
+- hidden: 任意。ユーザから不可視のファイルを指定します。(クライアントエクササイズではおそらく使うことはありません。)
+- clientTest: 必須。Mochaで書いたテスト
+
+ユーザーには見えているけれど、編集はさせたくないファイルが存在する場合は`files`サブセクションで定義してください。
+
+```
+### exercise
+- mode: client
+- file: [main.js](assets/1-2.main.js)
+- test: assets/1-2.test.js
+
+### files
+- [index.html](assets/chapter1.html)
+```
+
+以下はjQueryのセレクタテストの例です。
+
+``` javascript
+"use strict";
+
+var assert = chai.assert;
+
+describe("セレクタ", function() {
+
+  it("関数 getElementsが定義されている", function() {
+    assert.equal(typeof getElements, "function");
+  });
+
+  it("関数 getElementsがjQueryオブジェクトを返す", function() {
+    let $selected = getElements();
+    assert.ok($selected instanceof jQuery);
+  });
+
+  it("セレクタによって選択された要素が正しい", function() {
+    let $selected = getElements();
+    $selected.each(function() {
+      $(this).addClass("bingo");
+    });
+    $(".count").text($selected.length);
+
+    const $answer = $("#one");
+    const $bingo = $(".bingo");
+
+    assert.equal($answer.length, $bingo.length);
+    assert.equal($answer.filter(".bingo").length, $bingo.length);
+  });
+});
+```
+
+上記のjsがmochaのテストとしてindex.htmlに差し込まれて実行されます。
