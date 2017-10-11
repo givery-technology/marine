@@ -37,7 +37,7 @@ docker run -e "ORCA_HOST=localhost:5000" -p 9000:9000 --rm -it -v $(pwd):/opt/do
 If any change comes with the docker image itself, you need to remove it once for upgrading it.
 
 ```
-docker rmi codeprep/marine:newest
+docker rmi codeprep/marine:latest
 ```
 
 ## How to use
