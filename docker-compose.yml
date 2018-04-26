@@ -5,4 +5,4 @@ writer:
   volumes:
     - $PWD/contents:/opt/docker/contents
   environment:
-    - ORCA_HOST=orca-staging.codeprep.jp
+    - ORCA_HOST=track-staging.orca.run
