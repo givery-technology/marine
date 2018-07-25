@@ -1,7 +1,11 @@
-# CODEPREP Bookの作り方
+# track Bookの作り方
 ## 概要
-CODEPREPのBookはそのほとんどがMarkdownで作成できるように設計されています。  
+trackのBookはそのほとんどがMarkdownで作成できるように設計されています。  
 この文書ではBookを構成する各種ファイルの詳細について説明します。
+
+※ 
+ここで説明する仕様はCODEPREP用のブック, track用のブックの両方に対応しています。
+(一部、trackでは使用していない機能の説明も含みます。)
 
 ## 最小限のBook
 説明に先立ってまず最小限のBookの例を示します。
@@ -15,8 +19,6 @@ CODEPREPのBookはそのほとんどがMarkdownで作成できるように設計
 
 `contents`ディレクトリの下に適当なディレクトリを作成してこの2つのファイルを作成してください。
 
-注. 例の中ではマークダウンのコードブロックが`\\`\`\``のように示されています。
-
 book.yml
 ```
 title: はじめてのCODEPREP
@@ -26,7 +28,7 @@ chapters:
 ```
 
 chapter1.md
-```
+``````
 # 最初のチャプター
 チャプター定義のサンプルです。
 
@@ -36,13 +38,13 @@ chapter1.md
 
 ### main(index.html)
 
-\```
+```
 <p>Hello ${World}</p>
-\```
-
 ```
 
-この２ファイルを[Marine](README.md)を通して見ると「<p>Hello [     ]</p>」というページが表示されます。
+``````
+
+この２ファイルをMarineを通して見ると「<p>Hello [     ]</p>」というページが表示されます。
 
 以下それぞれのファイルについて説明していきます。
 
@@ -89,7 +91,7 @@ chaptersには各チャプターの定義ファイルを指定します。
 coverにはBookのカバー画像のファイルパスを指定します。  
 指定したファイルは必ずそのパスに存在しなければなりません。
 
-coverを省略してもコンパイルエラーとはなりませんが、Bookの公開までには必ず画像ファイルを用意してください。
+※ ブックカバーは[CODEPREP](https://codeprep.jp)では使用されていましたが、trackでは使用されません。
 
 ### files
 book.ymlのfilesにはすべてのチャプター、セクションで横断的に使用するファイルを指定します。  
@@ -129,7 +131,7 @@ preview: preview.html
 この場合は、指定したファイルは必ずそのパスになければなりません。
 css, scriptを使用する場合は外部ファイルとはせず、HTML内にインラインで定義してください。
 
-#### sectionを指定する(HTMLブックの場合)
+#### sectionを指定する(aliasでの指定)
 各チャプター定義ファイルのセクション定義に`alias`が定義されている場合は、その値を指定することができます。
 
 ```
@@ -139,7 +141,7 @@ preview:
 
 この場合、指定されたセクションのプレビューがブックのプレビューとして使用されます。
 
-#### chapterを指定する
+#### sectionを指定する(indexでの指定)
 チャプターとセクションのインデックスを指定して、セクションを指定することもできます。
 
 ```
@@ -149,6 +151,8 @@ preview:
 
 previewを指定しなかった場合は、最後のセクションの内容がプレビューとなります。
 remoteブック(Java, Rubyなど)の場合はセクションのソースコードがプレビューとなります。
+
+※ trackではプレビューは使用されていません。
 
 ### download
 ブックの各セクションがダウンロード可能かどうかを指定します。
@@ -173,6 +177,7 @@ Bookを解き終わるまでの目安時間を分単位で指定します。
 自動計算は穴埋め問題を基準に計算しています。
 エクササイズのあるBookでは自動計算される値と実際の目安時間が大きく乖離するのでできるだけ指定するようにしてください。
 
+※ trackではこの項目はUI上での設定項目となるので使用されません。
 
 ### env
 独自のDockerImageを使用する場合に指定します。
@@ -185,6 +190,13 @@ env:
 
 imageNameに指定できるDockerイメージ名は実行環境でサポートされているもののみです。
 新しいDockerImageを使用したい場合はご相談ください。
+
+省略時のデフォルト値は`givery/codecheck:latest`となります。
+これは多くの言語をオールインワンで含んだ巨大なDockerイメージです。
+(ただし、今後メンテナンスは予定されておらず各言語のバージョンアップには追随しません。)
+
+使用可能なDockerイメージの一覧は別途提供されます。
+
 
 ### answerSection
 各セクションで定義した`answer`をまとめたセクションを作成するかどうかを指定します。
@@ -261,7 +273,7 @@ CODEPREPではひとつのチャプターがひとつのファイルに対応し
 - remote
 
 各サブセクションはそれぞれのセクションで一度だけ定義できます。
-また、`main`と`exercise`のように同時には使用できないサブセクションもあります。
+また、`main`と`exercise`, `playground`のように同時には使用できないサブセクションもあります。
 
 ### セクションの種類
 CODEPREPのセクションには大きく次の4種類があります。
@@ -288,13 +300,13 @@ mainサブセクションの定義は見出し3(###)で「main(ファイル名)�
 
 mainサブセクションではコードブロックが必須であり、コードブロック内で一つ以上のAnswer定義が必須です。
 
-```
+``````
 ### main(index.html)
 
-\```
-<${p}>Hello World<${\/p}>
-\```
 ```
+<${p}>Hello World<${\/p}>
+```
+``````
 
 Answerは通常、`${...}`という形式で定義し、最もシンプルなケースでは{}で囲まれた文字列がそのまま正答となります。(大文字小文字を区別します。)
 
@@ -364,15 +376,15 @@ JSON内で定義できるキーは以下です。
 `${xxx}`という書式はES6やScalaでは構文として使用されています。  
 このようなケースに対応するために、prefixを定義して`$`を別の一文字に変更することができます。
 
-```
+``````
 ### main(index.html)
 
 - prefix: %
 
-\```
-<%{p}>Hello World<%{\/p}>
-\```
 ```
+<%{p}>Hello World<%{\/p}>
+```
+``````
 
 prefixに二文字以上の文字列を指定した場合でも有効となるのは最初の一文字のみです。
 
@@ -395,7 +407,7 @@ hintとtipsには機能的な差異は存在しないので用途によって使
 ### answerの定義
 answerには問題に対する解答/解説を定義します。
 
-穴埋め問題では不要ですが、エクササイズ問題では定義するようにしてください。
+穴埋め問題では不要ですが、エクササイズ問題では定義しておいた方が親切です。
 
 answerは各セクションで個別に参照することができます。
 また、Bookの最後にすべてのanswerをまとめたセクションが追加されます。
@@ -500,8 +512,8 @@ ${puts} "Hello World"
 またオプションとして以下が設定できます。
 
 - mode: 実行モード。`console`または`html`。省略時はconsole
-- build: command実行前に実行する準備のコマンド。複数指定可
 - file: 実行時に追加でサーバーにコピーするファイル。複数指定可
+- build: command実行前に実行する準備のコマンド。複数指定可
 - prepare: command, buildよりも先に実行されるコマンド。複数指定可
 - cwd: build, command実行時のワーキングディレクトリ。
   - 省略時は`/root/src`
@@ -550,29 +562,23 @@ Book定義時に実際にファイルが存在するパスは「chapter1/package
 
 通常、`@main`を使用する場合はファイル名を`shell`としてmainの内容がファイルとして実行サーバにコピーされないようにします。
 
-```
+``````
 ### main(shell)
 
-\```
+```
 ${ls}
-\```
+```
 
 ### remote
 
 - prepare: touch file1.txt
 - prepare: mkdir dir1
 - command: @main
-```
+``````
 
 この例では`touch`と`mkdir`が実行された後に`ls`が実行されますが、`touch`と`mkdir`が実行されていることはユーザにはわかりません。
 
 mainの内容が複数行ある場合は、改行毎で分割されそれぞれの行がコマンドとして実行されます。
-
-#### prepare, cwd, @mainを使用する際の注意
-現在CODEPREPの実行サーバは2種類ありますが、`prepare`、`cwd`と`@main`は新しい方の実行サーバでしかサポートされていません。
-
-新しい実行サーバを利用するためにはbook.ymlの`env/imageName`を指定します。
-ほとんどのブックが使用している標準的なDockerイメージの名前は`givery/codecheck:latest`です。
 
 #### html mode
 PHPのBookなどではコマンドの実行結果がそのままHTMLとなっている場合があります。
@@ -642,7 +648,7 @@ Section3
 
 これでも問題なく動作しますが、メンテナンス性はかなり悪くなります。(最初の方のセクションを修正してしまうとそれ以降のすべてを修正する羽目になります。)
 
-この場合 `${codeprep:section(prev)}` という関数を使用することで直前のセクションの完成した内容を参照することができます。  
+この場合 `${func:section(prev)}` という関数を使用することで直前のセクションの完成した内容を参照することができます。  
 この機能によって先の内容は以下のように書き換えることができます。
 
 Section1
@@ -652,22 +658,22 @@ Section1
 
 Section2
 ```
-${codeprep:section(prev)}
+${func:section(prev)}
 <${h2}>This is H2<${\/h2}>
 ```
 
 Section3
 ```
-${codeprep:section(prev)}
+${func:section(prev)}
 <${p}>This is p<${/p}>
 ```
 
-このcodeprep:section関数では引数として`prev`以外に以下を取ることができます。
+このfunc:section関数では引数として`prev`以外に以下を取ることができます。
 
 - 数字: 同一チャプター内のセクション番号。
-  - 例: `${codeprep:section(2)}` はセクション2の内容を参照します。
+  - 例: `${func:section(2)}` はセクション2の内容を参照します。
 - 任意の文字列: 先行するmainで定義されたaliasを検索し参照します。
-  - 例: `${codeprep:section(index1)}` は `- alias: index1` を持つmain定義を参照します。
+  - 例: `${func:section(index1)}` は `- alias: index1` を持つmain定義を参照します。
 
 いずれの場合もそのセクションが見つからない場合はコンパイルエラーとなります。
 
@@ -721,31 +727,31 @@ ${codeprep:section(prev)}
 ```
 
 ```
-${codeprep:section-before-blank(prev)}
+${func:section-before-blank(prev)}
   <ul>
     <${li}><${\/li}>
     <${li}><${\/li}>
   </ul>
-${codeprep:section-after-blank(prev)}
+${func:section-after-blank(prev)}
 ```
 
-### codeprep:mark関数
+### func:mark関数
 section-beforeやsection-afterを使用するためには何らかの検索文字列がソースコード内に必要ですが、適当な検索文字列が存在しないケースも多々あります。
-このようなケースのために`${codeprep:mark("hoge")}`という書式で検索用の文字列を埋め込むことができます。
+このようなケースのために`${func:mark("hoge")}`という書式で検索用の文字列を埋め込むことができます。
 
 ```
 $(${function}() {
-  // ${codeprep:mark("next-position")}
+  // ${func:mark("next-position")}
 })
 ```
 
 先行するセクションで上記のようにmainを定義しておけば、次のセクションでは、
 
 ```
-${codeprep:section-before(prev, "next-position")}
+${func:section-before(prev, "next-position")}
   var ws = ${new} ${WebSocket}("wss://codeprep-ws-chat.herokuapp.com/api/websocket/chat");
-  // ${codeprep:mark("next-position")}
-${codeprep:section-after(prev, "next-position")}
+  // ${func:mark("next-position")}
+${func:section-after(prev, "next-position")}
 ```
 
 のようにして、`next-position`のある行に次のコードを埋め込むことができます。
@@ -753,33 +759,33 @@ ${codeprep:section-after(prev, "next-position")}
 ちなみに上の例では`section-after`関数(検索行を含まない)の直前に検索行があるので、`section-from`(検索行を含む)を使用して以下のように書き換えても同じです。
 
 ```
-${codeprep:section-before(prev, "next-position")}
+${func:section-before(prev, "next-position")}
   var ws = ${new} ${WebSocket}("wss://codeprep-ws-chat.herokuapp.com/api/websocket/chat");
-${codeprep:section-from(prev, "next-position")}
+${func:section-from(prev, "next-position")}
 ```
 
 ただ、状況に応じて`section-after`と`section-from`を使い分けるよりも、常に`section-after`を使用して次の行が入る位置を明示した方が可読性は良くなります。
 
-`codeprep:mark`を含む行はブックの公開時には削除されますが、Marine上では表示するか削除するかを選択することができます。
+`func:mark`を含む行はブックの公開時には削除されますが、Marine上では表示するか削除するかを選択することができます。(DevMode)
 表示する場合は、その行もソースコードの一部となるので、コンパイルエラー/ランタイムエラーを避けるために対象言語のコメント書式を利用して定義してください。
 
 ### fileを参照する関数
 セクションではなく外部ファイルを参照する関数もあります。  
 こちらの関数では第一引数は外部ファイルへのパスとなります。
 
-- ${codeprep:file(filepath)}
-- ${codeprep:file-before-blank(filepath)}
-- ${codeprep:file-after-blank(filepath)}
-- ${codeprep:file-to-blank(filepath)}
-- ${codeprep:file-from-blank(filepath)}
-- ${codeprep:file-before(filepath, "検索文字列")}
-- ${codeprep:file-after(filepath, "検索文字列")}
-- ${codeprep:file-to(filepath, "検索文字列")}
-- ${codeprep:file-from(filepath, "検索文字列")}
-- ${codeprep:file-from-to(filepath, "検索文字列1", "検索文字列2")}
-- ${codeprep:file-from-before(filepath, "検索文字列1", "検索文字列2")}
-- ${codeprep:file-after-to(filepath, "検索文字列1", "検索文字列2")}
-- ${codeprep:file-after-before(filepath, "検索文字列1", "検索文字列2")}
+- ${func:file(filepath)}
+- ${func:file-before-blank(filepath)}
+- ${func:file-after-blank(filepath)}
+- ${func:file-to-blank(filepath)}
+- ${func:file-from-blank(filepath)}
+- ${func:file-before(filepath, "検索文字列")}
+- ${func:file-after(filepath, "検索文字列")}
+- ${func:file-to(filepath, "検索文字列")}
+- ${func:file-from(filepath, "検索文字列")}
+- ${func:file-from-to(filepath, "検索文字列1", "検索文字列2")}
+- ${func:file-from-before(filepath, "検索文字列1", "検索文字列2")}
+- ${func:file-after-to(filepath, "検索文字列1", "検索文字列2")}
+- ${func:file-after-before(filepath, "検索文字列1", "検索文字列2")}
 
 ### filesサブセクションでの先行セクションの参照
 filesサブセクションでも外部ファイルではなく先行するセクションを参照することができます。
@@ -872,7 +878,7 @@ TAP形式とは簡単に言うとコンソールの出力が
 - `ok `で始まる場合はテストの成功を表す。
 - `not ok `で始まる場合はテストの失敗を表す。
 
-というものです。(厳密に言うともう少し細かいルールがありますが、CODEPREPで必要としているのはこの部分だけです。)
+というものです。(厳密に言うともう少し細かいルールがありますが、trackで必要としているのはこの部分だけです。)
 
 リモートエクササイズの結果の判定では
 
@@ -917,7 +923,7 @@ RSpecやJUnitなどのテストフレームワークを使うことも可能で�
 
 - file: 1つ以上必須。ユーザが編集可能なファイルを指定します。ファイル自体は外部ファイルとして作成します。
 - hidden: 任意。ユーザから不可視のファイルを指定します。(クライアントエクササイズではおそらく使うことはありません。)
-- clientTest: 必須。Mochaで書いたテスト
+- clientTest: 必須。Mochaで書いたテストが書かれたファイル
 
 ユーザーには見えているけれど、編集はさせたくないファイルが存在する場合は`files`サブセクションで定義してください。
 
@@ -973,21 +979,22 @@ describe("セレクタ", function() {
 しかし、あらかじめ定義済みの関数をユーザに提示したいなど、編集可能な領域を制限したい場合もあるでしょう。
 この場合、
 
-- `CODEPREP_BEGIN_EDIT`
-- `CODEPREP_END_EDIT`
+- `EXCERCISE_BEGIN_EDIT`
+- `EXCERCISE_END_EDIT`
 
 というキーワードで編集可能とする領域を囲むことでその部分以外を編集不可とすることができます。
 
 ``` java
 public class Main {
   public static void main(String[] args) {
-    // CODEPREP_BEGIN_EDIT
+    // EXCERCISE_BEGIN_EDIT
     //この部分に解答コードを記述してください。
     
-    // CODEPREP_END_EDIT
+    // EXCERCISE_END_EDIT
   }
 }
 ```
 
-`CODEPREP_BEGIN_EDIT`, `CODEPREP_END_EDIT`を含む行は実行時には削除されるのでブック読者からは見えません。
+`EXCERCISE_BEGIN_EDIT`, `EXCERCISE_END_EDIT`を含む行は実行時には削除されるのでブック読者からは見えません。
 また、ひとつのファイル内に複数の編集可能領域を定義することも可能です。
+(MarineでDevModeにした場合は画面上に表示されます。)

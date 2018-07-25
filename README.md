@@ -1,13 +1,19 @@
 # Marine
 
-Book writer application for [CODEPREP](https://codeprep.jp/)
+Contents writer application for [track](https://tracks.run/)
+
+You can make all of following contents with it.
+
+- Challenge
+- Quiz
+- Book
 
 ## Prerequisite
 
 - docker
 - docker-compose
 
-## Start and Stop
+## Start
 
 ```
 docker-compose up -d
@@ -15,15 +21,10 @@ docker-compose up -d
 
 After the application started, you can access the app via `http://localhost:39000`
 
+## Stop
+
 ```
 docker-compose down
-```
-
-## How to update docker image
-If any change comes with the docker image itself, you need to remove it once for upgrading it.
-
-```
-docker rmi codeprep/marine:latest
 ```
 
 ## How to use
@@ -34,11 +35,18 @@ Following directory names are listed in dropdown on header.
 
 Choose 1 of them.
 
+## How to update application
+Using docker image is published in [DockerHub](https://hub.docker.com/r/codeprep/marine/)
+
+What you have to do is only pull latest version.
+
+```
+docker pull codeprep/marine:latest
+```
+
 ## About contents directory
 This directory is shared with docker container.
+Marine will sarech contents from this directory.
 
-The book compiler will read source code of a book from this directory.
+Checkout your content repository in this directory.
 
-Checkout your book repository in this directory.
-
-BookWriter is built as a docker image.
