@@ -50,3 +50,5 @@ Marine will sarech contents from this directory.
 
 Checkout your content repository in this directory.
 
+## ProxySetting
+If you want to use proxy for external HTTP requests, please modify [docker-compose.yml](docker-compose.yml)
