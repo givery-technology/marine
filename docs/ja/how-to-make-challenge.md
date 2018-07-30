@@ -38,29 +38,109 @@ TAPとは簡単に言えば、
 
 CLIチャレンジの場合はJavaScriptのテストフレームワークである[mocha](https://mochajs.org/)を使用してテストを記述します。
 
-
 ## track.yml
-  challengeType: ChallengeType,
-  editable: List[String] = Nil,
-  readonly: List[String] = Nil,
-  hide: List[String] = Nil,
-  testExclude: List[String] = Nil,
-  images: List[String] = Nil,
-  test: Option[String] = None,
-  allowNewFile: Boolean = false,
-  build: List[String] = Nil,
-  mainFile: Option[String] = None,
-  languages: List[String] = Nil,
-  envConfig: Option[EnvSettings] = None,
-  variables: Map[String, String] = Map.empty,
-  testcases: Option[Testcases] = None,
-  templateType: Option[CLITemplateType] = None,
-  initialize: List[String] = Nil
+基本的にチャレンジに含める内容の定義はtrack.ymlで定義します。
+track.ymlでは以下のキーを定義します。
 
-## README
+- type: string. 必須. 
+  - チャレンジの場合は`coding`固定です
+- editable: Array<string>
+  - チャレンジに含め、編集可能なファイルを指定します。ワイルドカードが使用できます。
+- readonly: Array<string>
+  - チャレンジに含め、編集不可なファイルを指定します。ワイルドカードが使用できます。
+  - 主にテストファイルをここで指定します。
+- hide: Array<string>
+  - チャレンジに含めるが、受験者からは不可視なファイルを指定します。ワイルドカードが使用できます。
+  - 主にSecretTestで使用するファイルをここで指定します。
+- testExclude: Array<string>
+  - editable, readonly, hideに指定されたファイルのうちテスト実行サーバに転送する必要のないファイルを指定します。ワイルドカードが使用できます。
+  - サンプル用のデータファイルなどテストの実行に不要なファイルをここで指定することでテスト実行のパフォーマンスが上がります。
+- images: Array<string>
+  - README.mdから参照する画像ファイルを指定します。ワイルドカードが使用できます。
+  - ここで指定されたファイルはREADME.mdから相対パスで参照できますが、Webエディタのツリー上には表示されません。
+- test: string. 必須
+  - テストの実行コマンドを指定します
+- allowNewFile: boolean
+  - Webエディタ上で新規ファイルの作成を許すかどうかを指定します。
+  - CLIチャレンジでは常にtrueにしてください。
+- build: Array<string>
+  - testで指定したコマンドの実行前に実行するビルドコマンドを指定します。(javac, makeなど)
+  - CLIチャレンジの場合はCLIテンプレートによって上書きされるため、ここでの指定は無視されます。
+- initialize: Array<string>
+  - Webエディタでチャレンジを開いた時に一度だけ実行する初期化コマンド群を指定します。
+ - mainFile: string
+   - Webエディタ上で初期表示するファイルを指定します。
+  - CLIチャレンジの場合はCLIテンプレートによって上書きされるため、ここでの指定は無視されます。
+- languages: Array<string>
+  - CLIチャレンジで使用可能な言語のリストを指定します。
+  - `all`とした場合、サポートされているすべての言語が対象となります。
+  - `languages`が指定されなかった場合、または単一言語のみが指定されていた場合は言語依存チャレンジとなります。
+- templateType: string
+  - CLIチャレンジで使用するテンプレート種別を指定します。
+  - 現在は指定できる値は`default`のみで、省略時のデフォルト値も`default`のため使用されていません。
+- envConf: hash
+  - 必要に応じて以下のサブキーを定義します。
+  - CLIチャレンジの場合はCLIテンプレートによって上書きされるため、ここでの指定は無視されます。
+  - imageName: string. テストで使用するdockerイメージ名を指定します
+  - workingDir: string. dockerイメージ内で使用するカレントディレクトリのパスを指定します。(省略時は`/root/src`になります)
+  - cacheDirs: Array<string>. Webエディタ実行中にテスト実行サーバでキャッシュするディレクトリを指定します。(Ruby, Javaのライブラリキャッシュ等)
+- variables: hash
+  - テスト実行時に設定する環境変数を指定します。
+- testcases: hash. 必須
+  - 以下のサブキーを指定します。
+  - open: number. オープンテストケースの数
+  - secret: number. シークレットテストケースの数
+
+未知のキーは無視されます。
+
+例
+```
+type: coding
+allowNewFile: true
+test: mocha
+editable:
+  - answer.md
+readonly:
+  - test/base.js
+  - test/cases.json
+hide:
+  - test/secret*
+testExclude:
+  - answer.md
+languages: all
+solution: solution.js
+variables:
+  APP_COMMAND: node solution.js
+testcases:
+  open: 8
+  secret: 8
+```
+
+## README.md
+README.mdには問題の内容をマークダウンで記述します。
+フォーマットは任意ですが、オフィシャル問題の場合はある程度テンプレート化されているのでテンプレートに従って記述するようにしてください。
+
+マークダウンの記述ではいくつかの[拡張機能](markdown-extension.md)が使用できます。
+
+README.mdはtrack.ymlに含める必要はありません。
+
+### READMEと言語
+trackではチャレンジのコンパイル時にオプションとして言語(ja, en)を指定します。
+
+このオプションによってREADMEを取り込む時のファイル選択のロジックが変わります。
+
+- `ja` -> `README_ja.md`があればそれを使用、なければ`README.md`を使用
+- `en` -> `README_en.md`があればそれを使用、なければ`README.md`を使用
+
+国際化する問題の場合は日本語と英語の両方のREADMEを用意することが望まれます。
+
+言語オプションで切り替わるのはREADMEのみでテストコード等は切り替わりません。
+このため、国際化する場合はテストコードはすべて英語で記述してください。
+(テストコード自体も日本語、英語を切り替えたい場合は別チャレンジとして作成してください。)
+
 ## openTestとsecretTest
 openTestとはテストコード、テストケースともにユーザに可視となっているテストです。
-それに対してsecretTestはユーザの目に触れることはできません。
+それに対してsecretTestはユーザの目に触れることはありません。
 
 track.ymlで言えば
 
@@ -83,17 +163,147 @@ track.ymlで言えば
 
 openTest、secretTest共に必須ではなく、openTestのみでsecretTestなしというチャレンジは作成することができますが、openTest, secretTestいずれもなし、というチャレンジは作成することができません。
 
-
 実行されるopenTest, secretTestの数はtrack.ymlの`testcases`に定義する必要があります。
 ここで定義された数字と実際に実行されたテストケース数が異なる場合はtrack上で警告となります。
 
-## answer.mdとsolution.md
+Marineでは通常、SecretTestはWebエディタ上に表示されませんが、DevModeにチェックを入れた場合は表示されます。
 
-## testについて
+## answer.md
+trackではプログラミング問題ごとに、受験者に
+
+- 実装の簡単な説明
+- 難しい点はなんだったか？
+
+などを自由記述で記述させることができます。(これを書くための時間はプログラミング問題の制限時間には含まれません)
+answer.mdはこの自由記述のためのテンプレートです。
+
+例
+
+```
+## 実装内容の詳細を記述してください
+
+## 問題に対する疑問点等あれば記述してください。
+```
+
+answer.mdが存在しない場合は白紙のテンプレートがユーザに提示されます。  
+answer.mdはtrack.ymlに含める必要はありません。
+
+## solution.md
+solution.mdは出題者が問題の解き方について、簡単な説明を記述するファイルです。
+solution.mdの内容は企業ユーザ(出題側)には提示されますが、受験者が目にすることはありません。
+
+solution.mdは必須ではありません。(例えばFizzBuzzのような超有名問題では省略しても問題ありません。)
+solution.mdはtrack.ymlに含める必要はありません。
 
 ## BEGIN_CHALLENGEとEND_CHALLENGE
+track.ymlの`editable`または`readonly`で指定したファイルに`BEGIN_CHALLENGE`, `END_CHALLENGE`という対の行が指定されている場合、その範囲はチャレンジ生成時に削除されます。
+
+ただし、MarineでDevModeにチェックした場合はこの部分も残されます。
+
+例
+
+```
+// 足し算を実行するメソッドを実装しなさい
+function add(a, b) {
+  // BEGIN_CHALLENGE
+  return a + b;
+  // END_CHALLENGE
+}
+```
+
+上記の場合、受験者の環境では関数`add`の中身は空になっているので受験者自身が実装しない限りエラーとなりますが、MarineのDevModeでは実装が含まれているためテストを実行して結果を確認することができます。
+
+## DockerImages
+現在用意されている汎用Dockerイメージは以下のとおりです。
+これらのイメージは[DockerHub](https://hub.docker.com/u/givery/dashboard/)で公開されています。
+
+- Perl5: givery/track-perl-5
+- Python3.6: givery/track-python-3.6
+- Python2.7: givery/track-python-2.7
+- C#: givery/track-mono-5.2
+- Scala: givery/track-scala-2.12
+- PHP: givery/track-php-7.2
+- Go: givery/track-go-1.10
+- NodeJS: givery/track-nodejs-8
+- Java: givery/track-java-8
+- Ruby givery/track-ruby-2.5
+- C/C++: givery/track-base2
+
+いずれの環境にもNodeJSとmochaはインストールされています。
 
 ## cli-templates
-## DockerImages
-## codecheck CLI
-## 無限ループと大量アウトプット対策
+CLIチャレンジのlanguagesで指定できる言語は以下のとおりです。(`all`を除く)
+
+- c
+- c++
+- c#
+- java
+- nodejs
+- php
+- python
+- python3
+- scala
+- perl
+- ruby
+- go
+
+それぞれの言語を指定した場合、対応するDockerイメージでテストが実行されます。
+Dockerイメージとcli-templateを用意すれば、対応言語を増やすことができます。
+
+## CLIチャレンジでのテストの書き方
+CLIチャレンジではユーザの作成したアプリケーションの実行方法は`APP_COMMAND`という環境変数に定義されています。
+
+ここまでの枠組みをおさらいしておくと、
+
+- テストの実行はTAP形式で結果を出力するテストフレームワークで実行する必要がある
+- すべての汎用DockerイメージにはNodeJSとmochaがインストールされている
+
+ということで、テストの実装は
+
+- mochaの中から`APP_COMMAND`で定義されたコマンドをキック
+- その際に引数または標準入力経由で入力パラメータを渡す
+- プロセスから標準出力を取得して結果を検証
+
+とすることで実現できます。
+
+ただし、これをチャレンジ毎に毎回実装するのはしんどいのでNodeJSのライブラリとして[codecheck](https://www.npmjs.com/package/codecheck)というユーティリティライブラリが用意されています。
+
+典型的な使い方は以下のようになります。
+
+``` javascript
+"use strict";
+
+const expect = require("chai").expect;
+// codecheckのファサードを取得
+const codecheck = require("codecheck");
+// consoleApp関数にコマンド("node main.js"など、空白区切り可)を指定してプロセスラッパーを取得
+const app = codecheck.consoleApp(process.env.APP_COMMAND);
+
+// 必要に応じてオプションを設定
+// app.consoleOut(false); //consoleOutをfalseにするとコマンドの標準出力がテスト実行のコンソールに出力されなくなる
+// app.storStdMax(10000); //storeStdMaxは配列として保持する標準出力の最大行数。デフォルトは1000行
+
+describe("足し算アプリケーションのテスト", () => {
+  it ("1 + 1 = 2", () => {
+    // codecheck関数に引数の配列を渡してコマンド実行。返り値はPromise<Result>
+    return app.codecheck(["1", "2"]).then(result => {
+      // result#codeはアプリケーションのexitコード
+      expect(result.code).to.equal(0, "CLIアプリケーションはステータスコード0で終了しなければならない。");
+      // result#stdoutは標準出力の配列
+      expect(result.stdout[0]).to.equal("2", "1 + 1 = 2");
+    });
+  })
+
+  it ("10 + 5 = 15", () => {
+    return app.codecheck(["10", "5"]).then(result => {
+      expect(result.code).to.equal(0, "CLIアプリケーションはステータスコード0で終了しなければならない。");
+      expect(result.stdout[0]).to.equal("15", "10 + 5 = 15");
+    });
+  })
+});
+
+```
+
+codecheckはtrackの前身である旧サービス時代に作成されたもので、ここでの目的のためには不要な機能が多々含まれます。
+旧サービスをクローズするタイミングで大幅に改訂してその際にリファレンスも整理する予定です。
+
