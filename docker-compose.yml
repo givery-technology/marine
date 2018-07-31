@@ -1,5 +1,5 @@
 writer:
-  image: codeprep/marine:latest
+  image: givery/marine:latest
   ports:
     - "39000:9000"
   volumes:
