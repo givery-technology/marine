@@ -36,7 +36,7 @@ Following directory names are listed in dropdown on header.
 Choose 1 of them.
 
 ## How to update application
-Using docker image is published in [DockerHub](https://hub.docker.com/r/codeprep/marine/)
+Using docker image is published in [DockerHub](https://hub.docker.com/r/givery/marine/)
 
 What you have to do is only pull latest version.
 
