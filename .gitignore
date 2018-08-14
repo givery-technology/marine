@@ -1,2 +1,2 @@
-contents/*
-!contents/sample/*
+/contents/*
+!/contents/sample
