@@ -41,7 +41,7 @@ Using docker image is published in [DockerHub](https://hub.docker.com/r/givery/m
 What you have to do is only pull latest version.
 
 ```
-docker pull codeprep/marine:latest
+docker pull givery/marine:latest
 ```
 
 ## About contents directory
