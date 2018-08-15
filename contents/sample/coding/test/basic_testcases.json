@@ -1,0 +1,112 @@
+[
+   {
+      "input": "in/basic/00_sample1.in",
+      "output": "out/basic/00_sample1.out",
+      "description": "入力される整数が3個で、整数の最大値が5であるときに正答できる"
+   },
+   {
+      "input": "in/basic/00_sample2.in",
+      "output": "out/basic/00_sample2.out",
+      "description": "入力される整数が8個で、整数の最大値が83であるときに正答できる"
+   },
+   {
+      "input": "in/basic/10_small11.in",
+      "output": "out/basic/10_small11.out",
+      "description": "入力される整数が10個で、整数の最大値が10であるときに正答できる"
+   },
+   {
+      "input": "in/basic/10_small22.in",
+      "output": "out/basic/10_small22.out",
+      "description": "入力される整数が10個で、整数の最大値が10であるときに正答できる"
+   },
+   {
+      "input": "in/basic/10_small33.in",
+      "output": "out/basic/10_small33.out",
+      "description": "入力される整数が10個で、整数の最大値が10であるときに正答できる"
+   },
+   {
+      "input": "in/basic/10_small44.in",
+      "output": "out/basic/10_small44.out",
+      "description": "入力される整数が10個で、整数の最大値が10であるときに正答できる"
+   },
+   {
+      "input": "in/basic/20_medium11.in",
+      "output": "out/basic/20_medium11.out",
+      "description": "入力される整数が1000個で、整数の最大値が99804であるときに正答できる"
+   },
+   {
+      "input": "in/basic/20_medium22.in",
+      "output": "out/basic/20_medium22.out",
+      "description": "入力される整数が1000個で、整数の最大値が99881であるときに正答できる"
+   },
+   {
+      "input": "in/basic/20_medium33.in",
+      "output": "out/basic/20_medium33.out",
+      "description": "入力される整数が1000個で、整数の最大値が99775であるときに正答できる"
+   },
+   {
+      "input": "in/basic/20_medium44.in",
+      "output": "out/basic/20_medium44.out",
+      "description": "入力される整数が1000個で、整数の最大値が99885であるときに正答できる"
+   },
+   {
+      "input": "in/basic/30_large11.in",
+      "output": "out/basic/30_large11.out",
+      "description": "入力される整数が100000個で、整数の最大値が999986049であるときに正答できる"
+   },
+   {
+      "input": "in/basic/30_large22.in",
+      "output": "out/basic/30_large22.out",
+      "description": "入力される整数が100000個で、整数の最大値が999985129であるときに正答できる"
+   },
+   {
+      "input": "in/basic/30_large33.in",
+      "output": "out/basic/30_large33.out",
+      "description": "入力される整数が100000個で、整数の最大値が999990053であるときに正答できる"
+   },
+   {
+      "input": "in/basic/30_large44.in",
+      "output": "out/basic/30_large44.out",
+      "description": "入力される整数が100000個で、整数の最大値が999997615であるときに正答できる"
+   },
+   {
+      "input": "in/basic/40_unbalanced11.in",
+      "output": "out/basic/40_unbalanced11.out",
+      "description": "入力される整数が100000個で、整数の最大値が3であるときに正答できる"
+   },
+   {
+      "input": "in/basic/40_unbalanced22.in",
+      "output": "out/basic/40_unbalanced22.out",
+      "description": "入力される整数が100000個で、整数の最大値が3であるときに正答できる"
+   },
+   {
+      "input": "in/basic/40_unbalanced33.in",
+      "output": "out/basic/40_unbalanced33.out",
+      "description": "入力される整数が100000個で、整数の最大値が3であるときに正答できる"
+   },
+   {
+      "input": "in/basic/40_unbalanced44.in",
+      "output": "out/basic/40_unbalanced44.out",
+      "description": "入力される整数が100000個で、整数の最大値が3であるときに正答できる"
+   },
+   {
+      "input": "in/basic/40_unbalanced55.in",
+      "output": "out/basic/40_unbalanced55.out",
+      "description": "入力される整数が100000個で、整数の最大値が3であるときに正答できる"
+   },
+   {
+      "input": "in/basic/40_unbalanced66.in",
+      "output": "out/basic/40_unbalanced66.out",
+      "description": "入力される整数が100000個で、整数の最大値が3であるときに正答できる"
+   },
+   {
+      "input": "in/basic/40_unbalanced77.in",
+      "output": "out/basic/40_unbalanced77.out",
+      "description": "入力される整数が100000個で、整数の最大値が3であるときに正答できる"
+   },
+   {
+      "input": "in/basic/40_unbalanced88.in",
+      "output": "out/basic/40_unbalanced88.out",
+      "description": "入力される整数が100000個で、整数の最大値が3であるときに正答できる"
+   }
+]
