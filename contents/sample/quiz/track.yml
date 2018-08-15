@@ -1,0 +1,6 @@
+title: チュートリアル用サンプルチャレンジ
+type: quiz
+questions:
+    - questions.md
+images:
+    - assets/*
