@@ -124,7 +124,7 @@ README.mdには問題の内容をマークダウンで記述します。
 
 README.mdはtrack.ymlに含める必要はありません。
 
-### READMEと言語
+### 国際化対応
 trackではチャレンジのコンパイル時にオプションとして言語(ja, en)を指定します。
 
 このオプションによってREADMEを取り込む時のファイル選択のロジックが変わります。
@@ -134,9 +134,23 @@ trackではチャレンジのコンパイル時にオプションとして言語
 
 国際化する問題の場合は日本語と英語の両方のREADMEを用意することが望まれます。
 
-言語オプションで切り替わるのはREADMEのみでテストコード等は切り替わりません。
-このため、国際化する場合はテストコードはすべて英語で記述してください。
-(テストコード自体も日本語、英語を切り替えたい場合は別チャレンジとして作成してください。)
+言語オプションで切り替わるのはREADMEのみでテストコード等は切り替わりませんが、言語オプションはテスト実行時に環境変数`CHALLENGE_LANGUAGE`で参照できます。
+
+この環境変数を利用すればテストコード内でメッセージを切り替えることも可能になります。
+
+mochaで外部jSONファイルからtestcaseを読み込んで実行する例
+```
+const lang = process.env.CHALLENGE_LANGUAGE;
+const testcases = require("./testcases.json");
+
+testcases.forEach(case => {
+  const title = case.title[lang];
+  it(title, () => {
+    ...
+  });
+});
+
+```
 
 ## openTestとsecretTest
 openTestとはテストコード、テストケースともにユーザに可視となっているテストです。
