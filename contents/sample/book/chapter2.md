@@ -53,6 +53,9 @@ ${puts} "Hello World!"
 ### hint
 Rubyを使用するセクションを作成する際にはDockerイメージとして`givery/track-ruby-2.5`を使用します。
 
+### env
+
+- imageName: givery/track-ruby-2.5
 
 ##　Pythonで「Hello World!」
 Pythonで「Hello World!」を出力してみましょう。
@@ -72,6 +75,10 @@ ${print}("Hello World!")
 
 ### remote
 - command: python main.py
+
+### env
+
+- imageName: givery/track-python-3.6
 
 ### hint
 Python(Ptyhon3)を使用するセクションを作成する際にはDockerイメージとして`givery/track-python-3.6`を使用します。
@@ -111,6 +118,10 @@ Javaを使用するセクションを作成する際にはDockerイメージと�
 - build: javac Main.java
 - command: java Main
 
+### env
+
+- imageName: givery/track-java-8
+
 ## シェルで「Hello World!」
 シェルコマンドで「Hello World!」を出力してみましょう。
 
@@ -132,6 +143,10 @@ ${echo} "Hello, World!"
 ### remote
 
 - command: @main
+
+### env
+
+- imageName: givery/track-python-3.6
 
 ### hint
 シェルコマンドはどのDockerイメージでも動作しますが、ubuntuベースの`givery/track-python-3.6`を使用することをおすすめします。
