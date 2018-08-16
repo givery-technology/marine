@@ -124,7 +124,7 @@ README.mdには問題の内容をマークダウンで記述します。
 
 README.mdはtrack.ymlに含める必要はありません。
 
-### 国際化対応
+## 国際化対応
 trackではチャレンジのコンパイル時にオプションとして言語(ja, en)を指定します。
 
 このオプションによってREADMEを取り込む時のファイル選択のロジックが変わります。
@@ -139,6 +139,7 @@ trackではチャレンジのコンパイル時にオプションとして言語
 この環境変数を利用すればテストコード内でメッセージを切り替えることも可能になります。
 
 mochaで外部jSONファイルからtestcaseを読み込んで実行する例
+
 ```
 const lang = process.env.CHALLENGE_LANGUAGE;
 const testcases = require("./testcases.json");
