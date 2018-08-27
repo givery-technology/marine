@@ -1,66 +1,133 @@
-# クイズセクションの作り方
-このセクションではチャレンジのクイズと同じような選択問題やプログラムコード以外の穴埋め問題の作成の仕方を説明します。
+# エクササイズの作り方
+このセクションではリモート及びフロントエンドのエクササイズの作成の仕方を説明します。
 
-## 単一選択問題を作成する
-右の設問に答えなさい。
-
----
-単一選択問題を作成するには`mcq`というセクションに正解が一つだけ定義されたクイズを定義します。
-クイズの定義方法はhow-to-make-quiz.mdを参照してください。
-
-
-### mcq
-`1 + 1`は？
-
-- [ ] 0
-- [ ] 1
-- [x] 2
-- [ ] 3
-
-## 複数選択問題を作成する
-右の設問に答えなさい。
+## リモートエクササイズを作成する
+引数`name`をとり、`Hello [name]`を返す関数を作成しなさい。
 
 ---
-複数選択問題を作成するには`mcq`というセクションに正解が複数定義されたクイズを定義します。
-クイズの定義方法はhow-to-make-quiz.mdを参照してください。
+リモートエクササイズを作成するには`exercise`セクションに`mode: remote`と、ユーザに編集させるファイルとテストを指定します。
 
+テストでは`ok xxxxx` または`not ok xxxxxx`という行が複数出力されるようにしてください。
+テストの実行によって標準出力が以下の条件を満たす場合にクリアと判定されます。
 
-### mcq
-次のうちプログラミング言語は？
+- コンパイルエラー、または実行時エラーになっていない
+- `ok `で始まる行が1つ以上ある
+- `not ok `で始まる行がない
 
-- [x] PHP
-- [ ] Git
-- [x] Ruby
-- [ ] Docker
+### exercise
 
-## マークダウン内の穴埋め問題を定義する
-右の設問に答えなさい。
+- build: javac -J-Duser.language=ja *.java
+- file: [Main.java](chapter5/Section1_Main.java)
+- hidden: [Test.java](chapter5/Section1_Test.java)
+- mode: remote
+- command: java Test
 
----
-マークダウン内での穴埋め問題を作成するには`fib`というセクションに穴埋めを含むマークダウンを定義します。
+### env
 
-### fib
-
-1 + 1 は ${2}です。
+- imageName: givery/track-nodejs-8
 
 ### hint
-場合によってはjQueryのコードをコードブロック内で示すなど、マークダウンの文章中で`$`というキーワードを使いたい場合があるかもしれません。
-`fib`セクションでは`prefix`を定義することはできませんが、実は`fib`セクションは内部的に`main`セクションに変換されるので、`main`セクションを使って定義することもできます。
+`ok xxxx`, `not ok xxxxx`という書式は[TAP](https://testanything.org/)というテストプロトコルに基づいたものです。
 
-`````````
-### main(question.md)
+TAPをサポートしたテストフレームワークを使えばもっと簡単にテストを作成することができますが、ライブラリへの依存度が高まることと現状全てのDockerイメージにテストフレームワークがプリインストールされているわけではないことから、自力で結果を出力する方式を取ることが多いです。
 
-- prefix: %
+ユーザ要件が固まれば、方式を整備してもう少しエクササイズを簡単に作成できるようになるかもしれません。
 
-``````
-idという要素を持つjQueryのセレクタを完成させなさい。
+## リモートエクササイズの注意点
+整数除算を行うメソッド`divide`を実装しなさい。
+ただし、除数(`b`)が0の場合の返り値は0とします。
 
-```
-var result = $("%{#id}");
-```
+---
+前セクションで説明したとおり、テストの判定は
 
-``````
-`````````
+- コンパイルエラー、または実行時エラーになっていない
+- `ok `で始まる行が1つ以上ある
+- `not ok `で始まる行がない
 
-この場合、`main`に指定するファイル名は`question.md`としてください。
-(マークダウンのコードブロック内にマークダウンのコードブロックを記述する場合は、外側のバッククォートの数を4つ以上重ねます。これはマークダウンの仕様です。)
+の3つの条件を満たすことです。
+
+このため、実行時エラーをキャッチした際に`not ok`の出力を忘れると、すべてのテストをパスしていないにも関わらずクリアとなってしまうことがありえます。
+
+実行時エラーが発生すると以降のテストが走らなくなるため、極力実行時エラーはテスト内で処理した方が良いのですが、不正にクリアとならないようにこの点には注意が必要です。
+
+
+### exercise
+
+- build: javac -J-Duser.language=ja *.java
+- file: [Main.java](chapter5/Section2_Main.java)
+- hidden: [Test.java](chapter5/Section2_Test.java)
+- mode: remote
+- command: java Test
+
+### env
+
+- imageName: givery/track-nodejs-8
+
+## Rubyエクササイズの例
+整数除算を行うメソッド`divide`を実装しなさい。
+ただし、除数(`b`)が0の場合の返り値は0とします。
+
+### exercise
+
+- file: [main.rb](chapter5/Section3_main.rb)
+- hidden: [test.rb](chapter5/Section3_test.rb)
+- mode: remote
+- command: ruby test.rb
+
+### env
+
+- imageName: givery/track-ruby-2.5
+
+## Pythonエクササイズの例
+整数除算を行うメソッド`divide`を実装しなさい。
+ただし、除数(`b`)が0の場合の返り値は0とします。
+
+### exercise
+
+- file: [main.py](chapter5/Section4_main.py)
+- hidden: [test.py](chapter5/Section4_test.py)
+- mode: remote
+- command: python3 test.py
+
+### env
+
+- imageName: givery/track-python-3.6
+
+## フロントエンドエクササイズの作り方
+足し算を行うメソッド`add`を実装しなさい。
+
+---
+フロントエンドエクササイズを作成するには`exercise`セクションに`mode: client`と、ユーザに編集させるファイルを指定します。
+(ユーザに編集させたくないファイルは`files`セクションで指定します。)
+
+テストコードは[mocha](https://mochajs.org/)と[chai](http://www.chaijs.com/)を使って記述することができ、`exercise`セクションに`test`というキーで指定します。(mochaとchai、およびテストのjsは自動的にindex.htmlに差し込まれます。)
+
+フロントエンドテストではただ単にユニットテストを実行するだけでなく、同時にindex.htmlでの表示やインタラクションの変化も同時にユーザに提示することができます。
+(この問題の場合に保存後に「計算」ボタンをクリックして動作を確認することができます。)
+
+
+### files
+- [index.html](chapter5/Section5_index.html)
+
+### exercise
+- mode: client
+- file: [main.js](chapter5/Section5_main.js)
+- test: chapter5/Section5_test.js
+
+## コードの一部のみ編集可能にする
+前セクションの例では、`main.js`の下部にはボタンクリック時の処理が記述されていました。
+この部分はユーザに変更されたくはない内容です。
+
+この場合、ファイル中に`EXERCISE_BEGIN_EDIT`, `EXERCISE_END_EDIT`という文字列を含む行を挿入することで編集可能な範囲を制限することができます。
+
+
+### files
+- [index.html](chapter5/Section5_index.html)
+
+### exercise
+- mode: client
+- file: [main.js](chapter5/Section6_main.js)
+- test: chapter5/Section5_test.js
+
+### hint
+リモートエクササイズでも同様に`EXERCISE_BEGIN_EDIT`, `EXERCISE_END_EDIT`を指定することによって編集可能範囲をせいげんできます。
