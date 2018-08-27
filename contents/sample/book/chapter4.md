@@ -189,6 +189,7 @@ ${func:section-after(prev, "next-position")}
 
 - prefix: %
 
+
 ```
 %{func:section-before(prev, "next-position")}
   $("#calc").%{click}(function() {
