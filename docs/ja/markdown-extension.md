@@ -43,3 +43,5 @@ var a = 1;
 ### MathJax
 Markdown中で[MathJax](https://www.mathjax.org/)を使用することができます。
 MathJaxの文法についてはMathJaxのドキュメントを参照してください。
+
+(注意) MathJaxの括り文字には`\\( 〜 )\\`を使用してください。`$`はデフォルトの穴埋めの指定文字となっているため使用できません。
