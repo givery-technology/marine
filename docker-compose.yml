@@ -4,7 +4,3 @@ writer:
     - "39000:9000"
   volumes:
     - $PWD/contents:/opt/docker/contents
-  # If you want to use proxy for external HTTP request, define following env vars.
-  # environment:  
-  #   - HTTP_PROXY_HOST=xxxx
-  #   - HTTP_PROXY_PORT=0000
