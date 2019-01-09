@@ -293,44 +293,7 @@ CLIチャレンジではユーザの作成したアプリケーションの実�
 
 ただし、これをチャレンジ毎に毎回実装するのはしんどいのでNodeJSのライブラリとして[codecheck](https://www.npmjs.com/package/codecheck)というユーティリティライブラリが用意されています。
 
-典型的な使い方は以下のようになります。
-
-``` javascript
-"use strict";
-
-const expect = require("chai").expect;
-// codecheckのファサードを取得
-const codecheck = require("codecheck");
-// consoleApp関数にコマンド("node main.js"など、空白区切り可)を指定してプロセスラッパーを取得
-const app = codecheck.consoleApp(process.env.APP_COMMAND);
-
-// 必要に応じてオプションを設定
-// app.consoleOut(false); //consoleOutをfalseにするとコマンドの標準出力がテスト実行のコンソールに出力されなくなる
-// app.storStdMax(10000); //storeStdMaxは配列として保持する標準出力の最大行数。デフォルトは1000行
-
-describe("足し算アプリケーションのテスト", () => {
-  it ("1 + 1 = 2", () => {
-    // codecheck関数に引数の配列を渡してコマンド実行。返り値はPromise<Result>
-    return app.codecheck(["1", "2"]).then(result => {
-      // result#codeはアプリケーションのexitコード
-      expect(result.code).to.equal(0, "CLIアプリケーションはステータスコード0で終了しなければならない。");
-      // result#stdoutは標準出力の配列
-      expect(result.stdout[0]).to.equal("2", "1 + 1 = 2");
-    });
-  })
-
-  it ("10 + 5 = 15", () => {
-    return app.codecheck(["10", "5"]).then(result => {
-      expect(result.code).to.equal(0, "CLIアプリケーションはステータスコード0で終了しなければならない。");
-      expect(result.stdout[0]).to.equal("15", "10 + 5 = 15");
-    });
-  })
-});
-
-```
-
-codecheckはtrackの前身である旧サービス時代に作成されたもので、ここでの目的のためには不要な機能が多々含まれます。
-旧サービスをクローズするタイミングで大幅に改訂してその際にリファレンスも整理する予定です。
+このライブラリがどのように使えるかは[how-to-use-codecheck.md](how-to-use-codecheck.md)を参照してください。
 
 ## templateType
 CLIチャレンジではtrack.ymlに`templateType`を指定することで、言語切り替えをした際に最初に表示されるテンプレートファイルを切り替えることができます。
