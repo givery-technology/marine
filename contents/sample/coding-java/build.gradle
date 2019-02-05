@@ -1,0 +1,17 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+}
+
+test {
+    def index = 1
+    afterTest { desc, result ->
+        def str = result.resultType == org.gradle.api.tasks.testing.TestResult.ResultType.SUCCESS ? "ok" : "not ok"
+        logger.quiet "${str} ${index++} ${desc}"
+    }
+}

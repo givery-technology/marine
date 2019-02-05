@@ -1,0 +1,20 @@
+type: coding
+title: JUNIT sample
+allowNewFile: true
+test: gradle cleanTest test -q
+readonly:
+  - src/test/java/track/BasicTest.java
+  - build.gradle
+hidden:
+  - src/test/java/track/SecretTest.java
+editable:
+  - src/main/java/track/.java
+main: src/main/java/track/FizzBuzz.java
+testcases:
+  open: 5
+  secret: 1
+envConf:
+  imageName: givery/track-java-8
+  cacheDirs:
+    - /root/.m2
+    - /root/.gradle
