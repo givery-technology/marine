@@ -8,7 +8,7 @@ readonly:
 hidden:
   - src/test/java/track/SecretTest.java
 editable:
-  - src/main/java/track/.java
+  - src/main/java/track/FizzBuzz.java
 main: src/main/java/track/FizzBuzz.java
 testcases:
   open: 5
