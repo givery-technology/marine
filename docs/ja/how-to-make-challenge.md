@@ -245,11 +245,11 @@ function add(a, b) {
 - Perl5: givery/track-perl-5
 - Python3.6: givery/track-python-3.6
 - Python2.7: givery/track-python-2.7
-- C#: givery/track-mono-5.2
+- C#: givery/track-mono-5
 - Scala: givery/track-scala-2.12
 - PHP: givery/track-php-7.2
 - Go: givery/track-go-1.10
-- NodeJS: givery/track-nodejs-8
+- NodeJS: givery/track-nodejs-10
 - Java: givery/track-java-8
 - Ruby givery/track-ruby-2.5
 - C/C++: givery/track-base2

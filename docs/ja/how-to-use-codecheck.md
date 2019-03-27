@@ -40,6 +40,7 @@ settings.jsonでは以下のキーが定義できます。
 - timeout: ひとつのテストケースにい対するタイムアウトの時間をミリ秒単位で指定します。省略時のデフォルトは`6000`です。
 - baseDirectory: testcases.jsonのベースディレクトリを指定します。省略時のデフォルトは`test`です。
 - language: testcase.jsonで使用する言語を指定します。省略時のデフォルトは`ja`です。
+- eps: 小数の許容誤差。例えばepsの値が`0.00001`だった場合、トークンの比較時に正解が`1.0`であっても`1.0000099`などの値(正解+/-eps未満の値)は正解となります。
 
 サンプル
 ```
@@ -107,7 +108,7 @@ suffix付きのdescriptionはsettings.json#languageの設定に応じて選択�
 ``` javascript
 const codecheck = require("codecheck");
 
-const language = process.env.LANGUAGE || "ja"; // Challengeの言語設定は環境変数`LANGUAGE`で取得できます。
+const language = process.env.CHALLENGE_LANGUAGE || "ja"; // Challengeの言語設定は環境変数`CHALLENGE_LANGUAGE`で取得できます。
 const appCommand = process.env.APP_COMMAND; // 受験者の作成したアプリの実行コマンドは環境変数`APP_COMMAND`で取得できます。
 
 const settings = require("./settings.json"); // settings.jsonを読み込み
@@ -154,7 +155,7 @@ judgeアプリケーションは内部で入力パラメータとユーザ出力
   - エラーメッセージを標準エラー出力に出力
   - exit_code 0以外でアプリを終了
 
-エラーメッセージの国際化が必要な場合はjudgeアプリケーション内で環境変数`LANGUAGE`を読んでください。
+エラーメッセージの国際化が必要な場合はjudgeアプリケーション内で環境変数`CHALLENGE_LANGUAGE`を読んでください。
 
 ## judgeアプリケーションの開発言語
 受験者にjudgeのソースコード自体が見えても問題ない場合はNodeJSで作成して問題ありません。  
@@ -227,3 +228,5 @@ async function verifyStdout(testcase, inputData, outputData) {
 testRunner.verifyStdout = verifyStdout; // メソッドの差し替え
 testRunner.runAll(testcases); // TestRunnerの実行
 ```
+
+注) 上記サンプルはsettings.jsonで`eps`をサポートしたことにより標準機能のみで実現できるようになりましたが、カスタマイズのサンプルとして掲載しています。
