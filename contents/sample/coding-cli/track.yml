@@ -1,32 +1,29 @@
 type: coding
-
 allowNewFile: true
 test: mocha
 editable:
-  - answer.md
 readonly:
   - test/**/basic/*.*
   - test/*basic*
   - test/settings.json
-  - test/test_*.js
-testExclude:
-  - answer.md
 hide:
-  - test/in/secret/*.in
-  - test/out/secret/*.out
+  - test/**/secret/*.*
   - test/*secret*
+
+templateType: stdin
+
 testcases:
   open: 22
   secret: 22
 
-languages: all
+evaluationPoint:
+  "基本実装" : "与えられた数列の最小値、最大値を判定するプログラムとソートアルゴリズムを正しく実装することができます。比較演算子を用いた数値比較、小さい値からのソートプログラム、文字列への変換とデータの連結という基本的なプログラミング能力を持つことがわかります。"
+  "Basic Case" : "Explain about what kind of programming skills needs."
+  "中規模なデータ入力を扱う実装" : "解答する上で必要なプログラミングスキルや解法等を記載致します。"
+  "Medium Case" : "Explain about what kind of programming skills needs."
+  "大規模なデータ入力を扱う実装" : "解答する上で必要なプログラミングスキルや解法等を記載致します。"
+  "Large Case" : "Explain about what kind of programming skills needs."
+  "アンバランスな入力を扱う実装" : "解答する上で必要なプログラミングスキルや解法等を記載致します。"
+  "Unbalanced Case" : "Explain about what kind of programming skills needs."
 
-## Writer           名無し
-## Abstract         ソートして整数を文字列として変換して連結する
-## Expected scores  満点
-## Complexity       O(n (log n + log max(a)))
-sample: solution.cpp
-build:
-    - c++ -std=c++11 -o solution solution.cpp
-variables:
-  APP_COMMAND: ./solution
+languages: all

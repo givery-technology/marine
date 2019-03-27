@@ -2,111 +2,133 @@
    {
       "input": "in/basic/00_sample1.in",
       "output": "out/basic/00_sample1.out",
-      "description": "入力される整数が3個で、整数の最大値が5であるときに正答できる"
+      "description_en": "[Basic Case] The number of integers is 3 and the max of them is 5",
+      "description": "[基本実装] 入力される整数が3個で、整数の最大値が5であるときに正答できる"
    },
    {
       "input": "in/basic/00_sample2.in",
       "output": "out/basic/00_sample2.out",
-      "description": "入力される整数が8個で、整数の最大値が83であるときに正答できる"
+      "description_en": "[Basic Case] The number of integers is 8 and the max of them is 83",
+      "description": "[基本実装] 入力される整数が8個で、整数の最大値が83であるときに正答できる"
    },
    {
-      "input": "in/basic/10_small11.in",
-      "output": "out/basic/10_small11.out",
-      "description": "入力される整数が10個で、整数の最大値が10であるときに正答できる"
+      "input": "in/basic/10_small1.in",
+      "output": "out/basic/10_small1.out",
+      "description_en": "[Basic Case] The number of integers is 10 and the max of them is 10",
+      "description": "[基本実装] 入力される整数が10個で、整数の最大値が10であるときに正答できる"
    },
    {
-      "input": "in/basic/10_small22.in",
-      "output": "out/basic/10_small22.out",
-      "description": "入力される整数が10個で、整数の最大値が10であるときに正答できる"
+      "input": "in/basic/10_small2.in",
+      "output": "out/basic/10_small2.out",
+      "description_en": "[Basic Case] The number of integers is 10 and the max of them is 10",
+      "description": "[基本実装] 入力される整数が10個で、整数の最大値が10であるときに正答できる"
    },
    {
-      "input": "in/basic/10_small33.in",
-      "output": "out/basic/10_small33.out",
-      "description": "入力される整数が10個で、整数の最大値が10であるときに正答できる"
+      "input": "in/basic/10_small3.in",
+      "output": "out/basic/10_small3.out",
+      "description_en": "[Basic Case] The number of integers is 10 and the max of them is 10",
+      "description": "[基本実装] 入力される整数が10個で、整数の最大値が10であるときに正答できる"
    },
    {
-      "input": "in/basic/10_small44.in",
-      "output": "out/basic/10_small44.out",
-      "description": "入力される整数が10個で、整数の最大値が10であるときに正答できる"
+      "input": "in/basic/10_small4.in",
+      "output": "out/basic/10_small4.out",
+      "description_en": "[Basic Case] The number of integers is 10 and the max of them is 10",
+      "description": "[基本実装] 入力される整数が10個で、整数の最大値が10であるときに正答できる"
    },
    {
-      "input": "in/basic/20_medium11.in",
-      "output": "out/basic/20_medium11.out",
-      "description": "入力される整数が1000個で、整数の最大値が99804であるときに正答できる"
+      "input": "in/basic/20_medium1.in",
+      "output": "out/basic/20_medium1.out",
+      "description_en": "[Medium Case] The number of integers is 1000 and the max of them is 99804",
+      "description": "[中規模なデータ入力を扱う実装] 入力される整数が1000個で、整数の最大値が99804であるときに正答できる"
    },
    {
-      "input": "in/basic/20_medium22.in",
-      "output": "out/basic/20_medium22.out",
-      "description": "入力される整数が1000個で、整数の最大値が99881であるときに正答できる"
+      "input": "in/basic/20_medium2.in",
+      "output": "out/basic/20_medium2.out",
+      "description_en": "[Medium Case] The number of integers is 1000 and the max of them is 9981",
+      "description": "[中規模なデータ入力を扱う実装] 入力される整数が1000個で、整数の最大値が9981であるときに正答できる"
    },
    {
-      "input": "in/basic/20_medium33.in",
-      "output": "out/basic/20_medium33.out",
-      "description": "入力される整数が1000個で、整数の最大値が99775であるときに正答できる"
+      "input": "in/basic/20_medium3.in",
+      "output": "out/basic/20_medium3.out",
+      "description_en": "[Medium Case] The number of integers is 1000 and the max of them is 9975",
+      "description": "[中規模なデータ入力を扱う実装] 入力される整数が1000個で、整数の最大値が9975であるときに正答できる"
    },
    {
-      "input": "in/basic/20_medium44.in",
-      "output": "out/basic/20_medium44.out",
-      "description": "入力される整数が1000個で、整数の最大値が99885であるときに正答できる"
+      "input": "in/basic/20_medium4.in",
+      "output": "out/basic/20_medium4.out",
+      "description_en": "[Medium Case] The number of integers is 1000 and the max of them is 9985",
+      "description": "[中規模なデータ入力を扱う実装] 入力される整数が1000個で、整数の最大値が9985であるときに正答できる"
    },
    {
-      "input": "in/basic/30_large11.in",
-      "output": "out/basic/30_large11.out",
-      "description": "入力される整数が100000個で、整数の最大値が999986049であるときに正答できる"
+      "input": "in/basic/30_large1.in",
+      "output": "out/basic/30_large1.out",
+      "description_en": "[Large Case] The number of integers is 100000 and the max of them is 999986049",
+      "description": "[大規模なデータ入力を扱う実装] 入力される整数が100000個で、整数の最大値が999986049であるときに正答できる"
    },
    {
-      "input": "in/basic/30_large22.in",
-      "output": "out/basic/30_large22.out",
-      "description": "入力される整数が100000個で、整数の最大値が999985129であるときに正答できる"
+      "input": "in/basic/30_large2.in",
+      "output": "out/basic/30_large2.out",
+      "description_en": "[Large Case] The number of integers is 100000 and the max of them is 999985129",
+      "description": "[大規模なデータ入力を扱う実装] 入力される整数が100000個で、整数の最大値が999985129であるときに正答できる"
    },
    {
-      "input": "in/basic/30_large33.in",
-      "output": "out/basic/30_large33.out",
-      "description": "入力される整数が100000個で、整数の最大値が999990053であるときに正答できる"
+      "input": "in/basic/30_large3.in",
+      "output": "out/basic/30_large3.out",
+      "description_en": "[Large Case] The number of integers is XXXXX and the max of them is YYYYYYYY",
+      "description": "[大規模なデータ入力を扱う実装] 入力される整数が100000個で、整数の最大値が999990053であるときに正答できる"
    },
    {
-      "input": "in/basic/30_large44.in",
-      "output": "out/basic/30_large44.out",
-      "description": "入力される整数が100000個で、整数の最大値が999997615であるときに正答できる"
+      "input": "in/basic/30_large4.in",
+      "output": "out/basic/30_large4.out",
+      "description_en": "[Large Case] The number of integers is XXXXX and the max of them is YYYYYYYY",
+      "description": "[大規模なデータ入力を扱う実装] 入力される整数が100000個で、整数の最大値が999997615であるときに正答できる"
    },
    {
-      "input": "in/basic/40_unbalanced11.in",
-      "output": "out/basic/40_unbalanced11.out",
-      "description": "入力される整数が100000個で、整数の最大値が3であるときに正答できる"
+      "input": "in/basic/40_unbalanced1.in",
+      "output": "out/basic/40_unbalanced1.out",
+      "description_en": "[Unbalanced Case] The number of integers is XXXXX and the max of them is YYYYYYYY",
+      "description": "[アンバランスなデータ入力を扱う実装] 入力される整数が100000個で、整数の最大値が3であるときに正答できる"
    },
    {
-      "input": "in/basic/40_unbalanced22.in",
-      "output": "out/basic/40_unbalanced22.out",
-      "description": "入力される整数が100000個で、整数の最大値が3であるときに正答できる"
+      "input": "in/basic/40_unbalanced2.in",
+      "output": "out/basic/40_unbalanced2.out",
+      "description_en": "[Unbalanced Case] The number of integers is XXXXX and the max of them is YYYYYYYY",
+      "description": "[アンバランスなデータ入力を扱う実装] 入力される整数が100000個で、整数の最大値が3であるときに正答できる"
    },
    {
-      "input": "in/basic/40_unbalanced33.in",
-      "output": "out/basic/40_unbalanced33.out",
-      "description": "入力される整数が100000個で、整数の最大値が3であるときに正答できる"
+      "input": "in/basic/40_unbalanced3.in",
+      "output": "out/basic/40_unbalanced3.out",
+      "description_en": "[Unbalanced Case] The number of integers is XXXXX and the max of them is YYYYYYYY",
+      "description": "[アンバランスな入力を扱う実装] 入力される整数が100000個で、整数の最大値が3であるときに正答できる"
    },
    {
-      "input": "in/basic/40_unbalanced44.in",
-      "output": "out/basic/40_unbalanced44.out",
-      "description": "入力される整数が100000個で、整数の最大値が3であるときに正答できる"
+      "input": "in/basic/40_unbalanced4.in",
+      "output": "out/basic/40_unbalanced4.out",
+      "description_en": "[Unbalanced Case] The number of integers is XXXXX and the max of them is YYYYYYYY",
+      "description": "[アンバランスな入力を扱う実装] 入力される整数が100000個で、整数の最大値が3であるときに正答できる"
    },
    {
-      "input": "in/basic/40_unbalanced55.in",
-      "output": "out/basic/40_unbalanced55.out",
-      "description": "入力される整数が100000個で、整数の最大値が3であるときに正答できる"
+      "input": "in/basic/40_unbalanced5.in",
+      "output": "out/basic/40_unbalanced5.out",
+      "description_en": "[Unbalanced Case] The number of integers is XXXXX and the max of them is YYYYYYYY",
+      "description": "[アンバランスな入力を扱う実装] 入力される整数が100000個で、整数の最大値が3であるときに正答できる"
    },
    {
-      "input": "in/basic/40_unbalanced66.in",
-      "output": "out/basic/40_unbalanced66.out",
-      "description": "入力される整数が100000個で、整数の最大値が3であるときに正答できる"
+      "input": "in/basic/40_unbalanced6.in",
+      "output": "out/basic/40_unbalanced6.out",
+      "description_en": "[Unbalanced Case] The number of integers is XXXXX and the max of them is YYYYYYYY",
+      "description": "[アンバランスな入力を扱う実装] 入力される整数が100000個で、整数の最大値が3であるときに正答できる"
    },
    {
-      "input": "in/basic/40_unbalanced77.in",
-      "output": "out/basic/40_unbalanced77.out",
-      "description": "入力される整数が100000個で、整数の最大値が3であるときに正答できる"
+      "input": "in/basic/40_unbalanced7.in",
+      "output": "out/basic/40_unbalanced7.out",
+      "description_en": "[Unbalanced Case] The number of integers is XXXXX and the max of them is YYYYYYYY",
+      "description": "[アンバランスな入力を扱う実装] 入力される整数が100000個で、整数の最大値が3であるときに正答できる"
    },
    {
-      "input": "in/basic/40_unbalanced88.in",
-      "output": "out/basic/40_unbalanced88.out",
-      "description": "入力される整数が100000個で、整数の最大値が3であるときに正答できる"
+      "input": "in/basic/40_unbalanced8.in",
+      "output": "out/basic/40_unbalanced8.out",
+      "description_en": "[Unbalanced Case] The number of integers is XXXXX and the max of them is YYYYYYYY",
+      "description": "[アンバランスな入力を扱う実装] 入力される整数が100000個で、整数の最大値が3であるときに正答できる"
    }
 ]
