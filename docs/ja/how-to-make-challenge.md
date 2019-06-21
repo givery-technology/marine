@@ -49,7 +49,7 @@ track.ymlでは以下のキーを定義します。
 
 - type: string. 必須. 
   - CLIチャレンジの場合は`cli`とします。
-  - Codingチャレンジの場合は`cli`とします。
+  - Codingチャレンジの場合は`coding`とします。
 - editable: Array<string>
   - チャレンジに含め、編集可能なファイルを指定します。ワイルドカードが使用できます。
   - 主にCodingチャレンジでユーザに編集させるファイルを指定します。
