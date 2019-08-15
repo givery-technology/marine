@@ -468,5 +468,5 @@ shared:
   - sharedJS:../shared/js:_
 ```
 
-上の定義では`../shared/js/package.json`が実行環境のルートディレクトリにある元野して扱われます。
+上の定義では`../shared/js/package.json`が実行環境のルートディレクトリにあるものとして扱われます。
 
