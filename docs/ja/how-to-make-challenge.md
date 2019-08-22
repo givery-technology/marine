@@ -105,6 +105,9 @@ track.ymlでは以下のキーを定義します。
   - 問題の解答例を含むファイルを指定します。
   - オフィシャル問題にはすべて解答例がありますが、自社専用の個別問題を作る場合は必須ではありません。
   - 解答例には後述する自動登録機能を使うこともできます。
+- shared: Array<string>
+  - 複数のチャレンジで共有するファイル群の置き場所を指定します。
+  - 書式及び使い方は後述します。
 
 未知のキーは無視されます。
 
@@ -231,7 +234,7 @@ solution.mdはtrack.ymlに含める必要はありません。
 ## BEGIN_CHALLENGEとEND_CHALLENGE
 track.ymlの`editable`または`readonly`で指定したファイルに`BEGIN_CHALLENGE`, `END_CHALLENGE`という対の行が指定されている場合、その範囲はチャレンジ生成時に削除されます。
 
-ただし、MarineでDevModeにチェックした場合はこの部分も残されます。
+ただし、MarineでSolutionを選択した場合はこの部分も表示されます。
 
 例
 
@@ -244,7 +247,8 @@ function add(a, b) {
 }
 ```
 
-上記の場合、受験者の環境では関数`add`の中身は空になっているので受験者自身が実装しない限りエラーとなりますが、MarineのDevModeでは実装が含まれているためテストを実行して結果を確認することができます。
+上記の場合、受験者の環境では関数`add`の中身は空になっているので受験者自身が実装しない限りエラーとなりますが、MarineでSolutionを選択している場合は
+実装が含まれているためテストを実行して結果を確認することができます。
 
 また、Codingチャレンジでは`BEGIN_CHALLENGE`, `END_CHALLENGE`で囲まれた部分を含むファイルが自動的に`solutions`に登録されます。
 
@@ -316,6 +320,8 @@ Codingチャレンジでもルートディレクトリにある`solution.xx`と�
 - Java: givery/track-java-8
 - Ruby givery/track-ruby-2.5
 - C/C++: givery/track-base2
+- Swift: givery/track-swift-5
+- Kotlin: givery/track-kotlin
 
 いずれの環境にもNodeJSとmochaはインストールされています。
 
@@ -334,6 +340,8 @@ CLIチャレンジで使用できる言語は以下のとおりです。
 - perl
 - ruby
 - go
+- swift
+- kotlin
 
 それぞれの言語を指定した場合、対応するDockerイメージでテストが実行されます。
 Dockerイメージとcli-templateを用意すれば、対応言語を増やすことができます。
@@ -386,14 +394,6 @@ initialize:
 
 デフォルトではここで指定した初期化ファイル及びコマンドの実行結果は受験者からは見えませんが、`showConsole: true`を指定した場合は初期化の過程が受験者に表示されます。
 
-### initializeの省略記法
-`initialize`セクションを指定する際に`files`の指定が必要ない場合はコマンドのみを直接の子リストとして指定するこができます。
-
-```
-initialize:
-  - g++ -std=c++11 -o test/judge test/judge.cpp
-```
-
 ## evaluationPoint
 track.ymlの`evaluationPoint`セクションを利用するとテストケースを評価項目毎に分類することができます。
 `evaluationPoint`には以下のように評価項目のキーと説明を記述します。
@@ -423,4 +423,50 @@ ok 4 (その他のテスト...)
 - 一つのテストケースに複数の`evaluationPoint`を指定することはできません。
   - 2つ目以降は無視されます。
 
+## shared
+`shared`とは複数のチャレンジでファイルを共有するための仕組みです。
+
+例えば、SQL関連のチャレンジを作成する場合に複数のチャレンジでデータセット(初期化時に実行するSQL)やユーティリティスクリプトを共有することができます。
+
+### sharedの書式
+`shared`の書式は以下の形式となります。
+
+```
+- <参照名>:<参照ディレクトリへの相対パス>[:<参照名のエイリアス>]
+```
+
+例. 共有のinit.sqlを`sql/init.sql`という名前で参照する
+
+```
+readonly:
+  - sql/init.sql
+shared:
+  - sql:../shared/sql
+```
+
+参照名のエイリアスを指定した場合、実行時のファイル名が参照名から指定の値に置き換わります。
+
+例. 複数のチャレンジでいくつかのテストを共有する
+
+```
+readonly:
+  - sharedTest/*.js
+shared:
+  - sharedTest:../shared/test:test
+```
+
+上の定義では`../shared/*.js`ファイルが実行環境の`test`ディレクトリにあるものとして扱われます。
+この時、チャレンジのフォルダに`test`ディレクトリ及び共有しているファイルとは異なる`test/*.js`があっても構いませんが、同じファイル名のファイルがある場合はどちらが使われるかは不定です。
+
+参照名のエイリアスに`_`を指定した場合、ルートディレクトリにそのファイルがあるものとして扱われます。
+
+例. package.jsonの共有
+```
+readonly:
+  - sharedJS/package.json
+shared:
+  - sharedJS:../shared/js:_
+```
+
+上の定義では`../shared/js/package.json`が実行環境のルートディレクトリにあるものとして扱われます。
 

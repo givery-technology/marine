@@ -65,6 +65,7 @@ book.ymlはBook全体の定義が記述されたファイルです。
 - webStorage: Boolean, 任意
 - timeInMinutes: Int, 任意
 - env: Object, 任意
+- shared: List[String], 任意
 
 ### title
 titleにはBookのタイトルを指定します。
@@ -207,6 +208,11 @@ imageNameに指定できるDockerイメージ名は実行環境でサポート�
 - last: ブックの最後に新規チャプターとしてすべてのanswerをまとめたセクションを追加する
 
 省略時のデフォルト値は`each`です。
+
+### shared
+複数のブックで共有するファイル群の置き場所を指定します。  
+主にexerciseでのファイル指定の際に使用します。
+具体的な定義方法および使用例については[how-to-make-challenge.md](how-to-make-challenge.md#shared)を参照してください。
 
 ## チャプター定義ファイル
 チャプター定義ファイルはMarkdown形式で記述されたチャプターの定義ファイルです。  
