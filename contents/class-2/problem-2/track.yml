@@ -1,0 +1,19 @@
+type: coding
+allowNewFile: true
+test: mocha
+editable:
+readonly:
+  - test/**/basic/*.*
+  - test/*basic*
+  - test/settings.json
+hide:
+  - test/**/secret/*.*
+  - test/*secret*
+
+templateType: stdin
+
+testcases:
+  open: 6
+  secret: 18
+
+languages: all

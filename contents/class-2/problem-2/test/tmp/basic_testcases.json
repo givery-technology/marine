@@ -1,0 +1,38 @@
+[
+   {
+      "input": "in/basic/sample_1.in",
+      "output": "out/basic/sample_1.out",
+      "description_en": "[Basic Case]",
+      "description": "[基本実装]"
+   },
+   {
+      "input": "in/basic/sample_2",
+      "output": "out/basic/sample_2",
+      "description_en": "[Basic Case]",
+      "description": "[基本実装]"
+   },
+   {
+      "input": "in/basic/sample_3",
+      "output": "out/basic/sample_3",
+      "description_en": "[Basic Case]",
+      "description": "[基本実装]"
+   },
+   {
+      "input": "in/basic/small_1",
+      "output": "out/basic/small_1",
+      "description_en": "[Basic Case]",
+      "description": "[基本実装]"
+   },
+   {
+      "input": "in/basic/random_1",
+      "output": "out/basic/random_1",
+      "description_en": "[Basic Case]",
+      "description": "[基本実装]"
+   },
+   {
+      "input": "in/basic/max_1",
+      "output": "out/basic/max_1",
+      "description_en": "[Basic Case]",
+      "description": "[基本実装]"
+   }
+]
