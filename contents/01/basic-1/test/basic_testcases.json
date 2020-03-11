@@ -1,0 +1,20 @@
+[
+    {
+        "input": "in/basic/sample_1.in",
+        "output": "out/basic/sample_1.out",
+        "description_en": "[Sample Case]",
+        "description": "[サンプルケース]"
+    },
+    {
+        "input": "in/basic/sample_2.in",
+        "output": "out/basic/sample_2.out",
+        "description_en": "[Sample Case]",
+        "description": "[サンプルケース]"
+    },
+    {
+        "input": "in/basic/sample_3.in",
+        "output": "out/basic/sample_3.out",
+        "description_en": "[Sample Case]",
+        "description": "[サンプルケース]"
+    }
+]
