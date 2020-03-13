@@ -1,24 +1,21 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
+#define rep(i,m,n) for(ll i=(m);i<(n);i++)
 
 int main(){
-	int N,M;
-	cin >> N >> M;
-	ll A[3010];
-	for(int i = 0; i < N; i++){
-		cin >> A[i];
+	int N;
+	cin >> N;
+	int A[100010];
+	rep(i,0,N) cin >> A[i];
+	sort(A, A+N);
+	int Q;
+	cin >> Q;
+	rep(i,0,Q){
+		int l,r;
+		cin >> l >> r;
+		int res = upper_bound(A, A+N, r) - lower_bound(A, A+N, l);
+		cout << res << "\n";
+
 	}
-	ll max_val = -1, idx = -1;
-	for(int i = 0; i < N-M+1; i++){
-		ll sum = 0;
-		for(int j = 0; j < M; j++){
-			sum += A[i + j];
-		}
-		if(sum > max_val){
-			idx = i+1;
-			max_val = sum;
-		}
-	}
-	cout << max_val << " " << idx << endl;
 }
