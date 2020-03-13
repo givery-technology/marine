@@ -33,12 +33,14 @@ struct BinaryHeap {
 			if (vl > vr) {
 				if (vl > dat[pos]) {
 					swap(dat[pos], dat[pos * 2 + 1]);
+					pos = pos*2+1;
 				}
 				else break;
 			}
 			else {
 				if (vr > dat[pos]) {
 					swap(dat[pos], dat[pos * 2 + 2]);
+					pos = pos*2+2;
 				}
 				else break;
 			}
