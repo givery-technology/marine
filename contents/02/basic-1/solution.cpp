@@ -3,22 +3,19 @@ using namespace std;
 using ll = long long;
 
 int main(){
-	int N,M;
-	cin >> N >> M;
-	ll A[3010];
-	for(int i = 0; i < N; i++){
-		cin >> A[i];
-	}
-	ll max_val = -1, idx = -1;
-	for(int i = 0; i < N-M+1; i++){
-		ll sum = 0;
-		for(int j = 0; j < M; j++){
-			sum += A[i + j];
-		}
-		if(sum > max_val){
-			idx = i+1;
-			max_val = sum;
+	ll Q;
+	queue<int> que;
+	cin >> Q;
+	for(int i = 0; i < Q; i++){
+		ll T;
+		cin >> T;
+		if(T == 1){
+			int X;
+			cin >> X;
+			que.push(X);
+		}else{
+			cout << que.front() << endl;
+			que.pop();
 		}
 	}
-	cout << max_val << " " << idx << endl;
 }
