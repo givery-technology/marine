@@ -11,48 +11,50 @@ const ll INF = 1e18;
 void print() {}
 template <class H,class... T>
 void print(H&& h, T&&... t){cout<<h<<" \n"[sizeof...(t)==0];print(forward<T>(t)...);}
-ll memo[10][1000010] = {};
-ll maxN = 0, maxM = 0;
-ll calc(ll m, ll n){
-	ll &res = memo[m][n];
-	maxN = max(maxN, n);
-	maxM = max(maxM, m);
-	print(maxM, maxN);
 
-	if(res != -1) return res;
-	res = 0;
-	if(m == 0){
-		return res = n+1;
-	}else if(n == 0){
-		return res = calc(m-1, 1);
-	}else{
-		ll v = calc(m, n-1);
-		return res = calc(m-1, v);
-	}
-}
-
-ll A(ll m, ll n){
-	if(m == 0) return n+1;
-	else if(n == 0) return A(m-1, 1);
-	else return A(m-1, A(m, n-1));
-}
-
+// verify: http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_14_B&lang=ja
 int main(){
-	cin.tie(0);
-	ios::sync_with_stdio(false);
-	memset(memo, -1, sizeof(memo));
-	ll m,n;
-	cin >> m >> n;
-	print(calc(m, n));
-	memo[0][0] = 1;
-	// print(A(m,n));
-	print(maxM, maxN);
-	// rep(i,0,10){
-	// 	rep(j,0,10){
-	// 		cout << memo[i][j] << " ";
-	// 	}
-	// 	cout << endl;
-	// }
-	
+    cin.tie(0);
+    ios::sync_with_stdio(false);
+    string T,P;
+    cin >> T >> P;
+    ll nt = T.size(), np = P.size();
+
+    ll table[10010] = {};
+    ll j = -1;
+    table[0] = -1;
+    rep(i,0,np){
+        while(j >= 0 && P[i] != P[j]) j = table[j];
+        table[i+1] = j+1;
+        j++;
+    }
+
+    vector<ll> ret;
+    ll m = 0, i = 0, n = T.size();
+    ll cnt = 0;
+    while(m + i < n){
+        if(P[i] == T[m+i]){
+            i++;
+
+            if(np == i){
+				print(m);
+				return 0;
+                ret.push_back(m);
+                // print(i,m);
+                m += i - table[i];
+                i = table[i];
+                // print(i,m);
+                cnt++;
+            }
+        }else{
+            m += i - table[i];
+            if(i > 0) i = table[i];
+            cnt++;
+        }
+    }
+	print(-1);
+
+
+    
 
 }
