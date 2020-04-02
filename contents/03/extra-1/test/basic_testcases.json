@@ -6,18 +6,6 @@
         "description": "[サンプルケース1]"
     },
     {
-        "input": "in/basic/00_sample_02.in",
-        "output": "out/basic/00_sample_02.out",
-        "description_en": "[Sample Case]",
-        "description": "[サンプルケース2]"
-    },
-    {
-        "input": "in/basic/00_sample_03.in",
-        "output": "out/basic/00_sample_03.out",
-        "description_en": "[Sample Case]",
-        "description": "[サンプルケース3]"
-    },
-    {
         "input": "in/basic/10_random_01.in",
         "output": "out/basic/10_random_01.out",
         "description_en": "[Random Case]",
@@ -88,5 +76,17 @@
         "output": "out/basic/10_random_12.out",
         "description_en": "[Random Case]",
         "description": "[ランダムケース12]"
+    },
+    {
+        "input": "in/basic/10_random_13.in",
+        "output": "out/basic/10_random_13.out",
+        "description_en": "[Random Case]",
+        "description": "[ランダムケース13]"
+    },
+    {
+        "input": "in/basic/10_random_14.in",
+        "output": "out/basic/10_random_14.out",
+        "description_en": "[Random Case]",
+        "description": "[ランダムケース14]"
     }
 ]
