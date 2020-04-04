@@ -1,0 +1,92 @@
+[
+    {
+        "input": "in/basic/00_sample_01.in",
+        "output": "out/basic/00_sample_01.out",
+        "description_en": "[Sample Case]",
+        "description": "[サンプルケース1]"
+    },
+    {
+        "input": "in/basic/00_sample_02.in",
+        "output": "out/basic/00_sample_02.out",
+        "description_en": "[Sample Case]",
+        "description": "[サンプルケース2]"
+    },
+    {
+        "input": "in/basic/10_random_01.in",
+        "output": "out/basic/10_random_01.out",
+        "description_en": "[Random Case]",
+        "description": "[ランダムケース1]"
+    },
+    {
+        "input": "in/basic/10_random_02.in",
+        "output": "out/basic/10_random_02.out",
+        "description_en": "[Random Case]",
+        "description": "[ランダムケース2]"
+    },
+    {
+        "input": "in/basic/10_random_03.in",
+        "output": "out/basic/10_random_03.out",
+        "description_en": "[Random Case]",
+        "description": "[ランダムケース3]"
+    },
+    {
+        "input": "in/basic/10_random_04.in",
+        "output": "out/basic/10_random_04.out",
+        "description_en": "[Random Case]",
+        "description": "[ランダムケース4]"
+    },
+    {
+        "input": "in/basic/10_random_05.in",
+        "output": "out/basic/10_random_05.out",
+        "description_en": "[Random Case]",
+        "description": "[ランダムケース5]"
+    },
+    {
+        "input": "in/basic/10_random_06.in",
+        "output": "out/basic/10_random_06.out",
+        "description_en": "[Random Case]",
+        "description": "[ランダムケース6]"
+    },
+    {
+        "input": "in/basic/10_random_07.in",
+        "output": "out/basic/10_random_07.out",
+        "description_en": "[Random Case]",
+        "description": "[ランダムケース7]"
+    },
+    {
+        "input": "in/basic/10_random_08.in",
+        "output": "out/basic/10_random_08.out",
+        "description_en": "[Random Case]",
+        "description": "[ランダムケース8]"
+    },
+    {
+        "input": "in/basic/10_random_09.in",
+        "output": "out/basic/10_random_09.out",
+        "description_en": "[Random Case]",
+        "description": "[ランダムケース9]"
+    },
+    {
+        "input": "in/basic/10_random_10.in",
+        "output": "out/basic/10_random_10.out",
+        "description_en": "[Random Case]",
+        "description": "[ランダムケース10]"
+    },
+    {
+        "input": "in/basic/10_random_11.in",
+        "output": "out/basic/10_random_11.out",
+        "description_en": "[Random Case]",
+        "description": "[ランダムケース11]"
+    },
+    {
+        "input": "in/basic/10_random_12.in",
+        "output": "out/basic/10_random_12.out",
+        "description_en": "[Random Case]",
+        "description": "[ランダムケース12]"
+    },
+    {
+        "input": "in/basic/10_random_13.in",
+        "output": "out/basic/10_random_13.out",
+        "description_en": "[Random Case]",
+        "description": "[ランダムケース13]"
+    }
+]
