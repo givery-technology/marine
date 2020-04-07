@@ -13,7 +13,7 @@ hide:
 templateType: stdin
 
 testcases:
-  open: 15
+  open: 16
   secret: 0
 
 languages: all

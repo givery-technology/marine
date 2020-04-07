@@ -88,5 +88,11 @@
         "output": "out/basic/10_random_12.out",
         "description_en": "[Random Case]",
         "description": "[ランダムケース12]"
+    },
+    {
+        "input": "in/basic/20_corner_01.in",
+        "output": "out/basic/20_corner_01.out",
+        "description_en": "[Corner Case]",
+        "description": "[コーナーケース1]"
     }
 ]
