@@ -1,2 +1,1 @@
-[あなたのコードがどのように動作するのか、簡潔に説明してください。]
-[Write a brief explanation about how your code works here.]
+[もしコメントすべき事項があれば記入してください(記入は必須ではありません)。]
