@@ -1,10 +1,21 @@
-import bisect
-
 N = int(input())
 A = list(map(int, input().split()))
-A.sort()
 Q = int(input())
-for i in range(Q):
-  l, r = map(int, input().split())
-  ps = bisect.bisect_right(A, r) - bisect.bisect_left(A, l)
-  print(ps)
+for _ in range(Q):
+  x = int(input())
+  lv = -1
+  rv = N
+  while rv - lv > 1:
+    mid = (rv + lv) // 2
+    if A[mid] >= x:
+      rv = mid
+    else:
+      lv = mid
+  pos = rv
+  if pos == N:
+    print("No")
+  else:
+    if A[pos] == x:
+      print("Yes")
+    else:
+      print("No")

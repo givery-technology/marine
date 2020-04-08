@@ -8,14 +8,29 @@ int main(){
 	cin >> N;
 	int A[100010];
 	rep(i,0,N) cin >> A[i];
-	sort(A, A+N);
 	int Q;
 	cin >> Q;
-	rep(i,0,Q){
-		int l,r;
-		cin >> l >> r;
-		int res = upper_bound(A, A+N, r) - lower_bound(A, A+N, l);
-		cout << res << "\n";
-
+	while(Q--){
+		int x;
+		cin >> x;
+		int lv = -1, rv = N;
+		while(rv - lv > 1){
+			int mid = (lv + rv) / 2;
+			if(A[mid] >= x){
+				rv = mid;
+			}else{
+				lv = mid;
+			}
+		}
+		int pos = rv;
+		if(pos == N){
+			cout << "No" << endl;
+		}else{
+			if(A[pos] == x){
+				cout << "Yes" << endl;
+			}else{
+				cout << "No" << endl;
+			}
+		}
 	}
 }
