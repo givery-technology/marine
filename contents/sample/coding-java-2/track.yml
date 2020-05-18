@@ -1,0 +1,18 @@
+type: coding
+title: Java coding sample
+allowNewFile: true
+test: sh test.sh
+readonly:
+  - test/track/util/*.java
+  - test/track/BasicTest.java
+  - test.sh
+hidden:
+  - test/track/SecretTest.java
+editable:
+  - src/track/FizzBuzz.java
+main: src/track/FizzBuzz.java
+testcases:
+  open: 5
+  secret: 1
+envConf:
+  imageName: givery/track-java-corretto-11.0
