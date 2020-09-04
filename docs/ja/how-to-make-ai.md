@@ -117,12 +117,9 @@ AIチャレンジの定義にもtrack.ymlを使用します。
   - ジャッジアプリケーションの実行コマンドを指定します
 - build: Array<string>
   - ジャッジアプリケーションをソースコードからbuildする場合はそのbuildコマンドを指定します。
-- envConf: hash
+- envConf: hash. 必須
   - ジャッジアプリケーションを実行するDockerコンテナの情報を指定します。
-  - 省略時はNodeJSのDockerイメージが使用されます。
-  - imageName: string. テストで使用するdockerイメージ名を指定します
-  - workingDir: string. dockerイメージ内で使用するカレントディレクトリのパスを指定します。(省略時は`/root/src`になります)
-  - cacheDirs: Array<string>. Webエディタ実行中にテスト実行サーバでキャッシュするディレクトリを指定します。(Ruby, Javaのライブラリキャッシュ等)
+  - 指定内容の詳細は[env.md](env.md)を参照してください。
 - scoreType: hash
   - 上述のスコアの順序付けに関する情報を指定します。
   - 省略時は rankBy=High, 上限下限なしとなります。
