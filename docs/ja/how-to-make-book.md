@@ -66,6 +66,7 @@ book.ymlはBook全体の定義が記述されたファイルです。
 - timeInMinutes: Int, 任意
 - env: Object, 任意
 - shared: List[String], 任意
+- carryOver: List[String], 任意
 
 ### title
 titleにはBookのタイトルを指定します。
@@ -181,23 +182,16 @@ Bookを解き終わるまでの目安時間を分単位で指定します。
 ※ trackではこの項目はUI上での設定項目となるので使用されません。
 
 ### env
-独自のDockerImageを使用する場合に指定します。
-現状`env`以下に指定できるキーは`imageName`のみです。
+RubyやJavaなどのプログラミング言語を実行する場合にその環境を指定します。
 
-```
-env:
-  imageName: codeprep/python3_numpy
-```
+HTMLやjs/cssのみを扱う場合フロントエンドのみで完結するのでenvの指定は不要です。
 
-imageNameに指定できるDockerイメージ名は実行環境でサポートされているもののみです。
-新しいDockerImageを使用したい場合はご相談ください。
+ここで環境を指定した場合はBook内のすべてのセクションで使用されますが、セクション毎に異なる環境を指定することも可能です。
 
 省略時のデフォルト値は`givery/codecheck:latest`となります。
-これは多くの言語をオールインワンで含んだ巨大なDockerイメージです。
-(ただし、今後メンテナンスは予定されておらず各言語のバージョンアップには追随しません。)
+これは多くの言語をオールインワンで含んだDockerイメージですが、既にメンテナンスは終了しており含まれる各言語のバージョンが古いので、原則明示的に環境を指定するようにしてください。
 
-使用可能なDockerイメージの一覧は別途提供されます。
-
+詳細な指定内容は[env.md](env.md)を参照してください。
 
 ### answerSection
 各セクションで定義した`answer`をまとめたセクションを作成するかどうかを指定します。
@@ -213,6 +207,29 @@ imageNameに指定できるDockerイメージ名は実行環境でサポート�
 複数のブックで共有するファイル群の置き場所を指定します。  
 主にexerciseでのファイル指定の際に使用します。
 具体的な定義方法および使用例については[how-to-make-challenge.md](how-to-make-challenge.md#shared)を参照してください。
+
+### carryOver
+Book内の複数のExerciseで同じファイルを徐々に作り込んでいくような場合にそのファイル名を指定します。
+
+例えばJavascriptでFizzBuzz(fizzbuzz.js)を作成するような場合、
+
+```
+carryOver:
+  - fizzbuzz.js
+```
+
+と指定すれば、
+
+- 1-1. でFizzに対応するコードを作らせる
+- 1-2. で1-1で作ったコードを引き継いでBuzzに対応するコードを作らせる
+- 1-3. で1-2で作ったコードを引き継いでFizzBuzzに対応するコードを作らせる
+
+というようなことができます。
+
+この機能では同じファイルをすべてのセクションで使用するのではないことに注意してください。  
+ファイルの保存は各セクション単位になります。
+
+例えば1-3まで進んだ後に1-1に戻った場合、そこで表示される内容は1-1終了時の内容になります。
 
 ## チャプター定義ファイル
 チャプター定義ファイルはMarkdown形式で記述されたチャプターの定義ファイルです。  
@@ -280,12 +297,14 @@ CODEPREPではひとつのチャプターがひとつのファイルに対応し
 - files
 - remote
 - dropdown
+- env
+- debug
 
 各サブセクションはそれぞれのセクションで一度だけ定義できます。
 また、`main`と`exercise`, `playground`, `mcq`, `fib`のように同時には使用できないサブセクションもあります。
 
 ### セクションの種類
-CODEPREPのセクションには大きく次の4種類があります。
+CODEPREPのセクションには大きく次の6種類があります。
 
 - 穴埋め問題 - コード(main)
   - セクションで`main`が定義されている
@@ -925,7 +944,73 @@ HTMLプレイグラウンド
 
 ### exercise
 エクササイズの定義はリスト形式で必要な情報を定義することで行われます。
-エクササイズの定義方法はリモートエクササイズ(Ruby, Java等)と、クライアントエクササイズ(HTML/JavaScript)の場合で異なります。
+
+エクササイズには以下の3種類があります。
+
+- client - クライアントエクササイズ
+  - HTMLやJavascript、CSSなどのフロントエンド技術を扱うエクササイズ
+- remote - リモートエクササイズ
+  - JavaやRubyなどのプログラミング言語を扱うエクササイズ
+- cli - CLIエクササイズ
+  - アルゴリズム問題などをユーザが選択した任意の言語で解かせるエクササイズ
+
+それぞれのエクササイズで定義方法は異なります。
+
+#### クライアントエクササイズ
+クライアントエクササイズを定義するには`- mode: client`を定義に加えます。
+それ以外に定義可能なキーは以下のとおりです。
+
+- file: 1つ以上必須。ユーザが編集可能なファイルを指定します。ファイル自体は外部ファイルとして作成します。
+- hidden: 任意。ユーザから不可視のファイルを指定します。(クライアントエクササイズではおそらく使うことはありません。)
+- clientTest: 必須。Mochaで書いたテストが書かれたファイル
+
+ユーザーには見えているけれど、編集はさせたくないファイルが存在する場合は`files`サブセクションで定義してください。
+
+```
+### exercise
+- mode: client
+- file: [main.js](assets/1-2.main.js)
+- test: assets/1-2.test.js
+
+### files
+- [index.html](assets/chapter1.html)
+```
+
+以下はjQueryのセレクタテストの例です。
+
+``` javascript
+"use strict";
+
+var assert = chai.assert;
+
+describe("セレクタ", function() {
+
+  it("関数 getElementsが定義されている", function() {
+    assert.equal(typeof getElements, "function");
+  });
+
+  it("関数 getElementsがjQueryオブジェクトを返す", function() {
+    let $selected = getElements();
+    assert.ok($selected instanceof jQuery);
+  });
+
+  it("セレクタによって選択された要素が正しい", function() {
+    let $selected = getElements();
+    $selected.each(function() {
+      $(this).addClass("bingo");
+    });
+    $(".count").text($selected.length);
+
+    const $answer = $("#one");
+    const $bingo = $(".bingo");
+
+    assert.equal($answer.length, $bingo.length);
+    assert.equal($answer.filter(".bingo").length, $bingo.length);
+  });
+});
+```
+
+上記のjsがmochaのテストとしてindex.htmlに差し込まれて実行されます。
 
 #### リモートエクササイズ
 リモートエクササイズを定義するには`- mode: remote`を定義に加えます。
@@ -999,61 +1084,56 @@ RSpecやJUnitなどのテストフレームワークを使うことも可能で�
 
 使いたいテストフレームワークがある場合はご相談ください。
 
-#### クライアントエクササイズ
-クライアントエクササイズを定義するには`- mode: client`を定義に加えます。
+#### CLIエクササイズ
+CLIエクササイズを定義するには`- mode: cli`を定義に加えます。
 それ以外に定義可能なキーは以下のとおりです。
 
-- file: 1つ以上必須。ユーザが編集可能なファイルを指定します。ファイル自体は外部ファイルとして作成します。
-- hidden: 任意。ユーザから不可視のファイルを指定します。(クライアントエクササイズではおそらく使うことはありません。)
-- clientTest: 必須。Mochaで書いたテストが書かれたファイル
+- hidden: 任意。ユーザから不可視のファイルを指定します。通常テスト本体はhiddenで指定します。
+- command: 必須。テストの実行コマンドを指定します。
+- prepare: 任意。cli-templateの`build`の実行前に実行するコマンドがある場合に指定します。複数指定可能です。
+- cwd: 任意。`command`を実行する場合のワーキングディレクトリ。
 
 ユーザーには見えているけれど、編集はさせたくないファイルが存在する場合は`files`サブセクションで定義してください。
 
+例
 ```
 ### exercise
+
 - mode: client
-- file: [main.js](assets/1-2.main.js)
-- test: assets/1-2.test.js
-
-### files
-- [index.html](assets/chapter1.html)
+- hidden: [test](assets/section1-1/test/*)
+- command: mocha -R tap
 ```
 
-以下はjQueryのセレクタテストの例です。
+#### CLIテストの書き方
+CLIエクササイズでのテストの書き方は[CLIチャレンジのテスト](how-to-make-challenge.md#CLIチャレンジでのテストの書き方)に準じます。
 
-``` javascript
-"use strict";
+通常はtrack標準のテストランナーである[codecheck](how-to-use-codecheck.md)を使用してテストを作成します。
 
-var assert = chai.assert;
+実際にはchallengeとして作成してエクササイズとしてBookに取り込む方が利便性が高いのでほとんどの場合、次節で紹介するimport機能が使用されます。
 
-describe("セレクタ", function() {
+#### チャレンジをエクササイズとしてインポートする
+任意のcodingチャレンジまたはcliチャレンジをBookのエクササイズとして取り込むことができます。
 
-  it("関数 getElementsが定義されている", function() {
-    assert.equal(typeof getElements, "function");
-  });
+その方法はtrack.ymlのあるディレクトリを`reference`というキーで参照するだけです。
 
-  it("関数 getElementsがjQueryオブジェクトを返す", function() {
-    let $selected = getElements();
-    assert.ok($selected instanceof jQuery);
-  });
-
-  it("セレクタによって選択された要素が正しい", function() {
-    let $selected = getElements();
-    $selected.each(function() {
-      $(this).addClass("bingo");
-    });
-    $(".count").text($selected.length);
-
-    const $answer = $("#one");
-    const $bingo = $(".bingo");
-
-    assert.equal($answer.length, $bingo.length);
-    assert.equal($answer.filter(".bingo").length, $bingo.length);
-  });
-});
+```
+- mode: coding
+- reference: ../../challenges/challenge1
 ```
 
-上記のjsがmochaのテストとしてindex.htmlに差し込まれて実行されます。
+codingチャレンジはremoteエクササイズとして、cliチャレンジはcliエクササイズとして取り込まれます。
+
+チャレンジとブックでは仕様が異なる部分があるのですべてのチャレンジが取り込めるわけではありません。(または取り込めたとしてもユーザにとって良いUXとはならないこともあります。)
+
+主な違いは以下です。
+
+- Bookでは任意のコマンド実行の仕組みは有りません。
+- Challenge側でtestディレクトリ以下に配置されているファイルはhidden扱いになりユーザが内容を確認することはできません。
+- Bookにはツリーがないため、すべてのファイルは最初からタブで表示されます。
+  - このため編集するファイル数が多いChallengeはBook化には向きません。
+  - testディレクトリ以下のファイルは上述の通り表示対象外です。
+- `frontend`を使用するChallengeはプレビューする方法がないため事実上インポートできません。
+- ユーザが自由にファイルを追加・削除することはできません。
 
 #### エクササイズのコードの一部のみを編集可能とする
 通常エクササイズの編集可能対象の指定はファイル単位です。
@@ -1080,3 +1160,55 @@ public class Main {
 `EXCERCISE_BEGIN_EDIT`, `EXCERCISE_END_EDIT`を含む行は実行時には削除されるのでブック読者からは見えません。
 また、ひとつのファイル内に複数の編集可能領域を定義することも可能です。
 (MarineでDevModeにした場合は画面上に表示されます。)
+
+### debug
+remoteエクササイズとcliエクササイズではチャレンジと同様のdebug機能を定義することができます。
+
+デバッグ定義の詳細は[Challengeのドキュメント](how-to-make-challenge.md#debug)を参照してください。
+
+Bookでの定義はyamlではないので、定義の書式は以下のようなリスト形式になります。
+(inputの`raw`と`file`の定義では`input`を省略して直接`raw`, `file`を指定します。)
+
+```
+### debug
+- command: cat $f | $c
+- raw:[テスト1]a b c
+- file:[テスト2]test/in/file1.txt
+```
+
+チャレンジからインポートした際にはdebug定義もインポートされます。
+
+### env
+book.ymlでenvを定義する代わりに個別のセクションでenvを定義することができます。
+
+定義できる内容はbookと同じです。詳細は[env.md](env.md)を参照してください。
+
+定義の書式は以下のようなリスト形式になります。
+
+```
+### env
+
+- imageName: givery/track-java-8
+- cacheDirs: /root/.m2
+- cacheDirs: /root/.gradle
+```
+
+### DevMode
+MarineはBook(またはChallenge)の作成を補助するためのツールなので通常モードではエクササイズのエディタ上でユーザが変更した内容はどこにも保存されません。
+
+ここを保存するようにした場合オリジナルのファイルを変更した後に画面をリロードしても、画面にはその変更が反映されない(ユーザファイルとして初期表示状態のファイルが保存されているのでそちらが表示されます)ため、「コンテンツを作成する」という目的にたいしては利便性が良くないためです。
+
+しかし、それではcarryOverの確認などができないため、DevModeを選択した場合は受験者のユーザ体験をエミュレートできます。
+
+DevModeにした場合は以下のような動作になります。
+
+- エクササイズ画面でユーザが変更した内容がリロードしても維持されます。
+- 原則そのセクションを解かないと次のセクションに移動できません。
+  - ただし、スキップはできます。
+- carryOverが機能します。
+  - ノーマルモードでは常に定義によって参照されているファイルが表示されます。
+
+DevMode中にメニューから「Clean up user code」を実行した場合は保存されているユーザコードがすべてクリアされます。
+
+
+

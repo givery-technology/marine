@@ -89,11 +89,10 @@ track.ymlでは以下のキーを定義します。
   - stdin: 入力パラメータを標準入力から受け取るタイプのコードテンプレートです。
   - plain: 入力パラメータを受け取らない空のテンプレートです。
 - envConf: hash
-  - 必要に応じて以下のサブキーを定義します。
-  - CLIチャレンジの場合はCLIテンプレートによって上書きされるため、ここでの指定は無視されます。
-  - imageName: string. テストで使用するdockerイメージ名を指定します
-  - workingDir: string. dockerイメージ内で使用するカレントディレクトリのパスを指定します。(省略時は`/root/src`になります)
-  - cacheDirs: Array<string>. Webエディタ実行中にテスト実行サーバでキャッシュするディレクトリを指定します。(Ruby, Javaのライブラリキャッシュ等)
+  - ユーザコードを実行するDockerコンテナの情報を指定します。
+  - CLIチャレンジの場合はCLIテンプレートによって上書きされるため不要です。
+  - Codingチャレンジの場合は必須です。
+  - 指定内容の詳細は[env.md](env.md)を参照してください。
 - testcases: hash. 必須
   - 以下のサブキーを指定します。
   - open: number. オープンテストケースの数
@@ -108,6 +107,14 @@ track.ymlでは以下のキーを定義します。
 - shared: Array<string>
   - 複数のチャレンジで共有するファイル群の置き場所を指定します。
   - 書式及び使い方は後述します。
+- debug: hash
+  - 一通りのUnitテストとは別に個別に実行する実行パラメータを指定します。
+  - 書式及び使い方は後述します。
+- watch: Array<string>
+  - コマンド実行による更新を監視するファイルのパスを指定します。
+  - ここで指定されたファイルはコマンド実行によって更新された内容がエディタに反映されます。
+  - 例. `package.json`を指定していた場合、`npm install xxx`によって更新された内容が反映されます。
+  - CLIチャレンジでは選択された言語によって定義されているので指定する必要はありません
 
 未知のキーは無視されます。
 
@@ -144,35 +151,6 @@ README.mdには問題の内容をマークダウンで記述します。
 マークダウンの記述ではいくつかの[拡張機能](markdown-extension.md)が使用できます。
 
 README.mdはtrack.ymlに含める必要はありません。
-
-## 国際化対応
-trackではチャレンジのコンパイル時にオプションとして言語(ja, en)を指定します。
-
-このオプションによってREADMEを取り込む時のファイル選択のロジックが変わります。
-
-- `ja` -> `README_ja.md`があればそれを使用、なければ`README.md`を使用
-- `en` -> `README_en.md`があればそれを使用、なければ`README.md`を使用
-
-国際化する問題の場合は日本語と英語の両方のREADMEを用意することが望まれます。
-
-言語オプションで切り替わるのはREADMEのみでテストコード等は切り替わりませんが、言語オプションはテスト実行時に環境変数`CHALLENGE_LANGUAGE`で参照できます。
-
-この環境変数を利用すればテストコード内でメッセージを切り替えることも可能になります。
-
-mochaで外部jSONファイルからtestcaseを読み込んで実行する例
-
-```
-const lang = process.env.CHALLENGE_LANGUAGE;
-const testcases = require("./testcases.json");
-
-testcases.forEach(case => {
-  const title = case.title[lang];
-  it(title, () => {
-    ...
-  });
-});
-
-```
 
 ## openTestとsecretTest
 openTestとはテストコード、テストケースともにユーザに可視となっているテストです。
@@ -230,6 +208,36 @@ solution.mdの内容は企業ユーザ(出題側)には提示されますが、�
 
 solution.mdは必須ではありません。(例えばFizzBuzzのような超有名問題では省略しても問題ありません。)
 solution.mdはtrack.ymlに含める必要はありません。
+
+## 国際化対応
+trackではチャレンジのコンパイル時にオプションとして言語(ja, en)を指定します。
+
+このオプションによってREADME.mdとsolution.mdを取り込む時のファイル選択のロジックが変わります。
+
+- `ja` -> `README_ja.md`があればそれを使用、なければ`README.md`を使用
+- `en` -> `README_en.md`があればそれを使用、なければ`README.md`を使用
+
+solution.mdも同様のロジックでで使用されるファイルが切り替わります。
+国際化する問題の場合は日本語と英語の両方のREADMEを用意することが望まれます。
+
+言語オプションではテストコード等は切り替わりませんが、テスト実行時に環境変数`CHALLENGE_LANGUAGE`で言語オプション(`ja`または`en`)を参照できます。
+
+この環境変数を利用すればテストコード内でメッセージを切り替えることも可能になります。
+
+mochaで外部jSONファイルからtestcaseを読み込んで実行する例
+
+```
+const lang = process.env.CHALLENGE_LANGUAGE;
+const testcases = require("./testcases.json");
+
+testcases.forEach(case => {
+  const title = case.title[lang];
+  it(title, () => {
+    ...
+  });
+});
+
+```
 
 ## BEGIN_CHALLENGEとEND_CHALLENGE
 track.ymlの`editable`または`readonly`で指定したファイルに`BEGIN_CHALLENGE`, `END_CHALLENGE`という対の行が指定されている場合、その範囲はチャレンジ生成時に削除されます。
@@ -306,24 +314,7 @@ Codingチャレンジでもルートディレクトリにある`solution.xx`と�
 また、`editable`なファイルに`BEGIN_CHALLENGE`, `END_CHALLENGE`で括られた区間がある場合はその区間を含むファイルが`solutions`に自動的に登録されます。
 
 ## DockerImages
-現在用意されている汎用Dockerイメージは以下のとおりです。
-これらのイメージは[DockerHub](https://hub.docker.com/u/givery/dashboard/)で公開されています。
-
-- Perl5: givery/track-perl-5
-- Python3.6: givery/track-python-3.6
-- Python2.7: givery/track-python-2.7
-- C#: givery/track-mono-5
-- Scala: givery/track-scala-2.12
-- PHP: givery/track-php-7.2
-- Go: givery/track-go-1.10
-- NodeJS: givery/track-nodejs-10
-- Java: givery/track-java-8
-- Ruby givery/track-ruby-2.5
-- C/C++: givery/track-base2
-- Swift: givery/track-swift-5
-- Kotlin: givery/track-kotlin
-
-いずれの環境にもNodeJSとmochaはインストールされています。
+使用可能なdockerイメージの一覧は[env.md](env.md)を参照してください。
 
 ## cli-templates
 CLIチャレンジで使用できる言語は以下のとおりです。
@@ -342,6 +333,7 @@ CLIチャレンジで使用できる言語は以下のとおりです。
 - go
 - swift
 - kotlin
+- rust
 
 それぞれの言語を指定した場合、対応するDockerイメージでテストが実行されます。
 Dockerイメージとcli-templateを用意すれば、対応言語を増やすことができます。
@@ -469,4 +461,41 @@ shared:
 ```
 
 上の定義では`../shared/js/package.json`が実行環境のルートディレクトリにあるものとして扱われます。
+
+## debug
+debugには受験者が自分の書いたコードの動作を確認するための手助けとなるようなコマンドとパラメータのセットを定義します。
+
+ここで定義するのは一つの `command`と複数の`input`です。
+
+### command
+`command`には実行に使用するコマンドを定義します。
+
+コマンド定義には以下の3つのプレースホルダが使用できます。
+
+- `$f` - 入力パラメータの内容が保存されたファイル名に置き換わります。
+- `$*` - 入力パラメータの内容がコマンドライン引数の形式で展開されます。
+- `$c` - CLIチャレンジで選択された言語のプログラムの実行コマンドに置き換わります。
+
+例
+
+- `node test/debug.js $f` - 入力パラメータが保存されたファイルを引数にdebug.jsを実行します
+- `cat $f | $c` - CLIチャレンジでユーザが作成したプログラムの標準入力に入力パラメータを流し込んで実行します。
+
+
+### input
+事前定義の入力パラメータを定義します。
+
+入力パラメータの指定の仕方には直接track.ymlに値を指定する方法(`raw`)と入力パラメータの内容が記述されたファイルのファイル名を指定する方法(`file`)の2つがあります。
+
+- `raw:[テスト1]a b c` - 入力パラメータは`a b c`です。
+- `file:[テスト2]test/in/file1.txt` - 入力パラメータはfile1.txtの内容です。
+
+`[]`で括られた部分はドロップダウンでの表示名になります。
+
+エディタ上では事前定義のパラメータをユーザが変更して実行することも可能です。
+
+### cliチャレンジの場合の自動定義
+[codecheck](how-to-use-codecheck)を使用して、テストケースを設定ファイルで定義している場合はその内容から自動的にdebug定義が作成されます。
+
+
 

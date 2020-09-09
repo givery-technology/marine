@@ -4,6 +4,6 @@ readonly:
   - https://s3-ap-northeast-1.amazonaws.com/track-contents-assets/challenges/ai/sample/ai-sample-input.tar.gz
 hide:
   - https://s3-ap-northeast-1.amazonaws.com/track-contents-assets/challenges/ai/sample/ai-sample-judge.tar.gz
-soreType:
+scoreType:
   rankBy: low
   min: 0
