@@ -1,9 +1,6 @@
 writer:
-  image: givery/marine:4.5.1
+  image: givery/marine:latest
   ports:
     - "39000:9000"
   volumes:
     - $PWD/contents:/opt/docker/contents
-  #   - $PWD/../compilers/../compilers/src/main/resources/jp/co/givery/trackc/coding/cli/templates:/opt/docker/cli-templates
-  # environment:
-  #   ORCA_HOST: dev.orca.run
