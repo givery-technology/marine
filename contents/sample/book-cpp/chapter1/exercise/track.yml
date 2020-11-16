@@ -1,0 +1,17 @@
+type: coding
+title: C++ sample
+allowNewFile: true
+test: ./build/app
+readonly:
+  - test/*
+  - Makefile
+editable:
+  - src/*
+main: src/app.cpp
+build:
+  - make
+testcases:
+  open: 9
+  secret: 0
+envConf:
+  imageName: givery/track-cpp-googletest
