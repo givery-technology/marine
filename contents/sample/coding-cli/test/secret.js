@@ -1,6 +1,6 @@
 const codecheck = require("codecheck");
 
-const language = process.env.LANGUAGE || "ja";
+const language = process.env.CHALLENGE_LANGUAGE || "ja";
 const appCommand = process.env.APP_COMMAND;
  
 const settings = require("./settings.json");
