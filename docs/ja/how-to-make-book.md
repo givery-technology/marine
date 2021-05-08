@@ -63,10 +63,12 @@ book.ymlはBook全体の定義が記述されたファイルです。
 - download: Boolean, 任意
 - playground: Boolean, 任意
 - webStorage: Boolean, 任意
+- keepSession: Boolean, 任意
 - timeInMinutes: Int, 任意
-- env: Object, 任意
+- env: Object, 任意(`keepSession=true`の場合は必須)
 - shared: List[String], 任意
 - carryOver: List[String], 任意
+- initialize: Object, 任意
 
 ### title
 titleにはBookのタイトルを指定します。
@@ -172,6 +174,12 @@ HTMLブックでWebStorage(sessionStorage or localStorage)を使用する場合�
 
 省略時のデフォルト値は`false`です。
 
+### keepSession
+JavaやRubyなどのRemote環境で処理を行うBookで、Remote環境との接続を維持したい場合は、`true`を指定します。
+`false`の場合はRemote環境でのコマンド実行は毎回、コマンド実行後に切断されます。
+
+省略時のデフォルト値は`false`です。
+
 ### timeInMinutes
 Bookを解き終わるまでの目安時間を分単位で指定します。
 省略時にはセクション数から自動計算されます。
@@ -186,7 +194,7 @@ RubyやJavaなどのプログラミング言語を実行する場合にその環
 
 HTMLやjs/cssのみを扱う場合フロントエンドのみで完結するのでenvの指定は不要です。
 
-ここで環境を指定した場合はBook内のすべてのセクションで使用されますが、セクション毎に異なる環境を指定することも可能です。
+ここで環境を指定した場合はBook内のすべてのセクションで使用されますが、セクション毎に異なる環境を指定することも可能です。(`keepSession=true`の場合は、各セクションで`env`を指定することはできません。言い換えればKeepSession時はBook内で使用できる`env`は一つだけであり途中で切り替えることはできません。)
 
 省略時のデフォルト値は`givery/codecheck:latest`となります。
 これは多くの言語をオールインワンで含んだDockerイメージですが、既にメンテナンスは終了しており含まれる各言語のバージョンが古いので、原則明示的に環境を指定するようにしてください。
@@ -232,6 +240,32 @@ carryOver:
 例えば1-3まで進んだ後に1-1に戻った場合、そこで表示される内容は1-1終了時の内容になります。
 
 carryOverを使用する場合はexercise定義には`name`が必須です。
+
+### initialize
+`initialize`は`keepSession: true`の場合のみ指定することができます。
+ここではRemote環境との接続時に使用するファイルとコマンドのセットを指定することができます。
+
+例えばDatabaseを扱う問題でユーザの処理を実行するよりも前に`CREATE TABLE`や初期データの`INSERT`が必要な場合、この機能を使用することができます。
+
+```
+# データベースを扱うBookの初期処理
+initialize:
+  files:
+    - sql/create.sql
+    - sql/insert.sql
+  commands:
+    - sqlite3 user.db < create.sql
+    - sqlite3 user.db < insert.sql
+```
+
+デフォルトではここで指定した初期化ファイル及びコマンドの実行結果は受講者からは見えませんが、`showConsole: true`を指定した場合は初期化の過程が受験者に表示されます。
+
+※1 KeepSession時でも何らかの理由でRemote環境との接続が切れることはありえます。
+その場合、ユーザによるコマンド実行が行われたタイミングで再接続が行われ、その際に`initialize`の処理も実行されます。
+
+※2 KeepSession時にはStateが維持されるので、ユーザの操作によっては環境が不正な状態になることがありえます。
+(例えばデータベースBookでユーザが`DELETE`文を発行するなど)
+この場合、以降のセクションでの処理が意図した結果とならないことがありますが、ブラウザをリロードすれば接続が切れるのでRemote環境も初期状態に戻ります。
 
 ## チャプター定義ファイル
 チャプター定義ファイルはMarkdown形式で記述されたチャプターの定義ファイルです。  
@@ -621,6 +655,8 @@ ${puts} "Hello World"
 - cwd: build, command実行時のワーキングディレクトリ。
   - 省略時は`/root/src`
   - 指定する場合は`/root/src/directory1`のようにフルパスで指定する必要がある
+- after: command実行後に実行する後処理コマンド。複数指定可
+- previewFile: after(無い場合はcommand)実行後に画面に表示するファイル。画像ファイルまたはHTMLファイルが指定可
 
 `build`と`prepare`の違いはコマンドがコンソール上に表示されるか否かです。
 
@@ -629,6 +665,8 @@ ${puts} "Hello World"
 
 また、prepareコマンドでは`cwd`は適用されません。
 このため、prepareコマンドでなんらかのディレクトリとファイルを作成後にそのディレクトリ上でcommandを実行することも可能です。
+
+`after`の実行はコンソール上には表示されません。
 
 #### remote実行時にコピーされるファイル
 remote実行時には以下のファイルが実行サーバーにコピーされます。
@@ -1026,6 +1064,8 @@ describe("セレクタ", function() {
 - build: 任意。`command`の実行前に実行するコマンドがある場合に指定します。複数指定可能です。
 - prepare: 任意。`build`の実行前に実行するコマンドがある場合に指定します。複数指定可能です。
 - cwd: 任意。`build`および`command`を実行する場合のワーキングディレクトリ。
+- after: `command`実行後に実行する後処理コマンド。複数指定可
+- previewFile: `after`(無い場合は`command`)実行後に画面に表示するファイル。画像ファイルまたはHTMLファイルが指定可
 
 ユーザーには見えているけれど、編集はさせたくないファイルが存在する場合は`files`サブセクションで定義してください。
 
