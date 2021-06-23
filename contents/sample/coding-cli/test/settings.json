@@ -11,7 +11,7 @@
     "maxLines" : 20,
     "maxCharacters" : 300
   },
-  "timeout": 6000,
+  "timeout": 2000,
   "baseDirectory": "test",
 
   "//": "誤差系の問題では以下のキーを// epsからepsに変更",

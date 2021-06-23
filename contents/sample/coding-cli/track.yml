@@ -1,29 +1,38 @@
-type: coding
+type: cli
 allowNewFile: true
 test: mocha
 editable:
 readonly:
-  - test/**/basic/*.*
+  - test/**/basic/*.in
+  - test/**/basic/*.out
   - test/*basic*
   - test/settings.json
+  - test/judge.cpp  # judgeを使用するチャレンジ以外では削除
 hide:
-  - test/**/secret/*.*
+  - test/**/secret/*.in
+  - test/**/secret/*.out
   - test/*secret*
 
 templateType: stdin
 
+# initialize: # judgeを使用するチャレンジ以外では削除
+#  commands:
+#    - g++ -std=c++11 -o test/judge test/judge.cpp
+#    - rm test/judge.cpp
+#  files:
+#    - test/judge.cpp
+
+images: # 画像を使用するチャレンジ以外では削除
+  - img/*.png
+
 testcases:
-  open: 22
+  open: 24
   secret: 22
 
 evaluationPoint:
   "基本実装" : "与えられた数列の最小値、最大値を判定するプログラムとソートアルゴリズムを正しく実装することができます。比較演算子を用いた数値比較、小さい値からのソートプログラム、文字列への変換とデータの連結という基本的なプログラミング能力を持つことがわかります。"
-  "Basic Case" : "Explain about what kind of programming skills needs."
-  "中規模なデータ入力を扱う実装" : "解答する上で必要なプログラミングスキルや解法等を記載致します。"
-  "Medium Case" : "Explain about what kind of programming skills needs."
-  "大規模なデータ入力を扱う実装" : "解答する上で必要なプログラミングスキルや解法等を記載致します。"
-  "Large Case" : "Explain about what kind of programming skills needs."
-  "アンバランスな入力を扱う実装" : "解答する上で必要なプログラミングスキルや解法等を記載致します。"
-  "Unbalanced Case" : "Explain about what kind of programming skills needs."
+  "Basic" : "The examinee can implement a program that returns correct output for small data. He/She has the coding skills to implement a simple sorting, string manipulations and numeral operations."
+  "応用実装" : "解答する上で必要なプログラミングスキルや解法等を記載致します。"
+  "Advanced" : "The examinee can implement a program that returns correct output for small data. He/She has the coding skills to implement a advanced sorting, string manipulations and numeral operations."
 
 languages: all
