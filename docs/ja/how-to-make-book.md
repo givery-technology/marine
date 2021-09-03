@@ -1186,23 +1186,23 @@ codingチャレンジはremoteエクササイズとして、cliチャレンジ�
 しかし、あらかじめ定義済みの関数をユーザに提示したいなど、編集可能な領域を制限したい場合もあるでしょう。
 この場合、
 
-- `EXCERCISE_BEGIN_EDIT`
-- `EXCERCISE_END_EDIT`
+- `EXERCISE_BEGIN_EDIT`
+- `EXERCISE_END_EDIT`
 
 というキーワードで編集可能とする領域を囲むことでその部分以外を編集不可とすることができます。
 
 ``` java
 public class Main {
   public static void main(String[] args) {
-    // EXCERCISE_BEGIN_EDIT
+    // EXERCISE_BEGIN_EDIT
     //この部分に解答コードを記述してください。
     
-    // EXCERCISE_END_EDIT
+    // EXERCISE_END_EDIT
   }
 }
 ```
 
-`EXCERCISE_BEGIN_EDIT`, `EXCERCISE_END_EDIT`を含む行は実行時には削除されるのでブック読者からは見えません。
+`EXERCISE_BEGIN_EDIT`, `EXERCISE_END_EDIT`を含む行は実行時には削除されるのでブック読者からは見えません。
 また、ひとつのファイル内に複数の編集可能領域を定義することも可能です。
 (MarineでDevModeにした場合は画面上に表示されます。)
 
