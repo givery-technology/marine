@@ -1,6 +1,6 @@
 type: cli
 allowNewFile: true
-test: mocha
+test: mocha -R track-reporter
 editable:
 readonly:
   - test/**/basic/*.in
