@@ -169,7 +169,7 @@ appディレクトリ内のどこかに`.gitignore`ファイルがある場合�
 
 もちろん生成後に出題する問題に合わせていくつかのファイルを変更しても構いません。
 
-ユーザの環境構築を容易にするためにdocker-compose.ymlをファイルセットに含めても構いませんが、その場合は後述の[HOST_NAMEの話](#HOST_NAMEの話)、[docker image名の話](#docker image名の話)に注意してください。
+ユーザの環境構築を容易にするためにdocker-compose.ymlをファイルセットに含めても構いませんが、その場合は後述の[HOST_NAMEの話](#HOST_NAMEの話)、[docker image名の話](#docker-image名の話)に注意してください。
 
 ### 解答例(solutionディレクトリ)の作成
 solutionディレクトリには作成するWebアプリケーションの回答例となるコードを置きます。
