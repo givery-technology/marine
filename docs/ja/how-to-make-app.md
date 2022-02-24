@@ -136,7 +136,7 @@ application.ymlはApplication問題専用の設定ファイルです。
   - `cpu`: `256 x N`の値で指定。省略時は256
   - `memory`: `512 x N`の値で指定。省略時は512
 - `conversion`: conversionの指定。省略時は`cat application.log`となる
-  - `command: 実行コマンド。複数可
+  - `command`: 実行コマンド。複数可
   - `envConf`: orca環境定義(track.ymlと同様)
   - ファイルセットの指定はconversionディレクトリの内容がそのまま使われるので不要
 - `testCount`:  テストケース数。CompilerOptionで必須/任意が変わる
