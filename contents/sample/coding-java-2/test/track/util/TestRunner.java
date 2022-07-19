@@ -1,6 +1,7 @@
 package track.util;
 
 import java.io.File;
+import java.io.PrintStream;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.stream.*;
@@ -18,7 +19,14 @@ public class TestRunner {
             }
             Test annotation = testcase.method.getAnnotation(Test.class);
             try {
-                testcase.method.invoke(instance);
+                PrintStream stdout = System.out;
+                PrintStream stderr = System.err;
+                try {
+                    testcase.method.invoke(instance);
+                } finally {
+                    System.setOut(stdout);
+                    System.setErr(stderr);
+                }
                 System.out.println("ok " + i + " " + toString(annotation));
             } catch (InvocationTargetException e) {
                 Throwable e2 = e.getTargetException();
