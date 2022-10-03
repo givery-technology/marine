@@ -1,6 +1,8 @@
-writer:
-  image: givery/marine:latest
-  ports:
-    - "39000:9000"
-  volumes:
-    - $PWD/contents:/opt/docker/contents
+version: "2"
+services:
+  writer:
+    image: givery/marine:latest
+    ports:
+      - "39000:9000"
+    volumes:
+      - $PWD/contents:/opt/docker/contents
