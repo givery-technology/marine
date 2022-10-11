@@ -7,3 +7,5 @@ hide:
 scoreType:
   rankBy: low
   min: 0
+envConf:
+  imageName: givery/track-base2
