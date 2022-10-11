@@ -142,6 +142,8 @@ scoreType:
   rankBy: high
   min: 0
   max: 1
+envConf:
+  imageName: givery/track-base2
 ```
 
 ## README.md
