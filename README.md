@@ -41,7 +41,11 @@ Using docker image is published in [DockerHub](https://hub.docker.com/r/givery/m
 What you have to do is only pull latest version.
 
 ```
+# Publishing version for the real customer
 docker pull givery/marine:latest
+
+# Internal beta version for the development/testing
+docker pull givery/marine:internal
 ```
 
 ## About contents directory
