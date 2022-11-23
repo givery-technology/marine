@@ -1,0 +1,18 @@
+{
+  "isSpecial": true,
+  "input": {
+    "type": "stdin",
+    "source": "file"
+  },
+  "output": {
+    "type": "stdout",
+    "source": "file"
+  },
+  "limitations": {
+    "maxLines" : 20,
+    "maxCharacters" : 300
+  },
+  "timeMethod": "user",
+  "timeout": 2000,
+  "baseDirectory": "test"
+}
