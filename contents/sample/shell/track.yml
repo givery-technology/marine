@@ -1,0 +1,46 @@
+type: coding
+allowNewFile: false
+test: mocha -R track-reporter
+editable:
+  - src/*.sh
+main:
+  - src/script1.sh
+readonly:
+  - test/*basic*
+  - test/settings.json
+  - test/before_init.sh
+  - test/recover.sh
+  - test/check_diff_stdout.sh
+  - test/check_diff_file.sh
+  - test/null
+  - test/basic/*
+  - debug.js
+  - images/*.png
+  - hoge.txt
+hide:
+  - test/*secret*
+  - test/secret/*
+solutions:
+  - src/script1.sh:solution/script1.sh
+  - src/script2.sh:solution/script2.sh
+  - src/script3.sh:solution/script3.sh
+envConf:
+  imageName: givery/track-python-3.9
+initialize:
+  commands:
+    - g++ -std=c++11 -o test/judge test/judge.cpp
+    - rm test/judge.cpp
+  files:
+    - test/judge.cpp
+testcases:
+  open: 3
+  secret: 3
+evaluationPoint:
+  基本実装 : ファイルを適切に操作するシェルスクリプトが記述できる。
+debug:
+  # https://github.com/givery-technology/marine/blob/master/docs/ja/how-to-make-challenge.md#cli%E3%83%81%E3%83%A3%E3%83%AC%E3%83%B3%E3%82%B8%E3%81%AE%E5%A0%B4%E5%90%88%E3%81%AE%E8%87%AA%E5%8B%95%E5%AE%9A%E7%BE%A9
+  command: node debug.js $*
+  input:
+    - raw:[[Step1] `script1.sh` を実行します]1
+    - raw:[[Step2] `script2.sh` を実行します]2
+    - raw:[[Step3] `script3.sh` を実行して、`b.txt` の中身を出力します]3
