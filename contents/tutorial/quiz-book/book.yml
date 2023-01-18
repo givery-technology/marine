@@ -1,0 +1,4 @@
+title: ここにタイトルを入力
+detail: ここにブックの説明文を記述します。
+chapters:
+  - chapter1.md
