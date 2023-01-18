@@ -1,8 +1,22 @@
 version: "3.9"
 services:
   writer:
-    image: givery/marine:latest
+    image: givery/marine:internal
     ports:
       - "39000:9000"
     volumes:
-      - $PWD/contents:/opt/docker/contents
+      - ./contents:/opt/docker/contents
+      - ./orcalogs:/opt/docker/orcalogs
+    # environment:
+    #   READER_JS_PATH: http://localhost:3000/assets/reader.js
+    #   READER_CSS_PATH: http://localhost:3000/assets/reader.css
+    #   CODING_JS_PATH: http://localhost:3000/assets/coding.js
+    #   CODING_CSS_PATH: http://localhost:3000/assets/coding.css
+    #   AI_JS_PATH: http://localhost:3000/assets/ai.js
+    #   AI_CSS_PATH: http://localhost:3000/assets/ai.css
+    #   WEB_JS_PATH: http://localhost:3000/assets/web.js
+    #   WEB_CSS_PATH: http://localhost:3000/assets/web.css
+    #   MARKDOWN_EDITOR_JS_PATH: http://localhost:3000/assets/markdown-editor.js
+    #   MARKDOWN_EDITOR_CSS_PATH: http://localhost:3000/assets/markdown-editor.css
+    #   MARKDOWN_HELPER_JS_PATH: http://localhost:3000/assets/markdown-helper.js
+    #   MARKDOWN_HELPER_CSS_PATH: http://localhost:3000/assets/markdown-helper.css
