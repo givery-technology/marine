@@ -1,0 +1,17 @@
+[
+   {
+      "input": "in/public/01.txt",
+      "output": "out/public/01.txt",
+      "description": "[基本実装] 入力が 2 と 3 のとき、期待された出力結果が得られる"
+   },
+   {
+      "input": "in/public/02.txt",
+      "output": "out/public/02.txt",
+      "description": "[基本実装] 入力が 15 と 8 のとき、期待された出力結果が得られる"
+   },
+   {
+      "input": "in/public/03.txt",
+      "output": "out/public/03.txt",
+      "description": "[基本実装] 入力が 65 と 94 のとき、期待された出力結果が得られる"
+   }
+]
