@@ -12,7 +12,7 @@
 
 ## **[App.java](src/main/java/track/App.java) (編集可)**
 ### `add(int x, int y)`
-`x` と `y` の足し算した値を返します。
+`x` と `y` を足し算した値を返します。
 [Main.java](src/main/java/track/Main.java) (編集不可)から呼び出されます。
 
 #### パラメータ
