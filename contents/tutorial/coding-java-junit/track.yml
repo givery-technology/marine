@@ -1,0 +1,45 @@
+type: coding
+allowNewFile: false
+main: src/main/java/track/App.java
+editable:
+  - src/main/java/track/App.java
+readonly:
+  - src/main/java/track/Main.java
+  - src/test/java/track/AppTest.java
+  - src/test/java/track/Util.java
+  - src/test/resources/in/public/*
+  - src/test/resources/out/public/*
+  - src/test/resources/*public*
+  - src/test/resources/mappings/mappings.yaml
+  - pom.xml
+hide:
+  - src/test/java/track/AppSecretTest.java
+  - src/test/resources/in/secret/*
+  - src/test/resources/out/secret/*
+  - src/test/resources/*secret*
+test: >
+  if mvn -q compile; then
+    mvn -q test;
+    metatest do echo then expand junit target/surefire-reports/TEST-track.AppTest.xml with mappings src/test/resources/mappings/mappings.yaml;
+    test -f src/test/resources/secret.testcases.csv && metatest do echo then expand junit target/surefire-reports/TEST-track.AppSecretTest.xml with mappings src/test/resources/mappings/mappings.yaml count from 4;
+  fi
+envConf:
+  imageName: givery/track-java-corretto-11.0
+  cacheDirs:
+    - /root/.m2
+solutions:
+  - src/main/java/track/App.java:solution/track/App.java
+testcases:
+  open: 3
+  secret: 6
+debug:
+  command: >
+    mvn -q package -Dmaven.test.skip=true &&
+    xargs java -jar target/theapp-1.0-SNAPSHOT.jar $*
+  input:
+    - "file:[[基本実装] 入力が 2 と 3 のとき、期待された出力結果が得られる]src/test/resources/in/public/01.txt"
+    - "file:[[基本実装] 入力が 15 と 8 のとき、期待された出力結果が得られる]src/test/resources/in/public/02.txt"
+    - "file:[[基本実装] 入力が 65 と 94 のとき、期待された出力結果が得られる]src/test/resources/in/public/03.txt"
+evaluationPoint:
+  基本実装: 基本的なテストケースにおいて、正答が出力できる
+  コーナーケース: 境界値のテストケースにおいて、正答が出力できる
