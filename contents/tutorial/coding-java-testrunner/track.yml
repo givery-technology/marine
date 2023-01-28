@@ -17,8 +17,6 @@ build: javac src/main/java/track/*.java
 test: mocha --exit -R track-reporter
 envConf:
   imageName: givery/track-java-corretto-11.0
-  cacheDirs:
-    - /root/.m2
   variables:
     APP_COMMAND: java -classpath src/main/java track.Main
 solutions:
