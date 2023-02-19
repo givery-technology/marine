@@ -1,5 +1,3 @@
-package track;
-
 import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -27,7 +25,7 @@ public class AppTest {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			System.setOut(new PrintStream(bos, true, "utf-8"));
 			String[] args = Files.readString(Paths.get(input), StandardCharsets.UTF_8).trim().split(" ");
-			Main.main(args);
+			Util.runApp(args);
 			String result = new String(bos.toByteArray(), "utf-8").trim();
 
 			List<String> expectedContent = Files.readAllLines(Paths.get(expected));
