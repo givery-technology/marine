@@ -1,4 +1,4 @@
-title: ここにタイトルを入力
-detail: ここにブックの説明文を記述します。
+title: サンプルクイズブック
+detail: クイズブック作成のためのチュートリアルです。
 chapters:
   - chapter1.md
