@@ -1,35 +1,23 @@
 type: coding
-allowNewFile: false
-main: src/main/java/track/App.java
+main: src/App.java
 editable:
-  - src/main/java/track/App.java
+  - src/App.java
 readonly:
-  - src/main/java/track/Main.java
+  - src/Main.java
   - test/*basic*
   - test/in/public/*
   - test/out/public/*
   - test/settings.json
-hide:
-  - test/*secret*
-  - test/in/secret/*
-  - test/out/secret/*
-build: javac src/main/java/track/*.java
+build: javac src/*.java
 test: mocha --exit -R track-reporter
 envConf:
   imageName: givery/track-java-corretto-11.0
   variables:
-    APP_COMMAND: java -classpath src/main/java track.Main
+    APP_COMMAND: java -classpath src Main
 solutions:
-  - src/main/java/track/App.java:solution/track/App.java
+  - src/App.java:solution/App.java
 testcases:
   open: 3
-  secret: 6
-debug:
-  command: $c $*
-  input:
-    - "file:[[基本実装] 入力が 2 と 3 のとき、期待された出力結果が得られる]test/in/public/01.txt"
-    - "file:[[基本実装] 入力が 15 と 8 のとき、期待された出力結果が得られる]test/in/public/02.txt"
-    - "file:[[基本実装] 入力が 65 と 94 のとき、期待された出力結果が得られる]test/in/public/03.txt"
+  secret: 0
 evaluationPoint:
   基本実装: 基本的なテストケースにおいて、正答が出力できる
-  コーナーケース: 境界値のテストケースにおいて、正答が出力できる
