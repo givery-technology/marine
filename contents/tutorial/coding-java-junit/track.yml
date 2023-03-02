@@ -3,12 +3,10 @@ main: src/main/java/App.java
 editable:
   - src/main/java/App.java
 readonly:
-  - src/main/java/Main.java
   - src/test/java/AppTest.java
   - src/test/java/Util.java
   - src/test/resources/in/public/*
   - src/test/resources/out/public/*
-  - src/test/resources/*public*
   - pom.xml
 test: >
   mvn test;

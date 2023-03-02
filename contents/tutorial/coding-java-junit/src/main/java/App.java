@@ -1,5 +1,5 @@
 public class App {
-    public static int add(int x, int y) {
-        return -1;
-    }
+  public static int add(int x, int y) {
+    return -1;
+  }
 }
