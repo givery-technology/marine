@@ -116,5 +116,3 @@ OSI参照モデルは通信処理を以下の7つの階層に分けています�
 - mode: remote
 - file: [q5.txt](./empty.txt)
 - command: echo "保存しました"
-
-
