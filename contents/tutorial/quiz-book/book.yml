@@ -1,0 +1,5 @@
+title: サンプルクイズブック
+detail: クイズブック作成のためのチュートリアルです。
+chapters:
+  - chapter1.md
+  - chapter2.md
