@@ -1,0 +1,31 @@
+type: coding
+main: src/main/App.cs
+editable:
+  - src/main/App.cs
+readonly:
+  - src/test/AppTest.cs
+  - src/test/Util.cs
+  - src/main/main.csproj
+  - src/test/test.csproj
+  - scripts/*
+  # - package.json
+build: sh scripts/build.sh
+test: sh scripts/test_run.sh
+envConf:
+  imageName: givery/track-cli-dotnet
+  cacheDirs:
+    - /root/.dotnet
+    # - /usr/local/lib/node_modules/track-metatest-tools
+# initialize:
+#   commands:
+#     - sh scripts/install.sh
+#   showConsole: true
+  # commands:
+  #   - npm install
+solutions:
+  - src/main/App.cs:solution/App.cs
+testcases:
+  open: 3
+  secret: 0
+evaluationPoint:
+  基本実装: 基本的なテストケースにおいて、正答が出力できる
