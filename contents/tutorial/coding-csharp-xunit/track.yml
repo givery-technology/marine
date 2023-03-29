@@ -8,20 +8,16 @@ readonly:
   - src/main/main.csproj
   - src/test/test.csproj
   - scripts/*
-  # - package.json
+  - package.json
 build: sh scripts/build.sh
 test: sh scripts/test_run.sh
 envConf:
   imageName: givery/track-cli-dotnet
   cacheDirs:
     - /root/.dotnet
-    # - /usr/local/lib/node_modules/track-metatest-tools
-# initialize:
-#   commands:
-#     - sh scripts/install.sh
-#   showConsole: true
-  # commands:
-  #   - npm install
+initialize:
+  commands:
+    - npm install
 solutions:
   - src/main/App.cs:solution/App.cs
 testcases:
