@@ -5,14 +5,14 @@ editable:
 readonly:
   - src/test/java/AppTest.java
   - src/test/java/Util.java
-  - pom.xml
-test: >
-  mvn test;
-  metatest do echo then expand junit target/surefire-reports/TEST-AppTest.xml;
+  - build.gradle
+build: javac src/main/java/App.java && gradle compileTest -q
+test: gradle test --warning-mode=none
 envConf:
   imageName: givery/track-java-corretto-11.0
   cacheDirs:
     - /root/.m2
+    - /root/.gradle
 solutions:
   - src/main/java/App.java:solution/App.java
 testcases:
