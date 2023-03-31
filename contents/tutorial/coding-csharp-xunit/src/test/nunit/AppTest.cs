@@ -1,26 +1,25 @@
-// Xunit
-// The type or namespace name 'XunitContext' could not be found
+// NUnit
+// 標準出力がされない
 
-using Xunit;
-using XunitContext;
+using NUnit.Framework;
 
 public class AppTest
 {
-    [Fact]
+    [Test]
     public void test_2_3()
     {
         int[] input = new int[2] {2, 3};
         __testOutput(input, 5);
     }
 
-    [Fact]
+    [Test]
     public void test_15_8()
     {
         int[] input = new int[2] {15, 8};
         __testOutput(input, 23);
     }
 
-    [Fact]
+    [Test]
     public void test_65_94()
     {
         int[] input = new int[2] {65, 94};
@@ -35,13 +34,13 @@ public class AppTest
 
         Assert.Equal(expected, result);
 
-        if (XunitContext.Context.TestStatus == TestStatus.Failed)
+        if (TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Failed)
         {
-            XunitContext.Context.WriteLine("Test failed.");
+            TestContext.WriteLine("Test failed.");
         }
         else
         {
-            XunitContext.Context.WriteLine("Test succeeded.");
+            TestContext.WriteLine("Test succeeded.");
         }
     }
 }
