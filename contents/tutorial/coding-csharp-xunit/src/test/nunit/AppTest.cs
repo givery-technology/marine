@@ -2,6 +2,7 @@
 // 標準出力がされない
 
 using NUnit.Framework;
+// using System;
 
 public class AppTest
 {
@@ -32,15 +33,17 @@ public class AppTest
         int y = input[1];
         int result = Util.RunApp(x, y);
 
-        Assert.Equal(expected, result);
+        Assert.AreEqual(expected, result);
 
         if (TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Failed)
         {
             TestContext.WriteLine("Test failed.");
+            // Console.WriteLine("Test failed.");
         }
         else
         {
             TestContext.WriteLine("Test succeeded.");
+            // Console.WriteLine("Test succeeded.");
         }
     }
 }
