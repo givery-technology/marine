@@ -1,4 +1,8 @@
+// Xunit
+// The type or namespace name 'XunitContext' could not be found
+
 using Xunit;
+using XunitContext;
 
 public class AppTest
 {
@@ -30,5 +34,14 @@ public class AppTest
         int result = Util.RunApp(x, y);
 
         Assert.Equal(expected, result);
+
+        if (XunitContext.Context.TestStatus == TestStatus.Failed)
+        {
+            XunitContext.Context.WriteLine("Test failed.");
+        }
+        else
+        {
+            XunitContext.Context.WriteLine("Test succeeded.");
+        }
     }
 }
