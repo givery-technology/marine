@@ -3,9 +3,18 @@
 
 using NUnit.Framework;
 // using System;
+using Xunit.Abstractions;
 
 public class AppTest
 {
+
+    private readonly ITestOutputHelper output;
+
+    public AppTest(ITestOutputHelper output)
+    {
+        this.output = output;
+    }
+
     [Test]
     public void test_2_3()
     {
@@ -35,6 +44,7 @@ public class AppTest
 
         Assert.AreEqual(expected, result);
 
+        output.WriteLine("This is output from TestMethod");
         if (TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Failed)
         {
             TestContext.WriteLine("Test failed.");
@@ -43,6 +53,7 @@ public class AppTest
         else
         {
             TestContext.WriteLine("Test succeeded.");
+            output.WriteLine("This is output from TestMethod");
             // Console.WriteLine("Test succeeded.");
         }
     }
