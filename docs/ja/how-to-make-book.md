@@ -1236,6 +1236,11 @@ public class Main {
 - after: consoleモードの場合に`command`実行後に実行する後処理コマンド。複数指定可
 - previewFile: consoleモードの場合に`after`(無い場合は`command`)実行後に画面に表示するファイル。画像ファイルまたはHTMLファイルが指定可
 
+### exerciseやsandboxの解答例
+exercise/playground/sandboxで指定したファイルに解答例がある場合は、指定のファイルと同じフォルダにファイル名に`.solution.`を追加したファイルとして作成します。
+(ex. ファイルが`Main.java`の場合、`Main.solution.java`というファイルで作成します。)
+
+現在、解答例はtrack本体では利用されませんが、Marine上ではDevモードにすることで表示することができます。
 
 ### debug
 remoteエクササイズとcliエクササイズではチャレンジと同様のdebug機能を定義することができます。
