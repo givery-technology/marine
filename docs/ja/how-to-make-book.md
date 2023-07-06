@@ -1236,6 +1236,9 @@ consoleモードの場合、受講者はコンソール上で任意のコマン�
 - cwd: 任意。consoleモードの場合に`build`および`command`を実行する場合のワーキングディレクトリ。
 - after: consoleモードの場合に`command`実行後に実行する後処理コマンド。複数指定可
 - previewFile: consoleモードの場合に`after`(無い場合は`command`)実行後に画面に表示するファイル。画像ファイルまたはHTMLファイルが指定可
+上記コマンド上で以下の変数が使えます。
+
+- `$ACTIVE`: コマンドが実行されたときに、受講者がアクティブにしているファイルのパス
 
 ### exerciseやsandboxの解答例
 exercise/playground/sandboxで指定したファイルに解答例がある場合は、指定のファイルと同じフォルダにファイル名に`.solution.`を追加したファイルとして作成します。
