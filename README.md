@@ -34,15 +34,25 @@ $ docker compose down
 ```
 ## Configuration
 
-### Contents base directory
+### Contents directory
 
-As default, Marine uses `./contents` as contents base directory. if you need to change the directory, pass `DBOOK_SRCDIR` via environment variable. See more details [here](https://github.com/givery-technology/marine/wiki/Configuration).
+As default, Marine uses `./contents` as contents directory. This directory is shared with docker container.
 
-In the contents base directory, all of the contents that meet with conditions below will be picked up by Marine and displayed as the contents list. (**Recursively**)
+In the contents directory, all of the contents that meet with conditions below will be picked up by Marine and displayed as the contents list. (**Recursively**)
 
 - have `book.yml` or `track.yml`
 
-See [Configuration](https://github.com/givery-technology/marine/wiki/Configuration) more advanced configuration. 
+Checkout your content repository in this directory.
+
+### How to update marine docker image
+
+Marine is using a docker image published in [DockerHub](https://hub.docker.com/r/givery/marine/).
+
+What you need to do to update the docker image is run this command.
+
+```
+$ docker pull givery/marine:latest
+```
 
 ## Contents Creation Guide
 
@@ -51,7 +61,6 @@ You can see all of documents under the `./docs`.
 ## Sample Contents
 
 You can see all of sample contents under the `./contents`.
-
 
 ## Troubleshooting
 
