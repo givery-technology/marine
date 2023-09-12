@@ -1,51 +1,72 @@
 # Marine
 
-Contents writer application for [track](https://tracks.run/)
+Contents writer application for [track](https://tracks.run/).
 
-You can make all of following contents with it.
+This application allows you to create all types of content supported by Track.
 
-- Challenge
-- Quiz
-- Book
-
-## Prerequisite
+## Installing / Getting started
+### Prerequisites
 
 - docker
-- docker-compose
 
-## Start
+## Setting up
+
+> For windows users.
+> 
+> Take a look this [Marine on Windows](https://github.com/givery-technology/marine/wiki/Marine-on-Windows) document first, please.
+
+### Start Marine
+
+Run this command.
 
 ```
-docker-compose up -d
+$ docker compose up -d
 ```
 
 After the application started, you can access the app via `http://localhost:39000`
 
-## Stop
+### Stop Marine
+
+Run this command.
 
 ```
-docker-compose down
+$ docker compose down
 ```
+## Configuration
 
-## How to use
-Following directory names are listed in dropdown on header.
+### Contents directory
 
-- under the `contents` directory
-- which has `book.yml` file
+As default, Marine uses `./contents` as contents directory. This directory is shared with docker container.
 
-Choose 1 of them.
+In the contents directory, all of the contents that meet with conditions below will be picked up by Marine and displayed as the contents list. (**Recursively**)
 
-## How to update application
-Using docker image is published in [DockerHub](https://hub.docker.com/r/givery/marine/)
-
-What you have to do is only pull latest version.
-
-```
-docker pull givery/marine:latest
-```
-
-## About contents directory
-This directory is shared with docker container.
-Marine will sarech contents from this directory.
+- have `book.yml` or `track.yml`
 
 Checkout your content repository in this directory.
+
+### How to update marine docker image
+
+Marine is using a docker image published in [DockerHub](https://hub.docker.com/r/givery/marine/).
+
+What you need to do to update the docker image is run this command.
+
+```
+$ docker pull givery/marine:latest
+```
+
+## Contents Creation Guide
+
+You can see all of documents under the `./docs`. 
+
+## Sample Contents
+
+You can see all of sample contents under the `./contents`.
+
+## Troubleshooting
+
+See [Troubleshooting](https://github.com/givery-technology/marine/wiki/Troubleshooting) Guide.
+
+## Licensing
+
+Givery, inc. All Rights Reserved.
+
