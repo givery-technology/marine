@@ -24,7 +24,7 @@
 
 ### env
 
-- imageName: givery/track-nodejs-8
+- imageName: nodejs
 
 ### hint
 `ok xxxx`, `not ok xxxxx`という書式は[TAP](https://testanything.org/)というテストプロトコルに基づいたものです。
@@ -61,7 +61,7 @@ TAPをサポートしたテストフレームワークを使えばもっと簡�
 
 ### env
 
-- imageName: givery/track-nodejs-8
+- imageName: nodejs
 
 ## Rubyエクササイズの例
 整数除算を行うメソッド`divide`を実装しなさい。
@@ -76,7 +76,7 @@ TAPをサポートしたテストフレームワークを使えばもっと簡�
 
 ### env
 
-- imageName: givery/track-ruby-2.5
+- imageName: ruby
 
 ## Pythonエクササイズの例
 整数除算を行うメソッド`divide`を実装しなさい。
@@ -91,7 +91,7 @@ TAPをサポートしたテストフレームワークを使えばもっと簡�
 
 ### env
 
-- imageName: givery/track-python-3.6
+- imageName: python
 
 ## フロントエンドエクササイズの作り方
 足し算を行うメソッド`add`を実装しなさい。
