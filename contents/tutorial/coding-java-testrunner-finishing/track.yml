@@ -15,7 +15,7 @@ hide:
 build: javac src/*.java
 test: mocha --exit -R track-reporter
 envConf:
-  imageName: givery/track-java-corretto-11.0
+  imageName: java
   variables:
     APP_COMMAND: java -classpath src Main
 solutions:
