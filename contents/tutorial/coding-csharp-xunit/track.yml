@@ -3,6 +3,7 @@ main: src/main/App.cs
 editable:
   - src/main/App.cs
 readonly:
+  - src/main/Program.cs
   - src/test/AppTest.cs
   - src/test/Util.cs
   - src/main/main.csproj
@@ -12,7 +13,7 @@ readonly:
 build: sh scripts/build.sh
 test: sh scripts/test_run.sh
 envConf:
-  imageName: givery/track-cli-dotnet
+  imageName: dotnet
   cacheDirs:
     - /root/.dotnet
 initialize:
