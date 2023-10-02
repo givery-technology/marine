@@ -43,6 +43,7 @@ envConfには以下のキーが指定できます
 - perl
 - php
 - python
+  - `python3`でも可能です。どちらも同じ `givery/track-cli-python3` のイメージが使用されます。
 - python3
 - ruby
 - rust
@@ -130,14 +131,6 @@ postgres:
 
 #### バージョンの依存について
 バージョンに依存するライブラリを利用している場合はご相談ください。
-
-### postgresの注意事項
-postgresのイメージを使用する際にはusernameとbaseDirに以下を指定してください。
-
-```
-  username: "postgres"
-  baseDir: "/home/postgres"
-```
 
 ### C#の注意事項
 C#に使用するcsprojファイルの`PropertyGroup`には以下の設定を記載してください。バージョンが変わっても動作するようにするためです。
