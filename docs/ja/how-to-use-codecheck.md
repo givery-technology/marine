@@ -1,7 +1,7 @@
 # codecheckを利用したCLIチャレンジのテスト作成
 ## codecheckとは？
 trackのCLIチャレンジのようなCLIの入出力に対するテストを簡単に作成できるようにしたユーティリティライブラリです。  
-GitHub上の[public repostiroy](https://github.com/code-check/codecheck)で公開されています。
+（現在はprivate repositoryとなっております。）
 
 アルゴリズム問題をCLIアプリケーションで作成させた際のテスト方法のバリエーションはそれほど多くありません。  
 それを極力定型化して、テスト作成のコストを抑えることがこのライブラリの目的です。
