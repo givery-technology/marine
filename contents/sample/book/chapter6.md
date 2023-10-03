@@ -17,6 +17,10 @@
 - file: [Test.java](chapter5/Section1_Test.java)
 - command: java Test
 
+### env
+
+- imageName: givery/track-java-8
+
 ### hint
 ここでは、Main.javaとTest.javaの両方をplaygroundのfileとして指定しているのでどちらも編集可能です。
 
