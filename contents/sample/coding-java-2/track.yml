@@ -17,4 +17,4 @@ testcases:
   open: 5
   secret: 1
 envConf:
-  imageName: givery/track-java-corretto-11.0
+  imageName: java

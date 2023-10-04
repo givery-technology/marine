@@ -7,7 +7,7 @@ JUnitを使用して、Javaのユニットテスト問題を作成するサン�
 ## 問題作成のポイント
 ### build.gradle
 このサンプルではTestRunnerとしてGradleを使用しています。
-[build.gradle](build.grade)はテストの実行結果を[TAP](https://testanything.org/)形式で出力するようにカスタマイズされています。
+[build.gradle](build.gradle)はテストの実行結果を[TAP](https://testanything.org/)形式で出力するようにカスタマイズされています。
 
 Java問題を作成する際にはこのbuild.gradleをそのままコピーして使用してください。
 
@@ -29,7 +29,7 @@ JUnitを利用したごく普通のユニットテストです。
 
 ```
 envConf:
-  imageName: givery/track-java-8
+  imageName: java
   cacheDirs:
     - /root/.m2
     - /root/.gradle

@@ -12,9 +12,9 @@ readonly:
 build: dotnet build src/main.csproj
 test: mocha --exit -R track-reporter
 envConf:
-  imageName: givery/track-cli-dotnet
+  imageName: dotnet
   variables:
-    APP_COMMAND: dotnet src/bin/Debug/net6.0/main.dll
+    APP_COMMAND: dotnet src/bin/Debug/main.dll
 solutions:
   - src/main/App.cs:solution/App.cs
 testcases:

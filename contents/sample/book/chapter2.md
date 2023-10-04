@@ -21,10 +21,10 @@ ${console}.${log}("Hello World!");
 
 ### env
 
-- imageName: givery/track-nodejs-8
+- imageName: nodejs
 
 ### hint
-JavaScript(Node.js)を使用するセクションを作成する際にはDockerイメージとして`givery/track-nodejs-8`を使用します。
+JavaScript(Node.js)を使用するセクションを作成する際にはDockerイメージとして`nodejs`を使用します。
 
 このブックではセクション毎に使用する言語が異なるため各セクションで`env`を指定していますが、通常は1つのブックで扱う言語はひとつだけなので、book.ymlで指定します。
 
@@ -51,11 +51,11 @@ ${puts} "Hello World!"
 - command: ruby main.rb
 
 ### hint
-Rubyを使用するセクションを作成する際にはDockerイメージとして`givery/track-ruby-2.5`を使用します。
+Rubyを使用するセクションを作成する際にはDockerイメージとして`ruby`を使用します。
 
 ### env
 
-- imageName: givery/track-ruby-2.5
+- imageName: ruby
 
 ##　Pythonで「Hello World!」
 Pythonで「Hello World!」を出力してみましょう。
@@ -64,7 +64,7 @@ Pythonで「Hello World!」を出力してみましょう。
 
 ```
 ### remote
-- command: python main.py
+- command: python3 main.py
 ```
 
 ### main(main.py)
@@ -74,14 +74,14 @@ ${print}("Hello World!")
 ```
 
 ### remote
-- command: python main.py
+- command: python3 main.py
 
 ### env
 
-- imageName: givery/track-python-3.6
+- imageName: python
 
 ### hint
-Python(Ptyhon3)を使用するセクションを作成する際にはDockerイメージとして`givery/track-python-3.6`を使用します。
+Python(Ptyhon3)を使用するセクションを作成する際にはDockerイメージとして`python`を使用します。
 
 `givery/track-python-2.7`を使用してPython2系のブックを書くこともできます。
 
@@ -112,7 +112,7 @@ class Main {
 ```
 
 ### hint
-Javaを使用するセクションを作成する際にはDockerイメージとして`givery/track-java-8`を使用します。
+Javaを使用するセクションを作成する際にはDockerイメージとして`java`を使用します。
 
 ### remote
 - build: javac Main.java
@@ -120,7 +120,7 @@ Javaを使用するセクションを作成する際にはDockerイメージと�
 
 ### env
 
-- imageName: givery/track-java-8
+- imageName: java
 
 ## シェルで「Hello World!」
 シェルコマンドで「Hello World!」を出力してみましょう。
@@ -146,10 +146,10 @@ ${echo} "Hello, World!"
 
 ### env
 
-- imageName: givery/track-python-3.6
+- imageName: python
 
 ### hint
-シェルコマンドはどのDockerイメージでも動作しますが、ubuntuベースの`givery/track-python-3.6`を使用することをおすすめします。
+シェルコマンドはどのDockerイメージでも動作しますが、ubuntuベースの`python`を使用することをおすすめします。
 
 ### tips
 ブックの各セクションではDockerコンテナは毎回初期化されます。

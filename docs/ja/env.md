@@ -32,42 +32,113 @@ envConfには以下のキーが指定できます
 
 すべてのdockerイメージにはclangとnodejsが含まれています。
 
-- givery/track-base2
-- givery/track-ruby-2.5
-- givery/track-ruby-2.6
-- givery/track-ruby-2.7
-- givery/track-java-8
-- givery/track-java-corretto-11.0
-- givery/track-go-1.10
-- givery/track-go-1.13
-- givery/track-perl-5
-- givery/track-python-2.7
-- givery/track-python-3.6
-- givery/track-python-3.8
-- givery/track-php-7.2
-- givery/track-php-7.4
-- givery/track-scala-2.12
-- givery/track-scala-2.13
-- givery/track-nodejs-10
-- givery/track-nodejs-12.13
-- givery/track-nightmare-3.0
-- givery/track-mono-5
-- givery/track-cpp-googletest
-- givery/track-sql
-- givery/track-postgres
-- givery/track-kotlin
-- givery/track-swift-5
-- givery/track-swift-5.1
-- givery/track-dotnet-2.2
-- givery/track-dotnet-3.0
-- givery/track-java-corretto-11.0
-- givery/track-rust-1.39
-- givery/track-haskell-14.11
-- givery/track-python3.7-anaconda
+- cpp
+- dart
+- dotnet
+- go
+- haskell
+- java
+- kotlin
+- nodejs
+- perl
+- php
+- python
+  - `python3`でも可能です。どちらも同じ `givery/track-cli-python3` のイメージが使用されます。
+- python3
+- ruby
+- rust
+- scala
+- swift
+- typescript
+- sqlite
+- postgres
 
-postgresのイメージを使用する際にはusernameとbaseDirに以下を指定してください。
+これらのイメージは[DockerHub](https://hub.docker.com/u/givery)で公開されているイメージと次のようにマッピングされています。`cacheDirs`などを含んだマッピングではデフォルトでその設定が反映されます。例えば`java`イメージを使用する時、envConfに`cacheDirs`を記載しなくても、自動で`cacheDirs`に`/root/.m2`の設定が反映されます。
 
-```
+<details><summary>イメージのマッピング(クリックして展開)</summary>
+
+```yml
+cpp:
+  image: givery/track-cli-cpp
+dart:
+  image: givery/track-cli-dart
+dotnet:
+  image: givery/track-cli-dotnet
+go:
+  image: givery/track-cli-go
+  workingDir: "/root/src/src/tracks.run/challenge"
+  cacheDirs:
+    - /go/pkg
+haskell:
+  image: givery/track-cli-haskell
+java:
+  image: givery/track-cli-java
+  cacheDirs:
+    - /root/.m2
+kotlin:
+  image: givery/track-cli-kotlin
+  cacheDirs:
+    - /root/.gradle
+nodejs:
+  image: givery/track-cli-nodejs
+perl:
+  image: givery/track-cli-perl
+  cacheDirs:
+    - /root/.cpanm
+php:
+  image: givery/track-cli-php
+python:
+  image: givery/track-cli-python3
+  cacheDirs:
+    - "/usr/local/lib/python3.11"
+python3:
+  image: givery/track-cli-python3
+  cacheDirs:
+    - "/usr/local/lib/python3.11"
+ruby:
+  image: givery/track-cli-ruby
+  cacheDirs:
+    - "/usr/local/bundle"
+    - "/usr/local/lib/ruby/gems/3.2.0"
+rust:
+  image: givery/track-cli-rust
+  cacheDirs:
+    - "/root/.cargo/registry"
+scala:
+  image: givery/track-cli-scala
+  cacheDirs:
+    - "/root/.ivy2"
+    - "/root/.sbt"
+    - "/root/.cache"
+swift:
+  image: givery/track-cli-swift
+typescript:
+  image: givery/track-cli-typescript
+sqlite:
+  image: givery/track-sqlite
+postgres:
+  image: givery/track-postgres
   username: "postgres"
   baseDir: "/home/postgres"
+  cacheDirs:
+    - "/var/lib/postgresql/data"
+```
+
+</details>
+
+### イメージのバージョンについて
+イメージは自動で最新に保たれます。envConfを逐一更新する必要はありません。
+
+#### バージョンの依存について
+バージョンに依存するライブラリを利用している場合はご相談ください。
+
+### C#の注意事項
+C#に使用するcsprojファイルの`PropertyGroup`には以下の設定を記載してください。バージョンが変わっても動作するようにするためです。
+```xml
+<DOTNET_FRAMEWORK_VERSION Condition=" '$(DOTNET_FRAMEWORK_VERSION)' == '' ">net6.0</DOTNET_FRAMEWORK_VERSION>
+<OutputType>Exe</OutputType>
+<TargetFramework>$(DOTNET_FRAMEWORK_VERSION)</TargetFramework>
+<GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 ```
