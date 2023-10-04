@@ -8,3 +8,5 @@ chapters:
 - chapter5.md
 - chapter6.md
 - chapter7.md
+env:
+  imageName: givery/track-base2

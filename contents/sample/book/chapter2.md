@@ -1,7 +1,7 @@
 # リモートセクションの作り方
 このチャプターでは各種言語でのHelloWorldを題材にリモートセクション(バックエンドコンソールでプログラムを実行するセクション)の作り方を説明します。
 
-##　Javascriptで「Hello World!」
+##　JavaScriptで「Hello World!」
 JavaScriptで「Hello World」を出力してみましょう。
 
 文字列を出力するには `console.log` を使用します。

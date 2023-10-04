@@ -24,7 +24,7 @@
 
 ### env
 
-- imageName: nodejs
+- imageName: givery/track-java-8
 
 ### hint
 `ok xxxx`, `not ok xxxxx`という書式は[TAP](https://testanything.org/)というテストプロトコルに基づいたものです。
@@ -61,7 +61,7 @@ TAPをサポートしたテストフレームワークを使えばもっと簡�
 
 ### env
 
-- imageName: nodejs
+- imageName: givery/track-java-8
 
 ## Rubyエクササイズの例
 整数除算を行うメソッド`divide`を実装しなさい。
