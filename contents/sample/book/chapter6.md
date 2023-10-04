@@ -19,7 +19,7 @@
 
 ### env
 
-- imageName: givery/track-java-8
+- imageName: java
 
 ### hint
 ここでは、Main.javaとTest.javaの両方をplaygroundのfileとして指定しているのでどちらも編集可能です。
