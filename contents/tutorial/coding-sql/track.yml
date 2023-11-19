@@ -9,7 +9,10 @@ readonly:
   - test/**/public/*.*
   - test/*public*
 envConf:
-  imageName: givery/track-sql
+  imageName: givery/track-sqlite
+solutions:
+  - sql/step1.sql:solution/step1.sql
+  - sql/step2.sql:solution/step2.sql
 testcases:
   open: 2
   secret: 0
