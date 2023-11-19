@@ -1,5 +1,4 @@
 type: coding
-# mainFile: sql/step1.sql
 main: sql/step1.sql
 test: mocha --exit -R track-reporter
 editable:
