@@ -1,0 +1,18 @@
+preparations:
+  init_db: &init_db
+  - init/create_db.sql
+  - init/public/inventories.csv:inventories
+testcases:
+  - title: "[参照系クエリ] Step1 在庫数の一覧を取得できている"
+    exec:
+      - *init_db
+      - sql/step1.sql
+    check:
+      equal_to: test/data/public/01.csv
+  - title: "[更新系クエリ] Step2 在庫数が適切に変更されている"
+    exec:
+      - *init_db
+      - sql/step2.sql
+      - SELECT * FROM inventories
+    check:
+      equal_to: test/data/public/02.csv

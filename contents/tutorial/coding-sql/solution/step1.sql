@@ -1,0 +1,2 @@
+SELECT quantity
+FROM inventories;

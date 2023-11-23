@@ -1,0 +1,21 @@
+type: coding
+main: sql/step1.sql
+test: mocha --exit -R track-reporter
+editable:
+  - sql/step*.sql
+readonly:
+  - init/create_db.sql
+  - init/public/inventories.csv
+  - test/**/public/*.*
+  - test/*public*
+envConf:
+  imageName: sqlite
+solutions:
+  - sql/step1.sql:solution/step1.sql
+  - sql/step2.sql:solution/step2.sql
+testcases:
+  open: 2
+  secret: 0
+evaluationPoint:
+  参照系クエリ: 適切な SELECT 文が記述できる
+  更新系クエリ: INSERT/UPDATE/DELETE 文が正しく記述できる
