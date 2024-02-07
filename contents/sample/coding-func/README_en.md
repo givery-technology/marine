@@ -1,6 +1,6 @@
 Please read DEVNOTES.md for an explanation of the question-creation workflow and file structure.
 
-A given number of integers, n, are provided. Implement a function that returns a string concatenated from the integers in ascending order.
+A given number of integers, \\(n\\), are provided. Implement a function that returns a string concatenated from the integers in ascending order.
 
 ## Implementation Details
 
