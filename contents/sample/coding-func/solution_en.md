@@ -1,5 +1,10 @@
 ## Solution
-The correct answer can be obtained by inputting the three strings, acquiring the first character of each string, and connecting these characters in order.
+Concatenating the sequence \\(a\\) from the smallest element can be realized by the following steps:
 
-## Computational complexity
-O(1)
+- Sort \\(a\\)
+- Convert each element into a string
+- Concatenate them
+
+## Computational Complexity
+The sorting requires \\(O(n \log n)\\), and converting a single integer to a string requires \\(O(\log \max(a))\\), so the total computational complexity is \\(O(n (\log n + \log \max(a)))\\).
+

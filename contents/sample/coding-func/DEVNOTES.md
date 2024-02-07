@@ -79,6 +79,7 @@ evaluationPoint:
 evaluationPoint: では、basic_testcases.json と secret_testcases.json で定義された全ての EvaluationPoint が説明されていなければならない。この説明は企業に公開されており、この分類に該当するテストケースで正答した受験者がどのようなスキルを持っているのかを定性的に理解させるために書かれている。
 
 # 作問フロー
-- 問題文 README.md、想定解 solution.拡張子、解説 solution.md、テストケースの入力ファイル`test/in/**/*.in`を書く。
+- 問題文 README.md、想定解 solution.拡張子、解説 solution.md、テストケースの入力ファイル`test/in/**/*.in.json`を書く。
+- テストケースの入力ファイル`test/in/**/*.in.json`に対応する、出力ファイル`test/in/**/*.out`を作成する。
+- track.yml に `test/basic_testcases.json`と`test/secret_testcases.json`にテストケースを追加する
 - track.yml に open, secret テストケースの数を記述する。
-- track.yml に `test/basic_testcases.json`と`test/secret_testcases.json`に含まれる全ての evaluationPoint について、説明文を書く。

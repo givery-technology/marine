@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   writer:
-    image: givery/marine:latest
+    image: givery/marine:internal
     ports:
       - "39000:9000"
     volumes:

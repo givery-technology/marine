@@ -31,7 +31,7 @@ functionInputDir:
   - "test/in/basic"
   - "test/in/secret"
 evaluationPoint:
-  "基本実装" : "与えられた数列の最小値、最大値を判定するプログラムとソートアルゴリズムを正しく実装することができます。比較演算子を用いた数値比較、小さい値からのソートプログラム、文字列への変換とデータの連結という基本的なプログラミング能力を持つことがわかります。"
+  "基本実装" : "ソートプログラム、文字列への変換とデータの連結という基本的なプログラミング能力を持つことがわかります。"
   "Basic" : "The examinee can implement a program that returns correct output for small data. He/She has the coding skills to implement a simple sorting, string manipulations and numeral operations."
-  "応用実装" : "解答する上で必要なプログラミングスキルや解法等を記載致します。"
+  "応用実装" : "解答する上で必要なプログラミングスキルや解法等を記載してください。"
   "Advanced" : "The examinee can implement a program that returns correct output for small data. He/She has the coding skills to implement a advanced sorting, string manipulations and numeral operations."
