@@ -30,7 +30,7 @@ When arranged in ascending order (1, 3, 5), concatenating them results in "135".
 ### Example 2
 Arguments
 
-| n   | a                  |
+| \\(n\\)   | \\(a\\)                  |
 |-----|--------------------|
 | 8   | [ 1, 43, 6, 2, 7, 83, 2, 6 ] |
 
