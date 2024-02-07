@@ -1,48 +1,43 @@
-There are many abbreviations in the world.
-For example, `PC` stands for `Personal Computer` and `NHK` stands for `Nippon Hoso Kyokai`.
+Please read DEVNOTES.md for an explanation of the question-creation workflow and file structure.
 
-There are several methods for abbreviating a word. The most common method is taking the first character of each string and concatenating them.
-The above examples are abbreviated using this method.
-Your task is to abbreviate a variety of words using this method.
+A given number of integers, n, are provided. Implement a function that returns a string concatenated from the integers in ascending order.
 
-## Implementation details
+## Implementation Details
 
-Implement a function that receives arguments \\(s_1\\), \\(s_2\\), and \\(s_3\\), and returns the string `result`.
-Please store `result` as the first characters of the \\(3\\) strings without any spaces between the characters.
+A function template is provided. Implement a function that takes the integer n and an array a as arguments, and returns a string `result` concatenated from the integers in ascending order.
 
-The conditions are as follows:
-- \\(1 \le\\) the length of string \\(s_i\\) \\(\le 20\ (1 \le i \le 3)\\)
-- Each string consists of letters only
+The constraints are as follows:
 
-## I/O examples
+- \\(2 \le n \le 10^5\\), integer
+- \\(1 \le a_i \le 10^9 (1 \le i \le n) \\), integer
+
+## Examples
 ### Example 1
 Arguments
 
-| \\(s_1\\) | \\(s_2\\) | \\(s_3\\) |
-|----------|----------|----------|
-| "Nippon"  | "Hoso"    | "Kyokai"  |
+| n   | a          |
+|-----|------------|
+| 3   | [ 3, 1, 5 ]|
 
 Return Value
 
 | result |
 |--------|
-| "NHK" |
+| "135"   |
 
-The first characters of the strings are `N`, `H`, and `K`.
-After concatenating these characters, the abbreviation is `NHK`.
+When arranged in ascending order (1, 3, 5), concatenating them results in "135".
 
 ### Example 2
 Arguments
 
-| \\(s_1\\) | \\(s_2\\) | \\(s_3\\) |
-|----------|----------|----------|
-| "for"  | "your"    | "infomation"  |
+| n   | a                  |
+|-----|--------------------|
+| 8   | [ 1, 43, 6, 2, 7, 83, 2, 6 ] |
 
 Return Value
 
-| result |
-|--------|
-| "fyi" |
+| result     |
+|------------|
+| "1226674383" |
 
-Note that the expected arguments and return value are defined in [test/basic_testcases.json](test/basic_testcases.json).
-Please refer to this file for implementation.
+Expected arguments and return values for some cases are defined in [test/basic_testcases.json](test/basic_testcases.json). Please refer to it when implementing.
