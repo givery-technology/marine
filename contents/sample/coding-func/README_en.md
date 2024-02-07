@@ -4,7 +4,7 @@ A given number of integers, \\(n\\), are provided. Implement a function that ret
 
 ## Implementation Details
 
-A function template is provided. Implement a function that takes the integer n and an array a as arguments, and returns a string `result` concatenated from the integers in ascending order.
+A function template is provided. Implement a function that takes the integer \\(n\\) and an array \\(a\\) as arguments, and returns a string `result` concatenated from the integers in ascending order.
 
 The constraints are as follows:
 
