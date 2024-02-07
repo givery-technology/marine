@@ -15,7 +15,7 @@ The constraints are as follows:
 ### Example 1
 Arguments
 
-| n   | a          |
+| \\(n\\)   | \\(a\\)          |
 |-----|------------|
 | 3   | [ 3, 1, 5 ]|
 
