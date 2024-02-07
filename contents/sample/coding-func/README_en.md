@@ -1,10 +1,10 @@
 Please read DEVNOTES.md for an explanation of the question-creation workflow and file structure.
 
-A given number of integers, n, are provided. Implement a function that returns a string concatenated from the integers in ascending order.
+A given number of integers, \\(n\\), are provided. Implement a function that returns a string concatenated from the integers in ascending order.
 
 ## Implementation Details
 
-A function template is provided. Implement a function that takes the integer n and an array a as arguments, and returns a string `result` concatenated from the integers in ascending order.
+A function template is provided. Implement a function that takes the integer \\(n\\) and an array \\(a\\) as arguments, and returns a string `result` concatenated from the integers in ascending order.
 
 The constraints are as follows:
 
@@ -15,7 +15,7 @@ The constraints are as follows:
 ### Example 1
 Arguments
 
-| n   | a          |
+| \\(n\\)   | \\(a\\)          |
 |-----|------------|
 | 3   | [ 3, 1, 5 ]|
 
@@ -30,7 +30,7 @@ When arranged in ascending order (1, 3, 5), concatenating them results in "135".
 ### Example 2
 Arguments
 
-| n   | a                  |
+| \\(n\\)   | \\(a\\)                  |
 |-----|--------------------|
 | 8   | [ 1, 43, 6, 2, 7, 83, 2, 6 ] |
 
