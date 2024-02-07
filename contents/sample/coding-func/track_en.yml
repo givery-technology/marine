@@ -1,0 +1,13 @@
+function:
+  name: "sortAndConcatIntegers"
+  arguments:
+    - name: n
+      type: int
+      description: "\\\\(n\\\\)"
+    - name: a
+      type: int[]
+      description: "\\\\(a\\\\)"
+  result:
+    type: string
+    description: "Concatenated string of integers in ascending order"
+
