@@ -43,7 +43,7 @@
 
 テストケース毎に、入力ファイル、出力ファイル、テストケースの日本語説明、テストケースの英語説明を定義することができる。ただし、英語での作問をしない場合には、テストケースの英語説明は省略できる。ファイルの内容の例は以下である。
 
-```
+```plain
 [
    {
       "input": "in/basic/00_sample1.in",
@@ -64,7 +64,7 @@ description, description_en は、`[EvaluationPoint] 説明文` の形式で書�
 # track.yml
 チャレンジのメタ情報を定義する。この中では主に、テストケース数と EvaluationPoint の説明を行う。以下が抜粋である。
 
-```
+```plain
 testcases:
   open: 24
   secret: 22
@@ -77,6 +77,31 @@ evaluationPoint:
 ```
 
 evaluationPoint: では、basic_testcases.json と secret_testcases.json で定義された全ての EvaluationPoint が説明されていなければならない。この説明は企業に公開されており、この分類に該当するテストケースで正答した受験者がどのようなスキルを持っているのかを定性的に理解させるために書かれている。
+
+function: では、受験者が実行すべき関数について、その入出力の変数の型・名前・説明を定義する。type は、int, string, float, boolean、及びその配列と二次元配列を指定することができる。以下が設定例である。
+
+```plain
+function:
+  name: "getStudentInfo"
+  arguments:
+    - name: age
+      type: int
+      description: "Age."
+    - name: subjects
+      type: string[]
+      description: "Array of subjects"
+    - name: scores
+      type: float[][]
+      description: "2D array of scores"
+  result:
+    type: string[]
+    description: "Retern value"
+```
+
+現在の関数実装スタイルでは、各入出力の型に下記の制限があることに注意が必要である。
+
+- int は double 型の整数範囲しかサポートできないため、整数の入出力制約を ±10^15 に抑える必要がある。
+- 入力において、string 変数に空白文字を含めることはできない。
 
 # 作問フロー
 - 問題文 README.md、想定解 solution.拡張子、解説 solution.md、テストケースの入力ファイル`test/in/**/*.in.json`を書く。
