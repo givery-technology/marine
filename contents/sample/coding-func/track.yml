@@ -1,0 +1,37 @@
+type: function
+allowNewFile: true
+test: mocha -R track-reporter
+editable:
+readonly:
+  - test/in/basic/*.in.json
+  - test/out/basic/*.out
+  - test/*basic*
+  - test/settings.json
+hide:
+  - test/in/secret/*.in.json
+  - test/out/secret/*.out
+  - test/*secret*
+
+testcases:
+  open: 24
+  secret: 22
+function:
+  name: "sortAndConcatIntegers"
+  arguments:
+    - name: n
+      type: int
+      description: "\\\\(n\\\\)"
+    - name: a
+      type: int[]
+      description: "\\\\(a\\\\)"
+  result:
+    type: string
+    description: "整数を小さい方から連結した文字列"
+functionInputDir:
+  - "test/in/basic"
+  - "test/in/secret"
+evaluationPoint:
+  "基本実装" : "ソートプログラム、文字列への変換とデータの連結という基本的なプログラミング能力を持つことがわかります。"
+  "Basic" : "The examinee can implement a program that returns correct output for small data. He/She has the coding skills to implement a simple sorting, string manipulations and numeral operations."
+  "応用実装" : "解答する上で必要なプログラミングスキルや解法等を記載してください。"
+  "Advanced" : "The examinee can implement a program that returns correct output for small data. He/She has the coding skills to implement a advanced sorting, string manipulations and numeral operations."
