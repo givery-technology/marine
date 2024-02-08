@@ -106,5 +106,5 @@ function:
 # 作問フロー
 - 問題文 README.md、想定解 solution.拡張子、解説 solution.md、テストケースの入力ファイル`test/in/**/*.in.json`を書く。
 - テストケースの入力ファイル`test/in/**/*.in.json`に対応する、出力ファイル`test/in/**/*.out`を作成する。
-- track.yml に `test/basic_testcases.json`と`test/secret_testcases.json`にテストケースを追加する
+- `test/basic_testcases.json`と`test/secret_testcases.json`に、テストケースのファイル名とdescriptionを追加する
 - track.yml に open, secret テストケースの数を記述する。
