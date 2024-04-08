@@ -1236,7 +1236,7 @@ book.ymlでenvを定義する代わりに個別のセクションでenvを定義
 ```
 ### env
 
-- imageName: givery/track-java-8
+- imageName: java
 - cacheDirs: /root/.m2
 - cacheDirs: /root/.gradle
 ```
