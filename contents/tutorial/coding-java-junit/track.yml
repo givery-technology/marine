@@ -6,7 +6,7 @@ readonly:
   - src/test/java/AppTest.java
   - src/test/java/Util.java
   - build.gradle
-build: javac src/main/java/App.java && gradle compileTest -q
+build: gradle compileTest -q
 test: gradle test --warning-mode=none
 envConf:
   imageName: java
