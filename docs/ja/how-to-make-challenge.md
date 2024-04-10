@@ -295,6 +295,25 @@ testcases.forEach(case => {
 
 ```
 
+## BEGIN_CHALLENGEとEND_CHALLENGE
+track.ymlの`editable`または`readonly`で指定したファイルに`BEGIN_CHALLENGE`, `END_CHALLENGE`という対の行が指定されている場合、その範囲はチャレンジ生成時に削除されます。
+
+ただし、MarineでSolutionを選択した場合はこの部分も表示されます。
+
+例
+
+```
+// 足し算を実行するメソッドを実装しなさい
+function add(a, b) {
+  // BEGIN_CHALLENGE
+  return a + b;
+  // END_CHALLENGE
+}
+```
+
+上記の場合、受験者の環境では関数`add`の中身は空になっているので受験者自身が実装しない限りエラーとなりますが、MarineでSolutionを選択している場合は
+実装が含まれているためテストを実行して結果を確認することができます。
+
 ## solutions
 solutionsには問題の解答例となるファイルを指定します。
 solutionsの登録にはファイル名を指定しますが、`:`で区切って実際のファイル名とテスト実行時のファイル名を変更することもできます。
@@ -345,6 +364,8 @@ Codingチャレンジの場合は`solutions`で指定されたファイルがす
 `editable`で指定されているファイルが`solutions`に指定されている場合は上書きされます。
 
 Codingチャレンジでもルートディレクトリにある`solution.xx`というファイルは自動的に登録されますが、そのファイルはtrack.ymlの`mainFile`で指定されたファイルと置き換えられます。
+
+また、`editable`なファイルに`BEGIN_CHALLENGE`, `END_CHALLENGE`で括られた区間がある場合はその区間を含むファイルが`solutions`に自動的に登録されます。
 
 ## DockerImages
 使用可能なdockerイメージの一覧は[env.md](env.md)を参照してください。
