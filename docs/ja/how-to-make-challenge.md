@@ -6,8 +6,9 @@ Challengeとはユーザに実際にプログラムコードを書かせてそ�
 - 言語非依存のCLIアプリケーションを作成させるCLIチャレンジ(`type: cli`)
 - 言語非依存の関数を実行させるFunctionチャレンジ(`type: function`)
 - 特定言語向けのプログラミング問題となるCodingチャレンジ(`type: coding`)
+- フロントエンドのプログラミング問題となるFrontendチャレンジ(`type: frontend`)
 
-の3種類に別れます。
+の4種類に別れます。
 
 ※ track上ではCLIチャレンジはアルゴリズム問題、Functionチャレンジは関数問題、Codingチャレンジは実装問題と表示されています。
 
@@ -48,6 +49,9 @@ public class FizzBuzz {
 CLIチャレンジとFunctionチャレンジはアルゴリズム等の基礎知識を問う問題に向いており、Codingチャレンジはその言語の習熟度を問う問題に向いています。
 (歴史的にはFunctionチャレンジは後から追加実装されました。現在ではCLIチャレンジよりもFunctionチャレンジの方がユーザーフレンドリーなので推奨されます。)
 
+## Frontendチャレンジ
+フロントエンドチャレンジは、ユーザがテンプレート (言語・フレームワーク) を切り替えて、フロントエンド開発を行うチャレンジです。
+
 ### オフィシャルチャレンジとカスタムチャレンジ
 オフィシャルチャレンジとはtrackが公式に作成しているチャレンジのことです。
 プランによって使える範囲に違いはありますが、契約企業であれば誰でも使用することができます。
@@ -81,7 +85,7 @@ Codingチャレンジでは対象の言語用の任意のテストフレーム�
 track.ymlでは以下のキーを定義します。
 
 - type: string. 必須.
-  - `cli`, `functiopn`, `coding`のいずれか
+  - `cli`, `functiopn`, `coding`, `frontend`のいずれか
   - AIチャレンジの場合はここに`ai`と指定しますが、この文書では扱いません。
 - editable: Array<string>
   - チャレンジに含め、編集可能なファイルを指定します。ワイルドカードが使用できます。
@@ -138,6 +142,16 @@ track.ymlでは以下のキーを定義します。
   - 言語バージョンの更新を行った際にチャレンジが動作することを検証するためにも使用するので必ず一つ以上作成してください。
   - オフィシャル問題は原則満点解答を作成していますが、カスタム問題では1点以上の得点が取れる(=コード自体が正しく実行できる)解答コードであれば、必ずしも満点回答でなくても構いません。
   - 解答例には後述する自動登録機能を使うこともできます。
+- namedSolutions: Array<hash>
+  - 問題の解答例を名称付きで指定します。
+  - Frontendチャレンジでは `solutions` のかわりにこちらを利用します
+  - フィールド
+    - name: string. 必須
+      - 解答例の名称を指定します
+      - Frontendチャレンジでは、テンプレートコード (`react-ts` 等) を指定します。
+    - files: Array<string>
+      - 解答例を含むファイルを指定します。
+      - `solutions` と同じ形式で指定します。
 - shared: Array<string>
   - 複数のチャレンジで共有するファイル群の置き場所を指定します。
   - 書式及び使い方は後述します。
@@ -366,6 +380,27 @@ Codingチャレンジの場合は`solutions`で指定されたファイルがす
 Codingチャレンジでもルートディレクトリにある`solution.xx`というファイルは自動的に登録されますが、そのファイルはtrack.ymlの`mainFile`で指定されたファイルと置き換えられます。
 
 また、`editable`なファイルに`BEGIN_CHALLENGE`, `END_CHALLENGE`で括られた区間がある場合はその区間を含むファイルが`solutions`に自動的に登録されます。
+
+## namedSolutions
+namedSolutions には問題の解答例となるファイルを指定します。複数の解答例のファイルセットを登録できます。ファイルセットは `name` で区別できます。
+ファイルの指定方法はsolutionsと同じで、`:` が利用できます。
+
+### Frontendチャレンジの場合
+Frontendチャレンジでは、`name` にはテンプレートのコードを設定します。`files` で指定されたファイルがすべてテスト実行時にコピーされます。`editable` で指定されているファイルが `files` に指定されている場合や、テンプレートのファイルが `files` に指定されている場合は、`files` の内容で上書きされます。
+
+例:
+
+```
+namedSolutions:
+  - name: react-ts
+    files:
+      - src/App.tsx:solution/react-ts/src/App.tsx
+      - index.html:solution/react-ts/index.html
+  - name: pure-js
+    files:
+      - src/app.js:solution/pure-js/src/app.js
+      - index.html:solution/pure-js/index.html
+```
 
 ## DockerImages
 使用可能なdockerイメージの一覧は[env.md](env.md)を参照してください。
