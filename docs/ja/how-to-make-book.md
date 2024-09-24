@@ -224,6 +224,22 @@ initialize:
 
 デフォルトではここで指定した初期化ファイル及びコマンドの実行結果は受講者からは見えませんが、`showConsole: true`を指定した場合は初期化の過程が受験者に表示されます。
 
+ここでfilesに指定したファイルは初回だけコピーされ、以降の変更は実行環境で保持されます。
+例えば、.NETの環境でライブラリ追加が行われていない状態のcsprojをコピーして、initialize時にその時点での最新のライブラリを追加するような操作が可能です。
+
+```
+## 初期化時に必要なライブラリを追加
+initialize:
+  commands:
+    - dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+    - dotnet add package RazorLight
+  files:
+    - "[main.csproj](src/main.csproj)"
+  showConsole: true
+```
+
+多くの言語やライブラリは互換性に配慮されているので、この方法で将来の言語/ライブラリのバージョンアップがあってもそのまま動く可能性は高いですが、その一方で非互換な修正が入った場合に動作しなくなるリスクもあります。
+
 ※1 KeepSession時でも何らかの理由でRemote環境との接続が切れることはありえます。
 その場合、ユーザによるコマンド実行が行われたタイミングで再接続が行われ、その際に`initialize`の処理も実行されます。
 
@@ -647,6 +663,7 @@ ${puts} "Hello World"
 このため、prepareコマンドでなんらかのディレクトリとファイルを作成後にそのディレクトリ上でcommandを実行することも可能です。
 
 `after`の実行はコンソール上には表示されません。
+また、`after`で指定されたコマンドは`build`や`command`で指定したコマンドの実行に失敗した場合も実行されます。
 
 #### remote実行時にコピーされるファイル
 remote実行時には以下のファイルが実行サーバーにコピーされます。
