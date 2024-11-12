@@ -91,7 +91,7 @@ Codingチャレンジでは対象の言語用の任意のテストフレーム�
 track.ymlでは以下のキーを定義します。
 
 - type: string. 必須.
-  - `cli`, `functiopn`, `coding`, `frontend`のいずれか
+  - `cli`, `function`, `coding`, `frontend`のいずれか
   - AIチャレンジの場合はここに`ai`と指定しますが、この文書では扱いません。
 - editable: Array<string>
   - チャレンジに含め、編集可能なファイルを指定します。ワイルドカードが使用できます。
