@@ -40,7 +40,9 @@ $ node scripts/list-contents.js | scripts/validation-tool
 ```
 
 ## 処理の中断について
-docker上で動かしているため、validation-tool.shはCTRL+Cでは止まりません。
+上記のようなホストOSからのリダイレクトを受け入れるためにvalidation-tool.shではdockerのTTYを無効にしています。
+この副作用として、validation-tool.shはCTRL+Cでは止まりません。
+
 処理を中断したい場合は `docker ps`でコンテナIDを調べて
 
 ```
@@ -48,6 +50,8 @@ $ docker rm -f <CONTAINER ID>
 ```
 
 としてください。
+
+リダイレクトを使用しないのであればスクリプト内の`-iT`の部分を`-it`に変更すればCTRL+Cも効くようになります。
 
 ## validation-toolのオプション
 コマンドラインで指定できるオプションには以下があります。

@@ -1,2 +1,2 @@
 #!/bin/bash
-docker compose run --entrypoint "" -iT --rm writer bin/validation-tool "$@"
+exec docker compose run --entrypoint "" -iT --rm writer bin/validation-tool "$@"
