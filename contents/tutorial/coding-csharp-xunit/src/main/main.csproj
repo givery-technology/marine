@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <DOTNET_FRAMEWORK_VERSION Condition=" '$(DOTNET_FRAMEWORK_VERSION)' == '' ">net6.0</DOTNET_FRAMEWORK_VERSION>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>$(DOTNET_FRAMEWORK_VERSION)</TargetFramework>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+  </PropertyGroup>
+
+</Project>
