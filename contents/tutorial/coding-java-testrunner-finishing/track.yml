@@ -1,0 +1,34 @@
+type: coding
+main: src/App.java
+editable:
+  - src/App.java
+readonly:
+  - src/Main.java
+  - test/*basic*
+  - test/in/public/*
+  - test/out/public/*
+  - test/settings.json
+hide:
+  - test/*secret*
+  - test/in/secret/*
+  - test/out/secret/*
+build: javac src/*.java
+test: mocha --exit -R track-reporter
+envConf:
+  imageName: java
+  variables:
+    APP_COMMAND: java -classpath src Main
+solutions:
+  - src/App.java:solution/App.java
+testcases:
+  open: 3
+  secret: 1
+debug:
+  command: $c $*
+  input:
+    - "file:[[基本実装] 入力が 2 と 3 のとき、期待された出力結果が得られる]test/in/public/01.in"
+    - "file:[[基本実装] 入力が 15 と 8 のとき、期待された出力結果が得られる]test/in/public/02.in"
+    - "file:[[基本実装] 入力が 65 と 94 のとき、期待された出力結果が得られる]test/in/public/03.in"
+evaluationPoint:
+  基本実装: 基本的なテストケースにおいて、正答が出力できる
+  コーナーケース: 境界値のテストケースにおいて、正答が出力できる
