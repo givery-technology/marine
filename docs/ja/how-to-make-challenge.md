@@ -710,4 +710,16 @@ systemTagにはtrackおよびその周辺ツールの振る舞いを規定する
 意図的にライブラリを使わせたくないような問題の場合に指定します。
 (simpleBuildの場合はheavyなビルドツールを使わないのでbuild時間が短くなるというメリットもあります。)
 
+# Link
+## SQLチャレンジ
+- https://github.com/givery-technology/track-db-test-library
+- https://github.com/givery-technology/track-contents/wiki/SQL-%E5%B0%82%E7%94%A8%E3%82%B9%E3%82%BF%E3%82%A4%E3%83%AB
 
+## API
+- https://github.com/givery-technology/track-judge/blob/main/docs/reference-webapi.md
+
+## Function
+- 仕様
+  - https://github.com/givery-technology/marine/blob/master/contents/sample/coding-func/DEVNOTES.md
+- チェックリスト
+  - https://github.com/givery-technology/track-contents/wiki/Function-Style
