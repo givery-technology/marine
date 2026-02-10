@@ -31,10 +31,11 @@ Markdownコンテンツの作成から公開までの基本的な流れは以下
 ```
 contents/
   └── my-markdown/
-      └── books/
-          └── my-first-book/
-              ├── config.yaml
-              └── 1.intro.md
+      ├── config.yaml
+      ├── 1.intro.md
+      └── images/
+          └── intro/
+              └── img_01.png
 ```
 
 config.yaml
@@ -201,12 +202,12 @@ RAGとは、Retrieval-Augmented Generationの略で...
 
 #### 画像
 ```markdown
-![画像の説明](/images/my-book/chapter1/image.png)
+![画像の説明](images/intro/img_01.png)
 ```
 
 画像にCSSスタイルを指定したい場合はtitle属性を使用します。
 ```markdown
-![画像の説明](/images/my-book/chapter1/image.png "width:300px;")
+![画像の説明](images/intro/img_01.png "width:300px;")
 ```
 
 #### コードブロック
@@ -231,67 +232,37 @@ E = mc^2
 ```
 ````
 
-#### アコーディオン（折りたたみ）
-```markdown
-:::details 詳細を表示
-ここに折りたたまれる内容を記述します。
-:::
-```
+#### アコーディオン（折りたたみ）/ リンクカード / メッセージ
+Zenn独自の記法（`:::details`, `:::message`, リンクカードなど）は、Marine/Trackでは現在**サポートされていません**。
+記述しても正しくレンダリングされないため、使用しないでください。
 
-#### リンクカード
-URLを単独の行に記述すると、リンクカードとして表示されます。
-
-```markdown
-https://zenn.dev/
-```
-
-拡張マークダウン記法の詳細については、[markdown-extension.md](markdown-extension.md)を参照してください。
+数式以外の拡張マークダウン記法の詳細については、[markdown-extension.md](markdown-extension.md)を参照してください。
 
 ## 画像の使い方
-マークダウンで画像を使用する場合は、`/images/`パスで参照します。
+マークダウンで画像を使用する場合は、`images/`ディレクトリを作成し、そこへ画像を配置して参照します。
 
-### 画像ディレクトリの配置
-画像ディレクトリは以下の2箇所のいずれかに配置できます。コンパイラはまず①を探し、存在しなければ②にフォールバックします。
+### 画像ディレクトリの配置と参照
+コンテンツルート直下に`images/`ディレクトリを作成することを推奨します。
 
-**① bookディレクトリ直下**
-```
-contents/
-  └── {content-name}/
-      └── books/
-          └── {book-name}/
-              ├── config.yaml
-              ├── 1.intro.md
-              └── images/
-                  └── intro/
-                      └── img_01.png
-```
-
-**② content-nameディレクトリ直下**
-```
-contents/{content-name}/images/
-```
-
-②を使用する場合のディレクトリ構造：
+**ディレクトリ構成例**:
 ```
 contents/
   └── my-markdown/
-      ├── books/
-      │   └── my-first-book/
-      │       ├── config.yaml
-      │       └── 1.intro.md
+      ├── config.yaml
+      ├── 1.intro.md
       └── images/
-          └── my-first-book/
-              └── chapter1/
-                  ├── img_01.png
-                  └── img_02.png
+          ├── img_01.png
+          └── img_02.png
 ```
 
-### 参照方法
+**参照方法**:
 ```markdown
-![RAGの概要図](/images/my-first-book/chapter1/img_01.png)
+![画像の説明](images/img_01.png)
 ```
 
-**注意**: マークダウン内でのパスは必ず`/images/`で始める必要があります。コンパイラが内部的に`/images/`を`images/`に変換して処理します。
+### Zenn互換モード（非推奨）
+Zennからの移行コンテンツなど、`books/`ディレクトリを使用した階層構造の場合、コンパイラは`../../images`（2階層上）をフォールバックとして検索します。
+新規に作成する場合は、上記の推奨構成（フラット構造）を使用してください。
 
 ## ディレクトリ構成
 推奨されるディレクトリ構成を示します。
@@ -300,30 +271,24 @@ contents/
 ```
 contents/
   └── {content-name}/
-      └── books/
-          └── {book-name}/
-              ├── config.yaml
-              ├── 1.chapter1.md
-              ├── 2.chapter2.md
-              └── 3.chapter3.md
+      ├── config.yaml
+      ├── 1.chapter1.md
+      ├── 2.chapter2.md
+      └── 3.chapter3.md
 ```
 
 ### 画像を含む構成
 ```
 contents/
   └── {content-name}/
-      ├── books/
-      │   └── {book-name}/
-      │       ├── config.yaml
-      │       ├── 1.intro.md
-      │       ├── 2.basics.md
-      │       └── 3.advanced.md
+      ├── config.yaml
+      ├── 1.intro.md
+      ├── 2.basics.md
       └── images/
-          └── {book-name}/
-              ├── intro/
-              │   └── img_01.png
-              └── basics/
-                  └── img_01.png
+          ├── intro/
+          │   └── img_01.png
+          └── basics/
+              └── img_01.png
 ```
 
 ## Bookスタイルとの違い
@@ -335,7 +300,7 @@ contents/
 | frontmatter | 使用する | 使用しない |
 | セクション | なし | あり |
 | 穴埋め問題 | なし | あり |
-| 画像パス | `/images/`から参照 | imagesキーで指定 |
+| 画像パス | `images/`から参照（相対パス） | imagesキーで指定 |
 | 目次 | 自動生成 | なし |
 
 Markdownスタイルは読み物コンテンツに、Bookスタイルはインタラクティブな学習コンテンツにそれぞれ適しています。
