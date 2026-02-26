@@ -73,8 +73,8 @@ config.yamlはMarkdownコンテンツ全体の定義が記述されたファイ�
 
 以下のキーを含みます。
 
-- title: String, 推奨（省略するとコンパイルは通りますが、目次に「(no title)」と表示されます）
-- summary: String, 任意
+- title: String, 必須
+- summary: String, 必須
 - topics: List[String], 任意
 - chapters: List[String], 任意
 - toc_depth: Int, 任意
