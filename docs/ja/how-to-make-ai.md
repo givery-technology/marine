@@ -101,7 +101,7 @@ rankedRange:
 AIチャレンジの定義にもtrack.ymlを使用します。
 コーディングチャレンジと共通の部分もありますが、AIチャレンジで使用するキーは以下になります。
 
-- type: string. 必須. 
+- type: string. 必須.
   - AIチャレンジの場合は`AI`固定です
 - readonly: Array<string>
   - ユーザーにダウンロードさせるデータファイルのURLを指定します。
@@ -167,3 +167,29 @@ trackではチャレンジのコンパイル時にオプションとして言語
 言語オプションはジャッジアプリケーションからは環境変数`CHALLENGE_LANGUAGE`で参照できます。
 
 この環境変数を利用すればジャッジアプリケーション内でエラーメッセージを切り替えることも可能になります。
+
+## AIチャレンジをローカルで試す方法
+AIチャレンジでは必要なデータやjudgeをtar.gzまたはzipで固めてインターネットからアクセス可能な場所に置く必要がありますが、必要なファイルがすべて揃っている状況であれば手元でdockerコマンドのみで試すことができます。
+
+以下はそのコマンド例です。
+
+```
+docker run -it --rm \
+  -v $PWD:/root/src \
+  -v ~/Downloads/distribution.zip:/root/src/distribution.zip \
+  -e UPLOAD_FILENAME=distribution.zip \
+  givery/track-python3.9-miniconda \
+  sh -c "npm install --prefix judge && node judge/judge.js public"
+```
+
+1行目は通常のdocker runのオプションなので割愛しますが、2行目以降のオプションで指定しているのは以下の内容です。
+
+- 2行目: `-v $PWD:/root/src` : 現在いるディレクトリをコンテナ内の`/root/src`にマウントする。
+- 3行目: `-v [uploadfile]:/root/src/[uploadfile]` : 採点対象ファイル(受講者のアップロードしたファイル)を `/root/src`に配置する
+- 4行目: `-e UPLOAD_FILENAME=[uploadfile]` : 環境変数`UPLOAD_FILENAME`を設定する
+- 5行目: track.ymlで指定しているimageName
+- 6行目: `sh -c "[command]"` : track.ymlで指定しているテストコマンド
+
+judgeのトライアンドエラーはこちらの方法で手元のdockerで行う方が効率的です。
+
+
