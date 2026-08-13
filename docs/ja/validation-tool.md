@@ -62,6 +62,7 @@ $ docker rm -f <CONTAINER ID>
   - `auto`: README.mdに日本語が含まれている場合は `ja`、それ以外の場合は `en`として検証します。
   - `all`: README_ja.md または README_en.md が存在する場合は両方検証します。ない場合は `auto`と同様です。
 - `--ja-check` または `-j`: 指定された場合、英語版検証の際にファイルまたはコンソールチェックに日本語が含まれているかをチェックします。
+- `--skip-run` または `-s`: 指定された場合、実行検証を行わずコンパイルエラーの検証のみを行います。
 
 ## Marine UIからのValidate
 Marine UI上で `Validate`ボタンをクリックした場合の検証では現在表示中の言語が`lang`として使用されます。
