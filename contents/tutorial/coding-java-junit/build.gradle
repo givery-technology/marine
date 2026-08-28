@@ -1,0 +1,26 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.0'
+    testImplementation 'org.hamcrest:hamcrest:2.1'
+}
+
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        showStandardStreams true
+        events 'failed'
+        exceptionFormat 'full'
+    }
+
+    def index = 1
+    afterTest { desc, result ->
+        def str = result.resultType == org.gradle.api.tasks.testing.TestResult.ResultType.SUCCESS ? "ok" : "not ok"
+        logger.quiet "${str} ${index++} ${desc.displayName}"
+    }
+}

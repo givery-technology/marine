@@ -1,0 +1,22 @@
+type: coding
+main: src/main/java/App.java
+editable:
+  - src/main/java/App.java
+readonly:
+  - src/test/java/AppTest.java
+  - src/test/java/Util.java
+  - build.gradle
+build: gradle compileTest -q
+test: gradle test --warning-mode=none
+envConf:
+  imageName: java
+  cacheDirs:
+    - /root/.m2
+    - /root/.gradle
+solutions:
+  - src/main/java/App.java:solution/App.java
+testcases:
+  open: 3
+  secret: 0
+evaluationPoint:
+  基本実装: 基本的なテストケースにおいて、正答が出力できる
