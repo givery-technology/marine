@@ -1,0 +1,7 @@
+title: Sample book for Rust
+detail: Rust ブック
+chapters:
+  - chapter1.md
+  - chapter2.md
+env:
+  imageName: rust
